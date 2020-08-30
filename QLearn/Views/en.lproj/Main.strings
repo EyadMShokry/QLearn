@@ -1,0 +1,186 @@
+
+/* Class = "UITextField"; placeholder = "إجابة رقم ١"; ObjectID = "3EZ-0d-8eA"; */
+"3EZ-0d-8eA.placeholder" = "إجابة رقم ١";
+
+/* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "4ty-o9-jmO"; */
+"4ty-o9-jmO.normalTitle" = "Sign out";
+
+/* Class = "UIButton"; normalTitle = "Forget Password/Add New Account"; ObjectID = "5Pn-gF-YE2"; */
+"5Pn-gF-YE2.normalTitle" = "Forget Password/Add New Account";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7B1-lF-0Ri"; */
+"7B1-lF-0Ri.text" = "Label";
+
+/* Class = "UILabel"; text = "Grade"; ObjectID = "7hz-CT-ZX5"; */
+"7hz-CT-ZX5.text" = "Grade";
+
+/* Class = "UIButton"; normalTitle = "Add Teachers"; ObjectID = "9Gb-9h-MTn"; */
+"9Gb-9h-MTn.normalTitle" = "Add Teachers";
+
+/* Class = "UILabel"; text = "الباب الأول"; ObjectID = "9O7-wx-UTV"; */
+"9O7-wx-UTV.text" = "الباب الأول";
+
+/* Class = "UIButton"; normalTitle = "Log in"; ObjectID = "9jk-RM-zst"; */
+"9jk-RM-zst.normalTitle" = "Log in";
+
+/* Class = "UILabel"; text = "Admin"; ObjectID = "ADF-hp-DMh"; */
+"ADF-hp-DMh.text" = "Admin";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "AfR-ZA-hcy"; */
+"AfR-ZA-hcy.text" = "Label";
+
+/* Class = "UILabel"; text = "1"; ObjectID = "BPt-SP-Qlj"; */
+"BPt-SP-Qlj.text" = "1";
+
+/* Class = "UILabel"; text = "show cause"; ObjectID = "C68-bg-tVn"; */
+"C68-bg-tVn.text" = "show cause";
+
+/* Class = "UILabel"; text = "Week no."; ObjectID = "CKT-uq-Lpb"; */
+"CKT-uq-Lpb.text" = "Week no.";
+
+/* Class = "UILabel"; text = "Office Phone Numbers "; ObjectID = "CYU-hF-aJt"; */
+"CYU-hF-aJt.text" = "Office Phone Numbers ";
+
+/* Class = "UILabel"; text = "10"; ObjectID = "D4o-df-Lng"; */
+"D4o-df-Lng.text" = "10";
+
+/* Class = "UINavigationItem"; title = "True & False"; ObjectID = "FH1-p8-Zqc"; */
+"FH1-p8-Zqc.title" = "True & False";
+
+/* Class = "UILabel"; text = "Weekly Fixed Appointments"; ObjectID = "FPv-Vv-nz2"; */
+"FPv-Vv-nz2.text" = "Weekly Fixed Appointments";
+
+/* Class = "UILabel"; text = "Weeks Grades"; ObjectID = "HGY-AO-3bs"; */
+"HGY-AO-3bs.text" = "Weeks Grades";
+
+/* Class = "UILabel"; text = "Select Student Level"; ObjectID = "Ihv-xr-4xN"; */
+"Ihv-xr-4xN.text" = "Select Student Level";
+
+/* Class = "UILabel"; text = "Addresses"; ObjectID = "J9i-X9-Cqd"; */
+"J9i-X9-Cqd.text" = "Addresses";
+
+/* Class = "UILabel"; text = "Achievements"; ObjectID = "JVX-PH-jFa"; */
+"JVX-PH-jFa.text" = "Achievements";
+
+/* Class = "UINavigationItem"; title = "Timetable"; ObjectID = "Jml-bH-Xcn"; */
+"Jml-bH-Xcn.title" = "Timetable";
+
+/* Class = "UITextField"; placeholder = "إجابة رقم ١"; ObjectID = "Kmv-Rq-Bgh"; */
+"Kmv-Rq-Bgh.placeholder" = "إجابة رقم ١";
+
+/* Class = "UINavigationItem"; title = "MCQ"; ObjectID = "L7k-72-fjH"; */
+"L7k-72-fjH.title" = "MCQ";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "Lky-FM-oYb"; */
+"Lky-FM-oYb.text" = "Date";
+
+/* Class = "UILabel"; text = "Grade"; ObjectID = "M6v-04-XRR"; */
+"M6v-04-XRR.text" = "Grade";
+
+/* Class = "UILabel"; text = "True & False"; ObjectID = "NJT-kq-W2U"; */
+"NJT-kq-W2U.text" = "True & False";
+
+/* Class = "UILabel"; text = "20/5/2019"; ObjectID = "OPL-Qa-nAV"; */
+"OPL-Qa-nAV.text" = "20/5/2019";
+
+/* Class = "UILabel"; text = "Parent"; ObjectID = "OwP-OE-VVv"; */
+"OwP-OE-VVv.text" = "Parent";
+
+/* Class = "UILabel"; text = "Month no."; ObjectID = "POs-lz-icD"; */
+"POs-lz-icD.text" = "Month no.";
+
+/* Class = "UITextField"; placeholder = "إجابة رقم ١"; ObjectID = "Pkg-7g-Uhy"; */
+"Pkg-7g-Uhy.placeholder" = "إجابة رقم ١";
+
+/* Class = "UINavigationItem"; title = "The New News"; ObjectID = "SC7-WF-RxU"; */
+"SC7-WF-RxU.title" = "The New News";
+
+/* Class = "UINavigationItem"; title = "Essay Question"; ObjectID = "SwA-bP-ngN"; */
+"SwA-bP-ngN.title" = "Essay Question";
+
+/* Class = "UILabel"; text = "Week no."; ObjectID = "SxL-Wx-hrJ"; */
+"SxL-Wx-hrJ.text" = "Week no.";
+
+/* Class = "UINavigationItem"; title = "Timetable"; ObjectID = "USh-Yr-bOa"; */
+"USh-Yr-bOa.title" = "Timetable";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "Vs9-1d-ZRg"; */
+"Vs9-1d-ZRg.text" = "Date";
+
+/* Class = "UIButton"; normalTitle = "LOGIN"; ObjectID = "X6r-Or-Eda"; */
+"X6r-Or-Eda.normalTitle" = "LOGIN";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "XKV-Pd-Blf"; */
+"XKV-Pd-Blf.title" = "Item";
+
+/* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "XrJ-Xq-ejh"; */
+"XrJ-Xq-ejh.placeholder" = "Phone number";
+
+/* Class = "UIButton"; normalTitle = "SEARCH..  "; ObjectID = "Yae-LJ-GYj"; */
+"Yae-LJ-GYj.normalTitle" = "SEARCH..  ";
+
+/* Class = "UILabel"; text = "Download"; ObjectID = "aXJ-wM-0X2"; */
+"aXJ-wM-0X2.text" = "Download";
+
+/* Class = "UILabel"; text = "Month no."; ObjectID = "bSp-th-91g"; */
+"bSp-th-91g.text" = "Month no.";
+
+/* Class = "UILabel"; text = "طارق الخطيب"; ObjectID = "bW4-94-9Aw"; */
+"bW4-94-9Aw.text" = "طارق الخطيب";
+
+/* Class = "UILabel"; text = "Essay"; ObjectID = "bx1-Xz-ufq"; */
+"bx1-Xz-ufq.text" = "Essay";
+
+/* Class = "UILabel"; text = "لم يحضر"; ObjectID = "dZE-QS-PPw"; */
+"dZE-QS-PPw.text" = "لم يحضر";
+
+/* Class = "UIButton"; normalTitle = "Add New News"; ObjectID = "fEa-PG-8Sr"; */
+"fEa-PG-8Sr.normalTitle" = "Add New News";
+
+/* Class = "UITextField"; placeholder = "إجابة رقم ١"; ObjectID = "fNi-sC-Q36"; */
+"fNi-sC-Q36.placeholder" = "إجابة رقم ١";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "gCn-iQ-a9e"; */
+"gCn-iQ-a9e.text" = "Name";
+
+/* Class = "UILabel"; text = "Grade"; ObjectID = "gt1-kh-nC1"; */
+"gt1-kh-nC1.text" = "Grade";
+
+/* Class = "UILabel"; text = "20/5/2019"; ObjectID = "hDy-n2-xG6"; */
+"hDy-n2-xG6.text" = "20/5/2019";
+
+/* Class = "UITextField"; placeholder = "Student's ID"; ObjectID = "lDd-Uo-88m"; */
+"lDd-Uo-88m.placeholder" = "Student's ID";
+
+/* Class = "UILabel"; text = "Student"; ObjectID = "mlT-cO-88J"; */
+"mlT-cO-88J.text" = "Student";
+
+/* Class = "UILabel"; text = "MCQ"; ObjectID = "nqf-SB-JJn"; */
+"nqf-SB-JJn.text" = "MCQ";
+
+/* Class = "UILabel"; text = "Ask Us something"; ObjectID = "oGk-LR-6Mw"; */
+"oGk-LR-6Mw.text" = "Ask Us something";
+
+/* Class = "UILabel"; text = "1"; ObjectID = "owx-VI-A6w"; */
+"owx-VI-A6w.text" = "1";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "p3B-GQ-ufB"; */
+"p3B-GQ-ufB.title" = "Title";
+
+/* Class = "UILabel"; text = "طارق الخطيب"; ObjectID = "qN3-nJ-WoG"; */
+"qN3-nJ-WoG.text" = "طارق الخطيب";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "uTf-dH-Wl4"; */
+"uTf-dH-Wl4.text" = "Status";
+
+/* Class = "UINavigationItem"; title = "The Teachers"; ObjectID = "wXy-HD-Q8e"; */
+"wXy-HD-Q8e.title" = "The Teachers";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "x8B-7W-ToN"; */
+"x8B-7W-ToN.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Chapters"; ObjectID = "xxi-OE-LRh"; */
+"xxi-OE-LRh.text" = "Chapters";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "za1-HI-bQP"; */
+"za1-HI-bQP.text" = "Name";
