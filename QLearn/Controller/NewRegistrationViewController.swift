@@ -9,6 +9,8 @@
 import UIKit
 import Foundation
 import SCLAlertView
+import iOSDropDown
+
 class NewRegistrationViewController: UIViewController{
 
     @IBOutlet weak var titleLable: UILabel!
@@ -18,20 +20,23 @@ class NewRegistrationViewController: UIViewController{
     @IBOutlet weak var RegisterButtom: UIButton!
     @IBOutlet weak var PasswordText: UITextField!
     @IBOutlet weak var ConfirmPassword: UITextField!
-    @IBOutlet weak var levelText: UITextField!
-        var iconClick = true
+    @IBOutlet weak var levelDropDown: DropDown!
+    @IBOutlet weak var schoolTextField: UITextField!
+    var iconClick = true
     var registerType = "student"
+    var levels: [String] = []
+    var levelsIds : [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getStudentLevels()
         self.StudentNumText.delegate = self
-          self.ParentNumText.delegate = self
-          self.FullNameText.delegate = self
-          self.PasswordText.delegate = self
-          self.ConfirmPassword.delegate = self
-          self.levelText.delegate = self
-         self.titleLable.text = "Your Data is Not Registered,Start Registering Now".localized
+        self.ParentNumText.delegate = self
+        self.FullNameText.delegate = self
+        self.PasswordText.delegate = self
+        self.ConfirmPassword.delegate = self
+        self.titleLable.text = "Your Data is Not Registered,Start Registering Now".localized
         RegisterButtom.setTitle("New Registration".localized, for: .normal)
         localiztion()
         //add button in text
@@ -42,10 +47,39 @@ class NewRegistrationViewController: UIViewController{
         addLeftImageTo(txtField: StudentNumText, andImage: emailImage!)
         _ = UIImage(named:"call-answer")
         addLeftImageTo(txtField: ParentNumText, andImage: emailImage!)
-      
+        self.levelDropDown.text = "الصف الأول الابتدائي"
      
     }
     
+    private func getStudentLevels() {
+        var student: Student
+        student = Student()
+        student.getStudentLevels(parameters: [:]) {(levels, error) in
+            if let levels = levels {
+                for level in levels.RESULT {
+                    self.levels.append(level.levelTitle)
+                    self.levelsIds.append(level.id)
+                }
+                self.performUIUpdatesOnMain {
+                    self.levelDropDown.optionArray.append(contentsOf: self.levels)
+                    self.levelDropDown.selectedIndex = 0
+                }
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
 
     @IBAction func NewRegistrationAction(_ sender: UIButton) {
         //validate for all fields here
@@ -76,7 +110,7 @@ class NewRegistrationViewController: UIViewController{
                                 let parameters = ["name" : self.FullNameText.text,
                                                   "phone" : self.StudentNumText.text?.replacedArabicDigitsWithEnglish,
                                                   "parentPhone" : self.ParentNumText.text?.replacedArabicDigitsWithEnglish,
-                                                  "level" : self.levelText.text,
+//                                                  "level" : self.levelText.text,
                                                   "password" : self.PasswordText.text]
                                 
                                 user.register(method: "insert_student.php", parameters: parameters as [String : AnyObject]) { (response, error) in
@@ -141,12 +175,12 @@ class NewRegistrationViewController: UIViewController{
     }
     
     func localiztion(){
-    StudentNumText.placeholder = "Student's Phone Number".localized
-    ParentNumText.placeholder = "Father's Phone Number".localized
-    FullNameText.placeholder = "Full Name".localized
-    PasswordText.placeholder = "Password".localized
-    ConfirmPassword.placeholder = "Confirm The Password".localized
-    levelText.placeholder = "level".localized
+        StudentNumText.placeholder = "Student's Phone Number".localized
+        ParentNumText.placeholder = "Father's Phone Number".localized
+        FullNameText.placeholder = "Full Name".localized
+        PasswordText.placeholder = "Password".localized
+        ConfirmPassword.placeholder = "Confirm The Password".localized
+        schoolTextField.placeholder = "School".localized
     }
     
     

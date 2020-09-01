@@ -67,23 +67,35 @@ class LoginViewController: UIViewController {
             activityIndicator.startAnimating()
             if userType == "student" {
                 let student = Student()
-                let parameters = ["phone" : textFieldOne.text?.replacedArabicDigitsWithEnglish,
-                                  "password" : textFieldTwo.text]
+                let parameters = ["phone" : textFieldOne.text!.replacedArabicDigitsWithEnglish]
                 print(parameters)
                 student.login(parameters: parameters as [String : AnyObject]) {(data, error) in
                     if let student = data {
-                        if student.RESULT.count == 1 {
+                        print(student)
+                        if student.RESULT.count != 0 {
                             UserDefaults.standard.set(student.RESULT[0].id, forKey: "id")
                             UserDefaults.standard.set(student.RESULT[0].level, forKey: "student_level")
                             UserDefaults.standard.set(student.RESULT[0].name, forKey: "student_name")
                             UserDefaults.standard.set(student.RESULT[0].parentPhone, forKey: "student_parent_phone")
                             UserDefaults.standard.set(student.RESULT[0].phone, forKey: "student_phone")
+                            UserDefaults.standard.set("student", forKey: "type")
                             self.performUIUpdatesOnMain {
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
-                                let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
-                                homeVC.userType = self.userType
-                                self.navigationController?.popViewController(animated: true)
+                                if(student.RESULT[0].password == self.textFieldTwo.text) {
+                                    //                                let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
+                                    //                                homeVC.userType = self.userType
+                                    //                                self.navigationController?.popViewController(animated: true)
+                                    let studentTeachersVC = self.storyboard?.instantiateViewController(withIdentifier: "StudentTeachersVC") as! AvailableTeachersViewController
+                                    studentTeachersVC.modalPresentationStyle = .fullScreen
+                                    self.textFieldOne.text = ""
+                                    self.textFieldTwo.text = ""
+                                    self.present(studentTeachersVC, animated: true, completion: nil)
+                                    
+                                }
+                                else {
+                                    SCLAlertView().showError("Error".localized, subTitle: "Incorrect Password".localized)
+                                }
                             }
                         }
                         else {
@@ -125,11 +137,14 @@ class LoginViewController: UIViewController {
                             UserDefaults.standard.set(admin.RESULT[0].id, forKey: "id")
                             UserDefaults.standard.set(admin.RESULT[0].name, forKey: "admin_name")
                             UserDefaults.standard.set(admin.RESULT[0].phone, forKey: "admin_phone")
+                            UserDefaults.standard.set("teacher", forKey: "type")
                             self.performUIUpdatesOnMain {
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
                                 let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
                                 homeVC.userType = self.userType
+                                self.textFieldOne.text = ""
+                                self.textFieldTwo.text = ""
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -172,12 +187,14 @@ class LoginViewController: UIViewController {
                             UserDefaults.standard.set(parent.RESULT[0].name, forKey: "student_name")
                             UserDefaults.standard.set(parent.RESULT[0].parentPhone, forKey: "student_parent_phone")
                             UserDefaults.standard.set(parent.RESULT[0].phone, forKey: "student_phone")
-                            UserDefaults.standard.set("parent", forKey: "user_type")
+                            UserDefaults.standard.set("parent", forKey: "type")
                             self.performUIUpdatesOnMain {
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
                                 let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
                                 homeVC.userType = self.userType
+                                self.textFieldOne.text = ""
+                                self.textFieldTwo.text = ""
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -212,7 +229,17 @@ class LoginViewController: UIViewController {
     }
   
     @IBAction func GoNewRegistration(_ sender: UIButton) {
-        performSegue(withIdentifier: "GoNewRegistration", sender: self)
+        print("register")
+        print("user type: \(self.userType)")
+        if (self.userType == "student") {
+            let registerStudentVC = storyboard?.instantiateViewController(withIdentifier: "NewRegistrationViewController") as! NewRegistrationViewController
+            self.navigationController?.pushViewController(registerStudentVC, animated: true)
+        }
+        else {
+            let registerTeacherVC = storyboard?.instantiateViewController(withIdentifier: "RegisterNewTeacher") as! RegisterNewTeacherViewController
+            self.navigationController?.pushViewController(registerTeacherVC, animated: true)
+        }
+        
     }
     //mark->  button forget password
     
@@ -323,7 +350,7 @@ class LoginViewController: UIViewController {
 //        if sender.isSelected{
             sender.isSelected = false
             buttonForget(hidden: true)
-            buttonRegister(hidden: true)
+            buttonRegister(hidden: false)
             teacherView.createBorderForView(color: UIColor.lightGray, radius: teacherView.frame.height/2)
             studentView.createBorderForView(color: UIColor.clear, radius: studentView.frame.height/2)
             fatherView.createBorderForView(color: UIColor.clear, radius: fatherView.frame.height/2)

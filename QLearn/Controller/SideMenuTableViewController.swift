@@ -63,7 +63,7 @@ class SideMenuTableViewController: UITableViewController {
         UserDefaults.standard.removeObject(forKey: "student_parent_phone")
         UserDefaults.standard.removeObject(forKey: "admin_name")
         UserDefaults.standard.removeObject(forKey: "admin_phone")
-        UserDefaults.standard.removeObject(forKey: "user_type")
+        UserDefaults.standard.removeObject(forKey: "type")
         UserDefaults.standard.synchronize()
         self.dismiss(animated: true, completion: nil)
     }

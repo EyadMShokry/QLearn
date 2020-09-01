@@ -72,7 +72,7 @@
 "Full Name"= "Full Name";
 "Password"= "Password";
 "Confirm The Password"= "Confirm Password";
-"New Registration"= "New Registration";
+"New Registration"= "Register";
 "Passwords do not match" = "Passwords do not match";
 "This student already exists" = "This student already exists";
 "Server Error, please contact with applications author" = "Server Error, please contact with application's author";
@@ -148,3 +148,8 @@
 "change password" = "Change password";
 "you can change password" = "You can change your password here";
 "skip" = "Skip";
+"School" = "School";
+"Incorrect Password" = "Incorrect Password";
+"Student Report" = "Student Report";
+"Appointements" = "Appointements";
+

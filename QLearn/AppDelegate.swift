@@ -25,6 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if(UserDefaults.standard.value(forKey: "id") != nil && UserDefaults.standard.string(forKey: "type")  == "student") {
+            let homeVC = storyboard.instantiateViewController(withIdentifier: "StudentTeachersVC") as! AvailableTeachersViewController
+            self.window?.rootViewController = homeVC
+        }
+        else {
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
+            self.window?.rootViewController = loginVC
+        }
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.disabledToolbarClasses = [AnswerQuestionViewController.self]
         MOLH.shared.activate(true)

@@ -74,7 +74,7 @@
 "Full Name" = "الاسم بالكامل";
 "Password" = "كلمه السر";
 "Confirm The Password" = "تأكيد كلمة المرور";
-"New Registration" = "تسجيل جديد";
+"New Registration" = "تسجيل";
 "Passwords do not match" = "كلمات المرور غير متطابقة";
 "This student already exists" = "هذا الطالب موجود بالفعل";
 "Server Error, please contact with applications author" = "خطأ في الخادم ، يرجى الاتصال بمالك التطبيق";
@@ -150,3 +150,7 @@
 "change password" = "تغيير كلمة المرور";
 "you can change password" = "يمكنك تغيير كلمة المرور هنا";
 "skip" = "تخطي";
+"School" = "المدرسة";
+"Incorrect Password" = "كلمه مرور خاطئه";
+"Student Report" = "تقرير الطالب";
+"Appointements" = "الميعاد والمكان";

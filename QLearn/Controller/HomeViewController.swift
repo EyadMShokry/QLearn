@@ -11,7 +11,6 @@
  
  class HomeViewController: UIViewController {
     @IBOutlet weak var sectionsTableView: UITableView!
-    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var newsView: SlidingText!
     @IBOutlet weak var addNewsButton: UIButton!
     @IBOutlet var buttonDrobMenu: [UIButton]!
@@ -19,10 +18,12 @@
     @IBOutlet weak var newsButton: UIButton!
     @IBOutlet weak var AdminButton: UIButton!
     @IBOutlet weak var adminBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var studentNumberLabel: UILabel!
+    
     var userType = ""
     //full features
-    var sectionsNames = ["Questions Bag".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized]
-    var sectionsImagesNames = ["question", "ask", "book", "about_person", "contact_us"]
+    var sectionsNames = ["Questions Bag".localized, "Student Report".localized, "Appointements".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized]
+    var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus"]
 
     var newsArray: [String] = []
  
@@ -31,10 +32,10 @@
         super.viewWillAppear(animated)
         newsArray.removeAll()
         
-        loginButton.isHidden = UserDefaults.standard.value(forKey: "id") != nil
         if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
             adminBarButtonItem.isEnabled = false
             adminBarButtonItem.tintColor = .clear
+            studentNumberLabel.text = "رقم الطالب: 0"
         }
         else {
             adminBarButtonItem.isEnabled = true
@@ -76,16 +77,13 @@
         sectionsTableView.delegate = self
         sectionsTableView.isScrollEnabled = false
         sectionsTableView.separatorColor = .clear
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         button(hidden: true)
     }
-    
-    @IBAction func onClickLoginButton(_ sender: UIButton) {
-        
-    }
-   
+       
     @IBAction func goAdminTable(_ sender: Any) {
          button (hidden: true)
         let AdminableVC = storyboard?.instantiateViewController(withIdentifier: "GoTheTeachers")
@@ -109,7 +107,7 @@
         UIView.animate(withDuration: 0.3) {
 //            self.buttonDrobMenu.forEach { (button) in
 //                button.isHidden = !button.isHidden
-//                self.view.layoutIfNeeded()
+//                self.view.layIfNeeded()
 //            }
             if(UserDefaults.standard.string(forKey: "id") == "1") {
                 self.AdminButton.isHidden = !self.AdminButton.isHidden

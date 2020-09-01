@@ -728,6 +728,56 @@ class Client: NSObject {
 
         })
     }
+    
+    func getStudentLevels(parameters: [String : AnyObject], completionHandler: @escaping(_ result: StudentLevel?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_levels.php", parameters: [:], bodyParameters: parameters, completionHandlerForPOST: { (data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let levels = try JSONDecoder().decode(StudentLevel.self, from: data)
+                completionHandler(levels, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+
+        })
+    }
+    
+    func getStudentTeachers(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Teachers?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_student_teachers_ios.php", parameters:parameters, bodyParameters: parameters, completionHandlerForPOST: { (data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let teachers = try JSONDecoder().decode(Teachers.self, from: data)
+                completionHandler(teachers, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+
+        })
+    }
+
+    
 }
 
 
@@ -860,6 +910,6 @@ extension Client {
     struct ApiConstants {
         static let APIScheme = "http"
         static let APIHost = "qubtan.website"
-        static let APIPath = "/khaled/elkhateebAPI/"
+        static let APIPath = "/khaled/Qlearn_API/"
     }
 }
