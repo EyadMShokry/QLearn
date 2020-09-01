@@ -86,7 +86,7 @@ class LoginViewController: UIViewController {
                                     //                                let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
                                     //                                homeVC.userType = self.userType
                                     //                                self.navigationController?.popViewController(animated: true)
-                                    let studentTeachersVC = self.storyboard?.instantiateViewController(withIdentifier: "StudentTeachersVC") as! AvailableTeachersViewController
+                                    let studentTeachersVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeView") as! UINavigationController
                                     studentTeachersVC.modalPresentationStyle = .fullScreen
                                     self.textFieldOne.text = ""
                                     self.textFieldTwo.text = ""

@@ -14,8 +14,8 @@ class TeachersTableViewCell: UITableViewCell {
     @IBOutlet weak var cellView: UIView!
     
     func setupCell(teacher: Teacher) {
-        self.teacherNameLabel.text = "استاذ: \(teacher.name)"
-        self.teacherSubjectLabel.text = "مدرس: \(teacher.subject)"
+        self.teacherNameLabel.text = "مدرس: \(teacher.subject)"
+        self.teacherSubjectLabel.text = "استاذ: \(teacher.name)"
         cellView.layer.cornerRadius = 15
     }
 

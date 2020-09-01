@@ -186,4 +186,15 @@ class Student: SchoolUser {
            }
        }
     
+    func getOtherTeachers(parameters: [String : AnyObject], completion: @escaping(_ result: Teachers?, _ error: NSError?) -> Void) {
+             Client.shared().getOtherTeachers(parameters: parameters) { (studentTeachers, error) in
+                 if let studentTeachers = studentTeachers {
+                     completion(studentTeachers, nil)
+                 }
+                 else if let error = error {
+                     completion(nil, error)
+                 }
+             }
+         }
+    
 }

@@ -232,8 +232,8 @@ class Client: NSObject {
     
  
     
-    func selectChaptersInQuestions(pathExtension: String, completionHandler: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod(pathExtension, parameters: [:]) {(data, error) in
+    func selectChaptersInQuestions(pathExtension: String, parameters: [String : AnyObject], completionHandler: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod(pathExtension, parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -241,7 +241,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             
@@ -304,7 +304,7 @@ class Client: NSObject {
     }
     
     func selectCountOfRightAnswers(parameters: [String : AnyObject], completionHandler: @escaping(_ result: RightAnswers?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_count_of_right_answered_type_from_bank.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_count_of_right_answered_type.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -777,6 +777,29 @@ class Client: NSObject {
         })
     }
 
+    func getOtherTeachers(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Teachers?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_other_teachers.php", parameters:parameters, bodyParameters: parameters, completionHandlerForPOST: { (data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let teachers = try JSONDecoder().decode(Teachers.self, from: data)
+                completionHandler(teachers, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+
+        })
+    }
     
 }
 

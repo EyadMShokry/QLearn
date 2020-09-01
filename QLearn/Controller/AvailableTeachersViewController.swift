@@ -8,11 +8,17 @@
 
 import UIKit
 import SCLAlertView
+import NVActivityIndicatorView
 
 class AvailableTeachersViewController: UIViewController {
 
     @IBOutlet weak var teachersTableView: UITableView!
+    @IBOutlet weak var addOtherTeachersButton: UIButton!
+    @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
+    
     var teachers = [Teacher]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -20,7 +26,9 @@ class AvailableTeachersViewController: UIViewController {
         teachersTableView.delegate = self
         teachersTableView.register(UINib(nibName: "TeachersTableViewCell", bundle: nil), forCellReuseIdentifier: "TeacherCell")
         teachersTableView.separatorStyle = .none
-        
+        addOtherTeachersButton.isHidden = true
+        activityIndicator.type = .circleStrokeSpin
+        activityIndicator.color = .cyan
         getStudentTeachers()
     }
     
@@ -28,6 +36,8 @@ class AvailableTeachersViewController: UIViewController {
         var student: Student
         student = Student()
         let parameters = ["student_id" : UserDefaults.standard.string(forKey: "id")]
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         student.getStudentTeachers(parameters: parameters as [String : AnyObject]){ (data, error) in
             if let teachers = data {
                 print(teachers)
@@ -35,6 +45,9 @@ class AvailableTeachersViewController: UIViewController {
                     self.teachers.append(teacher)
                 }
                 self.performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.addOtherTeachersButton.isHidden = false
                     self.teachersTableView.reloadData()
                 }
             }
@@ -53,6 +66,47 @@ class AvailableTeachersViewController: UIViewController {
             }
         }
     }
+    
+    private func getOtherTeachers() {
+        addOtherTeachersButton.isHidden = true
+        var student: Student
+        student = Student()
+        let parameters = ["student_id" : UserDefaults.standard.string(forKey: "id")]
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        student.getOtherTeachers(parameters: parameters as [String : AnyObject]) { (data, error) in
+            if let teachers = data {
+                print(teachers)
+                for teacher in teachers.RESULT{
+                    self.teachers.append(teacher)
+                }
+                self.performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.footerView.isHidden = true
+                    self.teachersTableView.reloadData()
+                }
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
+    
+    @IBAction func onClickAddOtherTeachersButton(_ sender: UIButton) {
+        getOtherTeachers()
+    }
+    
 
     @IBAction func onClickLogoutButton(_ sender: UIBarButtonItem) {
         UserDefaults.standard.removeObject(forKey: "id")
@@ -95,6 +149,13 @@ extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("hello")
+        let homeVC = storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
+        homeVC.teacherId = self.teachers[indexPath.row].id
+        navigationController?.pushViewController(homeVC, animated: true)
     }
     
     

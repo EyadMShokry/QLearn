@@ -16,5 +16,6 @@ pod 'Firebase/Core', '4.2.0'
 pod 'Firebase/Storage'
 pod 'Firebase/Auth'
 pod 'iOSDropDown'
+pod 'NVActivityIndicatorView'
 
 end

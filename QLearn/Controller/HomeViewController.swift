@@ -17,16 +17,15 @@
     @IBOutlet weak var addTeachersButton: UIButton!
     @IBOutlet weak var newsButton: UIButton!
     @IBOutlet weak var AdminButton: UIButton!
-    @IBOutlet weak var adminBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var adminBarButtonItem: UIButton!
     @IBOutlet weak var studentNumberLabel: UILabel!
     
     var userType = ""
-    //full features
     var sectionsNames = ["Questions Bag".localized, "Student Report".localized, "Appointements".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized]
     var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus"]
-
     var newsArray: [String] = []
- 
+    var teacherId = ""
+    
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -34,11 +33,13 @@
         
         if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
             adminBarButtonItem.isEnabled = false
+            adminBarButtonItem.isHidden = true
             adminBarButtonItem.tintColor = .clear
-            studentNumberLabel.text = "رقم الطالب: 0"
+            studentNumberLabel.text = "رقم الطالب: \(UserDefaults.standard.string(forKey: "id") ?? "0")"
         }
         else {
             adminBarButtonItem.isEnabled = true
+            adminBarButtonItem.isHidden = false
             adminBarButtonItem.tintColor = UIColor(displayP3Red: 48/255, green: 140/255, blue: 239/255, alpha: 1.0)
         }
         let user = User()
@@ -102,8 +103,8 @@
     
     
    //MARk ->Button drobDownMenu
-    @IBAction func drobDownMenu(_ sender: UIBarButtonItem) {
-
+    @IBAction func drobDownMenu(_ sender: UIButton) {
+        print("clicked")
         UIView.animate(withDuration: 0.3) {
 //            self.buttonDrobMenu.forEach { (button) in
 //                button.isHidden = !button.isHidden
@@ -174,8 +175,9 @@
             switch selectedRow {
             case 0:
                 if(UserDefaults.standard.value(forKey: "user_type") == nil) {
-                    let questionBagVC = storyboard?.instantiateViewController(withIdentifier: "QuestionsBag")
-                    navigationController?.pushViewController(questionBagVC!, animated: true)
+                    let questionBagVC = storyboard?.instantiateViewController(withIdentifier: "QuestionsBag") as! QuestionsBagViewController
+                    questionBagVC.teacherId = self.teacherId
+                    navigationController?.pushViewController(questionBagVC, animated: true)
                 }
                 else {
                     SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)

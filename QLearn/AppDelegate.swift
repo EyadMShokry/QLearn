@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable {
         // Override point for customization after application launch.
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if(UserDefaults.standard.value(forKey: "id") != nil && UserDefaults.standard.string(forKey: "type")  == "student") {
-            let homeVC = storyboard.instantiateViewController(withIdentifier: "StudentTeachersVC") as! AvailableTeachersViewController
+            let homeVC = storyboard.instantiateViewController(withIdentifier: "HomeView") as! UINavigationController
             self.window?.rootViewController = homeVC
         }
         else {

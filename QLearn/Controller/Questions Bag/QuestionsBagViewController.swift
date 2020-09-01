@@ -12,6 +12,7 @@ class QuestionsBagViewController: UIViewController {
     @IBOutlet weak var searchMcqButton: UIButton!
     @IBOutlet weak var searchEssayButton: UIButton!
     @IBOutlet weak var searchTFButton: UIButton!
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +81,7 @@ class QuestionsBagViewController: UIViewController {
         else if userType == "student" {
             let chaptersVC = storyboard?.instantiateViewController(withIdentifier: "ChaptersVC") as! ChaptersViewController
             chaptersVC.questionType = questionType
+            chaptersVC.teacherId = self.teacherId
             self.navigationController?.pushViewController(chaptersVC, animated: true)
         }
     }

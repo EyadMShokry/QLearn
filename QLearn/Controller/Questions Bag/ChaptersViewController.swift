@@ -19,6 +19,7 @@ class ChaptersViewController: UIViewController {
     var chaptersPercent: [String] = []
     var questionType = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
+    var teacherId = ""
     
     private func setChaptersProgress() {
         for i in (0..<chaptersArray.count) {
@@ -50,14 +51,17 @@ class ChaptersViewController: UIViewController {
         self.view.bringSubviewToFront(activityIndicator)
         activityIndicator.startAnimating()
 
-        let parameters = ["student_id" : UserDefaults.standard.value(forKey: "id"),
-                          "type" : questionType]
+        let parameters = ["studentID" : UserDefaults.standard.value(forKey: "id"),
+                          "questionType" : questionType]
         student.getRightAnswersCount(parameters: parameters as [String : AnyObject]) {(rightAnswers, error) in
             if let answers = rightAnswers?.RESULT {
                 self.rightAnswersArray = answers
                 if(self.questionType == "mcq") {
                     //call select chapters in mcq questions
-                    student.getChaptersInQuestions(pathExtension: "select_chapters_in_mcq_questions.php") {(chapters, error) in
+                    let parameters = ["level":UserDefaults.standard.string(forKey: "student_level"),
+                                      "teacherID": self.teacherId]
+                    print(parameters)
+                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_mcq_count.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
                         if let chapters = chapters {
                             self.chaptersArray = chapters.RESULT
                             self.setChaptersProgress()
@@ -89,7 +93,10 @@ class ChaptersViewController: UIViewController {
                 }
                 else if(self.questionType == "essay") {
                     //call select chapters in essay questions
-                    student.getChaptersInQuestions(pathExtension: "select_chapters_in_essay_questions.php") {(chapters, error) in
+                    let parameters = ["level":UserDefaults.standard.string(forKey: "student_level"),
+                                      "teacherID": self.teacherId]
+                    print(parameters)
+                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_essay_count.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
                         if let chapters = chapters {
                             self.chaptersArray = chapters.RESULT
                             self.setChaptersProgress()
@@ -122,7 +129,10 @@ class ChaptersViewController: UIViewController {
                 }
                 else if(self.questionType == "TF") {
                     //call select chapters in true and false questions
-                    student.getChaptersInQuestions(pathExtension: "select_chapters_in_trueFalse_questions.php") {(chapters, error) in
+                    let parameters = ["level":UserDefaults.standard.string(forKey: "student_level"),
+                                      "teacherID": self.teacherId]
+                    print(parameters)
+                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_tf_count.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
                         if let chapters = chapters {
                             self.chaptersArray = chapters.RESULT
                             self.setChaptersProgress()
@@ -207,14 +217,13 @@ class ChaptersViewController: UIViewController {
             }
         }
         addNewChapterAlertView.addButton("Cancal".localized)
- {
+        {
             addNewChapterAlertView.dismiss(animated: true, completion: nil)
             
         }
         
         let alertViewIcon = UIImage(named: "book")
-        addNewChapterAlertView.showInfo("Add new chapter".localized
-, subTitle: "", circleIconImage: alertViewIcon)
+        addNewChapterAlertView.showInfo("Add new chapter".localized, subTitle: "", circleIconImage: alertViewIcon)
     }
     
     func insertNewChapter(){

@@ -21,8 +21,8 @@ class SchoolUser: User {
         }
     }
     
-    func getChaptersInQuestions(pathExtension: String, completion: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
-        Client.shared().selectChaptersInQuestions(pathExtension: pathExtension) {(data, error) in
+    func getChaptersInQuestions(pathExtension: String, parameters: [String : AnyObject], completion: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
+        Client.shared().selectChaptersInQuestions(pathExtension: pathExtension, parameters: parameters) {(data, error) in
             if let chapters = data {
                 completion(chapters, nil)
             }
