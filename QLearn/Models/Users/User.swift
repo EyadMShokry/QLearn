@@ -10,8 +10,8 @@ import Foundation
 
 class User {
     
-    func getLessionDates(completion: @escaping(_ result: LessonDate?, _ error: NSError?) -> Void) {
-        Client.shared().selectLessonDates() {(data, error) in
+    func getLessionDates(parameters: [String : AnyObject], completion: @escaping(_ result: LessonDate?, _ error: NSError?) -> Void) {
+        Client.shared().selectLessonDates(parameters: parameters) {(data, error) in
             if let dates = data {
               completion(dates, nil)
             }
@@ -21,8 +21,8 @@ class User {
         }
     }
     
-    func getAddresses(completion: @escaping(_ result: Address?, _ error: NSError?) -> Void) {
-        Client.shared().selectAddresses() {(data, error) in
+    func getAddresses(parameters: [String : AnyObject], completion: @escaping(_ result: Address?, _ error: NSError?) -> Void) {
+        Client.shared().selectAddresses(parameters: parameters) {(data, error) in
             if let addresses = data {
                 completion(addresses, nil)
             }
@@ -32,8 +32,8 @@ class User {
         }
     }
     
-    func getPhoneNumbers(completion: @escaping(_ result: Phone?, _ error: NSError?) -> Void) {
-        Client.shared().selectPhoneNumbers() {(data, error) in
+    func getPhoneNumbers(parameters: [String : AnyObject], completion: @escaping(_ result: Phone?, _ error: NSError?) -> Void) {
+        Client.shared().selectPhoneNumbers(parameters: parameters) {(data, error) in
             if let phones = data {
                 completion(phones, nil)
             }
@@ -66,8 +66,8 @@ class User {
         }
     }
     
-    func getAchievements(completion: @escaping(_ result: Achievement?, _ error: NSError?) -> Void) {
-        Client.shared().selectAchievements() {(data, error) in
+    func getAchievements(parameters: [String : AnyObject], completion: @escaping(_ result: Achievement?, _ error: NSError?) -> Void) {
+        Client.shared().selectAchievements(parameters: parameters) {(data, error) in
             if let achievements = data {
                 completion(achievements, nil)
             }
@@ -77,8 +77,8 @@ class User {
         }
     }
     
-    func getTeacherInfo(completion: @escaping(_ result: TeacherInfo?, _ error: NSError?) -> Void) {
-        Client.shared().selectTeacherInfo() {(data, error) in
+    func getTeacherInfo(parameters: [String : AnyObject], completion: @escaping(_ result: TeacherInfo?, _ error: NSError?) -> Void) {
+        Client.shared().selectTeacherInfo(parameters: parameters) {(data, error) in
             if let teacherInfo = data {
                 completion(teacherInfo, nil)
             }

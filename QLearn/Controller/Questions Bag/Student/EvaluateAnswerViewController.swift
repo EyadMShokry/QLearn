@@ -82,7 +82,7 @@ class EvaluateAnswerViewController: UIViewController {
                               "isCorrect": "1",
                               "chapter_id": chapterId]
             let student = Student()
-            student.insertAnswerWithType(method: "insert_answer_with_type.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let response = data {
                     if response.contains("inserted") {
                         print("inserted")
@@ -127,7 +127,7 @@ class EvaluateAnswerViewController: UIViewController {
                               "isCorrect": isCorrectParameter,
                               "chapter_id": chapterId]
             let student = Student()
-            student.insertAnswerWithType(method: "insert_answer_with_type.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let response = data {
                     if response.contains("inserted") {
                         print("inserted")
@@ -172,7 +172,7 @@ class EvaluateAnswerViewController: UIViewController {
                               "isCorrect": "-1",
                               "chapter_id": chapterId]
             let student = Student()
-            student.insertAnswerWithType(method: "insert_answer_with_type.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let response = data {
                     if response.contains("inserted") {
                         print("inserted")
@@ -209,7 +209,7 @@ class EvaluateAnswerViewController: UIViewController {
                               "isCorrect": "-1",
                               "chapter_id": chapterId]
             let student = Student()
-            student.insertAnswerWithType(method: "insert_answer_with_type.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let response = data {
                     if response.contains("inserted") {
                         print("inserted")

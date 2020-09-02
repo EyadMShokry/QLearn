@@ -61,7 +61,7 @@ class ChaptersViewController: UIViewController {
                     let parameters = ["level":UserDefaults.standard.string(forKey: "student_level"),
                                       "teacherID": self.teacherId]
                     print(parameters)
-                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_mcq_count.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
+                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_mcq_count_ios.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
                         if let chapters = chapters {
                             self.chaptersArray = chapters.RESULT
                             self.setChaptersProgress()
@@ -96,7 +96,7 @@ class ChaptersViewController: UIViewController {
                     let parameters = ["level":UserDefaults.standard.string(forKey: "student_level"),
                                       "teacherID": self.teacherId]
                     print(parameters)
-                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_essay_count.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
+                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_essay_count_ios.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
                         if let chapters = chapters {
                             self.chaptersArray = chapters.RESULT
                             self.setChaptersProgress()
@@ -132,7 +132,7 @@ class ChaptersViewController: UIViewController {
                     let parameters = ["level":UserDefaults.standard.string(forKey: "student_level"),
                                       "teacherID": self.teacherId]
                     print(parameters)
-                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_tf_count.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
+                    student.getChaptersInQuestions(pathExtension: "select_chapters_with_tf_count_ios.php", parameters: parameters as [String : AnyObject]) {(chapters, error) in
                         if let chapters = chapters {
                             self.chaptersArray = chapters.RESULT
                             self.setChaptersProgress()
@@ -184,7 +184,7 @@ class ChaptersViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
+        if(UserDefaults.standard.string(forKey: "type") != "admin") {
             addChapterButton.isHidden = true
         }
 
@@ -263,8 +263,8 @@ extension ChaptersViewController: UITableViewDataSource, UITableViewDelegate {
             questionsTypesVC.isPdf = false
             questionsTypesVC.chapterName = chaptersArray[indexPath.row].title
             questionsTypesVC.selectedChapterId = chaptersArray[indexPath.row].id
+            
             self.navigationController?.pushViewController(questionsTypesVC, animated: true)
-
         }
         else if(questionType == "mcq") {
             //in teacher case
@@ -275,6 +275,7 @@ extension ChaptersViewController: UITableViewDataSource, UITableViewDelegate {
             let answerMcqVC = storyboard?.instantiateViewController(withIdentifier: "CheckQuestionStudent") as! CheckQuestionViewController
             answerMcqVC.title = chaptersArray[indexPath.row].title
             answerMcqVC.selectedChapterId = chaptersArray[indexPath.row].id
+            answerMcqVC.teacherId = self.teacherId
             
             self.navigationController?.pushViewController(answerMcqVC, animated: true)
 
@@ -286,8 +287,9 @@ extension ChaptersViewController: UITableViewDataSource, UITableViewDelegate {
             let answerTrueFalseVC = storyboard?.instantiateViewController(withIdentifier: "TrueFalseQuestionStudent") as! TrueFalseQuestionStudentViewController
             answerTrueFalseVC.title = chaptersArray[indexPath.row].title
             answerTrueFalseVC.selectedChapterId = chaptersArray[indexPath.row].id
+            answerTrueFalseVC.teacherId = self.teacherId
+            
             self.navigationController?.pushViewController(answerTrueFalseVC, animated: true)
-
         }
     }
 }

@@ -19,6 +19,7 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
     var selectedChapterId = ""
     var questionsArray: [FullQuestionResult] = []
     var selectedAnswer = ""
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,16 +41,16 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
         
         
         let student = Student()
-        let parameters = ["chapter_id" : selectedChapterId, "student_id" : UserDefaults.standard.value(forKey: "id")]
+        let parameters = ["chapter_id" : selectedChapterId, "student_id" : UserDefaults.standard.string(forKey: "id"), "level" : UserDefaults.standard.string(forKey: "student_level"), "teacher_id" : self.teacherId]
         activityIndicator.startAnimating()
         
-        student.getNotAnsweredQuestions(method: "select_not_answerd_tf_questions.php", parameters: parameters as [String : AnyObject]) {(questions, error) in
+        student.getNotAnsweredQuestions(method: "select_not_answered_tf_questions_ios.php", parameters: parameters as [String : AnyObject]) {(questions, error) in
             if let questions = questions {
                 for question in questions.RESULT {
                     self.questionsArray.append(question)
                 }
                 print("not answred array: \(self.questionsArray)")
-                student.getAnsweredQuestions(method: "select_answerd_tf_questions.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+                student.getAnsweredQuestions(method: "select_answered_tf_questions_ios.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                     if let questions = data {
                         for question in questions.RESULT {
                             self.questionsArray.append(question)
@@ -204,7 +205,7 @@ extension  TrueFalseQuestionStudentViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = .white
+            textView.textColor = .black
         }
     }
     
@@ -212,10 +213,10 @@ extension  TrueFalseQuestionStudentViewController: UITextViewDelegate {
         if textView.text.isEmpty {
             if textView == questionTextArea {
                 textView.text = "The Question ...".localized
-                textView.textColor = .white
+                textView.textColor = .lightGray
             }
             else if textView == reasonTextArea {
-                textView.textColor = .white
+                textView.textColor = .lightGray
                 textView.text = "The Reasoning ...".localized
                 
             }

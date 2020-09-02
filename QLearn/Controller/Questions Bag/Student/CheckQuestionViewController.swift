@@ -30,6 +30,7 @@ class CheckQuestionViewController: UIViewController, DismissManager {
     var selectedAnswer = 1
     var selectedChapterId = ""
     var questionsArray: [FullQuestionResult] = []
+    var teacherId = ""
     
     private func adjustUIForNewQuestion() {
         self.questionTextArea.text = self.questionsArray[0].question
@@ -58,22 +59,23 @@ class CheckQuestionViewController: UIViewController, DismissManager {
         questionTextArea.layer.borderWidth = 3
         questionTextArea.layer.cornerRadius = 15
 
-        View1.createsBorderForView(color: UIColor.white, radius: 25)
-        view2.createsBorderForView(color: UIColor.white, radius: 25)
-        view3.createsBorderForView(color: UIColor.white, radius: 25)
-        view4.createsBorderForView(color: UIColor.white, radius: 25)
+        View1.createsBorderForView(color: UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0), radius: 25)
+        view2.createsBorderForView(color: UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0), radius: 25)
+        view3.createsBorderForView(color: UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0), radius: 25)
+        view4.createsBorderForView(color: UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0), radius: 25)
 
         let student = Student()
-        let parameters = ["chapter_id" : selectedChapterId, "student_id" : UserDefaults.standard.value(forKey: "id")]
+        let parameters = ["chapter_id" : selectedChapterId, "student_id" : UserDefaults.standard.value(forKey: "id"), "teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+        print(parameters)
         activityIndicator.startAnimating()
         
-        student.getNotAnsweredQuestions(method: "select_not_answered_mcq_questions.php", parameters: parameters as [String : AnyObject]) {(questions, error) in
+        student.getNotAnsweredQuestions(method: "select_not_answered_mcq_questions_ios.php", parameters: parameters as [String : AnyObject]) {(questions, error) in
             if let questions = questions {
                 for question in questions.RESULT {
                     self.questionsArray.append(question)
                 }
                 print("not answred array: \(self.questionsArray)")
-                student.getAnsweredQuestions(method: "select_answered_mcq_questions.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+                student.getAnsweredQuestions(method: "select_answered_mcq_questions_ios.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                     if let questions = data {
                         for question in questions.RESULT {
                             self.questionsArray.append(question)
@@ -198,7 +200,7 @@ class CheckQuestionViewController: UIViewController, DismissManager {
             
             self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
-            student.insertAnswerWithType(method: "insert_answer_with_type.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let response = data {
                     if response.contains("inserted") {
                         self.performUIUpdatesOnMain {
@@ -274,7 +276,7 @@ class CheckQuestionViewController: UIViewController, DismissManager {
                               "type": "mcq",
                               "isCorrect": "-1",
                               "chapter_id": selectedChapterId]
-            student.insertAnswerWithType(method: "insert_answer_with_type.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let response = data {
                     if response.contains("inserted") {
                         print("inserted")

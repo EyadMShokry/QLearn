@@ -15,6 +15,7 @@ class TimetableViewController: UIViewController {
     
     var timesArray: [String] = []
     var placesArray: [String] = []
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,8 @@ class TimetableViewController: UIViewController {
         activityIndicator.startAnimating()
         var user: User
         user = User()
-        user.getLessionDates() {(dates, error) in
+        let parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+        user.getLessionDates(parameters: parameters as [String : AnyObject]) {(dates, error) in
             if let dates = dates {
                 for date in dates.RESULT {
                     self.placesArray.append(date.place)

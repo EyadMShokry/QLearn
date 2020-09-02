@@ -22,11 +22,12 @@ class AvailableTypesViewController: UIViewController {
     var chapterName = ""
     var selectedChapterId = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
+        if(UserDefaults.standard.string(forKey: "type") != "admin") {
             headerView.isHidden = true
         }
 
@@ -34,8 +35,9 @@ class AvailableTypesViewController: UIViewController {
         var student: Student
         student = Student()
         if(isPdf) {
+            let parameters = ["teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
             activityIndicator.startAnimating()
-            student.getPdfCategories() {(categories, error) in
+            student.getPdfCategories(parameters: parameters as [String : AnyObject]) {(categories, error) in
                 if let categories = categories {
                     self.typesArray = categories.RESULT
                     self.performUIUpdatesOnMain {
@@ -66,7 +68,8 @@ class AvailableTypesViewController: UIViewController {
         }
         else {
             //call essay types api here
-            student.getEssayTypes() {(essayTypes, error) in
+            let parameters = ["teacherID" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+            student.getEssayTypes(parameters: parameters as [String : AnyObject]) {(essayTypes, error) in
                 if let essayTypes = essayTypes {
                     self.typesArray = essayTypes.RESULT
                     self.performUIUpdatesOnMain {
@@ -119,7 +122,9 @@ class AvailableTypesViewController: UIViewController {
             }
             else {
                 if(self.isPdf) {
-                    let parameters = ["title" : newTypeTextField.text]
+                    let parameters = ["title" : newTypeTextField.text!,
+                                      "teacher_id" : self.teacherId,
+                                      "level" : UserDefaults.standard.string(forKey: "student_level")]
                     let admin = Admin()
                     self.typesArray.removeAll()
                     
@@ -129,7 +134,8 @@ class AvailableTypesViewController: UIViewController {
                         if let response = data{
                             if response.contains("inserted"){
                                 self.performUIUpdatesOnMain {
-                                    admin.getPdfCategories() {(data, error) in
+                                    let parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+                                    admin.getPdfCategories(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let types = data {
                                             self.typesArray = types.RESULT
                                             self.performUIUpdatesOnMain {
@@ -170,7 +176,9 @@ class AvailableTypesViewController: UIViewController {
                 }
                 else {
                     //call add new essay type api
-                    let parameters = ["title" : newTypeTextField.text]
+                    let parameters = ["title" : newTypeTextField.text!,
+                                      "level" : UserDefaults.standard.string(forKey: "student_level"),
+                                      "teacherID" : self.teacherId]
                     let admin = Admin()
                     self.typesArray.removeAll()
                     
@@ -180,7 +188,9 @@ class AvailableTypesViewController: UIViewController {
                         if let response = data{
                             if response.contains("inserted"){
                                 self.performUIUpdatesOnMain {
-                                    admin.getEssayTypes() {(data, error) in
+                                    let parameters = ["teacherID" : self.teacherId,
+                                                      "level" : UserDefaults.standard.string(forKey: "student_level")]
+                                    admin.getEssayTypes(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let types = data {
                                             self.performUIUpdatesOnMain {
                                                 SCLAlertView().showSuccess("Success".localized, subTitle:"New type is added successfully".localized, closeButtonTitle:"Ok".localized)
@@ -250,12 +260,8 @@ class AvailableTypesViewController: UIViewController {
         else {
             alertViewIcon = UIImage(named: "book")!
         }
-        addNewTypeAlertView.showInfo("Add New Type".localized
-, subTitle: "", circleIconImage: alertViewIcon)
-
+        addNewTypeAlertView.showInfo("Add New Type".localized, subTitle: "", circleIconImage: alertViewIcon)
     }
-    
-  
     
 }
 
@@ -282,6 +288,7 @@ extension AvailableTypesViewController: UITableViewDelegate, UITableViewDataSour
             let pdfTypeVC = storyboard?.instantiateViewController(withIdentifier: "PDFType") as! PDFTypeViewController
             pdfTypeVC.navigationItem.title = typesArray[indexPath.row].title
             pdfTypeVC.selectedCategoryId = typesArray[indexPath.row].id
+            pdfTypeVC.teacherId = self.teacherId
             self.navigationController?.pushViewController(pdfTypeVC, animated: true)
         }
         else {
@@ -292,6 +299,7 @@ extension AvailableTypesViewController: UITableViewDelegate, UITableViewDataSour
                 essayQuestionVC.title = chapterName
                 essayQuestionVC.selectedChapterId = selectedChapterId
                 essayQuestionVC.selectedTypeId = typesArray[indexPath.row].id
+                essayQuestionVC.teacherId = self.teacherId
                 
                 self.navigationController?.pushViewController(essayQuestionVC, animated: true)
             }

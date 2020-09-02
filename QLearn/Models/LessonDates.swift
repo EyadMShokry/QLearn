@@ -18,5 +18,9 @@ class LessonResult: Decodable {
     let day: String
     let time: String
     let minutes: String
+    let order: String
     let level: String
+    let teacherID: String
+    let level_id: String
+    let levelTitle: String
 }

@@ -18,6 +18,7 @@ class PDFTypeViewController: UIViewController, DismissManager {
     var selectedCategoryId = ""
     var pdfs: [PdfResult] = []
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +40,11 @@ class PDFTypeViewController: UIViewController, DismissManager {
         var student: Student
         student = Student()
         
-        let parameters = ["chapter_id" : selectedCategoryId]
+        let parameters = ["category_id" : selectedCategoryId, "teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
         student.getPdfs(parameters: parameters as [String : AnyObject]) {(pdfs, error) in
             if let pdfs = pdfs {
                 self.pdfs = pdfs.RESULT
+                print("PDFS: \(self.pdfs)")
                 self.performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
@@ -91,30 +93,35 @@ class PDFTypeViewController: UIViewController, DismissManager {
             showCloseButton: false
         )
         let waitAlertViewResponder = SCLAlertView(appearance: appearence).showWait("Wait", subTitle: "Please wait while downloading your file")
-
-        FileDownloader.loadFileAsync(url: selectedPdfUrl!) {(path, error) in
-            if let path = path {
-                if path.contains("file exists") {
-                    self.performUIUpdatesOnMain {
-                        waitAlertViewResponder.close()
-                        SCLAlertView().showWarning("Download is canceled".localized, subTitle: "This file already exists".localized)
+        if(selectedPdfUrl != nil) {
+            FileDownloader.loadFileAsync(url: selectedPdfUrl!) {(path, error) in
+                if let path = path {
+                    if path.contains("file exists") {
+                        self.performUIUpdatesOnMain {
+                            waitAlertViewResponder.close()
+                            SCLAlertView().showWarning("Download is canceled".localized, subTitle: "This file already exists".localized)
+                        }
+                    }
+                    else {
+                        self.performUIUpdatesOnMain {
+                            waitAlertViewResponder.close()
+                            SCLAlertView().showSuccess("Success".localized, subTitle:"Pdf is downloaded successfully".localized, closeButtonTitle:"Ok".localized)
+                        }
                     }
                 }
-                else {
+                else if let error = error {
                     self.performUIUpdatesOnMain {
                         waitAlertViewResponder.close()
-                        SCLAlertView().showSuccess("Success".localized, subTitle:"Pdf is downloaded successfully".localized, closeButtonTitle:"Ok".localized)
+                        SCLAlertView().showError("Error".localized, subTitle: "Can't download this file. please check your internet connection or try again later".localized)
+                        print(error)
                     }
-                }
-            }
-            else if let error = error {
-                self.performUIUpdatesOnMain {
-                    waitAlertViewResponder.close()
-                    SCLAlertView().showError("Error".localized, subTitle: "Can't download this file. please check your internet connection or try again later".localized)
-                    print(error)
                 }
             }
         }
+        else {
+            SCLAlertView().showError("Error".localized, subTitle: "Incorrect File link".localized)
+        }
+      
     }
     
     func popoverDismiss(isExit: Bool) {
@@ -123,7 +130,7 @@ class PDFTypeViewController: UIViewController, DismissManager {
         var student: Student
         student = Student()
         
-        let parameters = ["chapter_id" : selectedCategoryId]
+        let parameters = ["category_id" : selectedCategoryId, "teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
         student.getPdfs(parameters: parameters as [String : AnyObject]) {(pdfs, error) in
             if let pdfs = pdfs {
                 self.pdfs = pdfs.RESULT

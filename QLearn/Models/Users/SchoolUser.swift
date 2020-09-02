@@ -10,8 +10,8 @@ import Foundation
 
 class SchoolUser: User {
     
-    func getEssayTypes(completion: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
-        Client.shared().selectEssayTypes() {(data, error) in
+    func getEssayTypes(parameters: [String : AnyObject], completion: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
+        Client.shared().selectEssayTypes(parameters: parameters) {(data, error) in
             if let essayTypes = data {
                 completion(essayTypes, nil)
             }

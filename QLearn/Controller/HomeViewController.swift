@@ -174,7 +174,7 @@
             let selectedRow = indexPath.row
             switch selectedRow {
             case 0:
-                if(UserDefaults.standard.value(forKey: "user_type") == nil) {
+                if(UserDefaults.standard.string(forKey: "type") != "parent") {
                     let questionBagVC = storyboard?.instantiateViewController(withIdentifier: "QuestionsBag") as! QuestionsBagViewController
                     questionBagVC.teacherId = self.teacherId
                     navigationController?.pushViewController(questionBagVC, animated: true)
@@ -186,21 +186,29 @@
             case 1:
                 //in case of user other than student or parent uncomment this
                 //report
-//                if(UserDefaults.standard.value(forKey: "admin_name") != nil) {
-//                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "SelectStudent")
-//                    navigationController?.pushViewController(studentReportVC!, animated: true)
-//                }
-//                else {
-//                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "StudentReport")
-//                    navigationController?.pushViewController(studentReportVC!, animated: true)
-//                }
-                if(UserDefaults.standard.value(forKey: "admin_name") != nil) {
+                if(UserDefaults.standard.string(forKey: "type") == "teachehr") {
+                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "SelectStudent")
+                    navigationController?.pushViewController(studentReportVC!, animated: true)
+                }
+                else {
+                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "StudentReport")
+                    navigationController?.pushViewController(studentReportVC!, animated: true)
+                }
+                
+            case 2:
+                let timetableVC = storyboard?.instantiateViewController(withIdentifier: "Timetable") as! TimetableViewController
+                timetableVC.teacherId = self.teacherId
+                navigationController?.pushViewController(timetableVC, animated: true)
+
+            case 3:
+                //ask us block
+                if(UserDefaults.standard.string(forKey: "type") == "admin") {
                     let askUsVC = storyboard?.instantiateViewController(withIdentifier: "AskUs")
                     navigationController?.pushViewController(askUsVC!, animated: true)
                     
                 }
                 else {
-                    if(UserDefaults.standard.value(forKey: "user_type") == nil) {
+                    if(UserDefaults.standard.string(forKey: "type") == "student") {
                         let askTeacherVC = storyboard?.instantiateViewController(withIdentifier: "AskTeacher")
                         navigationController?.pushViewController(askTeacherVC!, animated: true)
                     }
@@ -208,27 +216,27 @@
                         SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
                     }
                 }
-            case 2:
-//                let timetableVC = storyboard?.instantiateViewController(withIdentifier: "Timetable")
-//                navigationController?.pushViewController(timetableVC!, animated: true)
-                if(UserDefaults.standard.value(forKey: "user_type") == nil) {
+            case 4:
+                //pdfs block
+                if(UserDefaults.standard.string(forKey: "type") != "parent") {
                     let uploadedPDFVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
                     uploadedPDFVC.isPdf = true
+                    uploadedPDFVC.teacherId = self.teacherId
                     navigationController?.pushViewController(uploadedPDFVC, animated: true)
-                    
                 }
                 else {
                     SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
                 }
 
-            case 3:
-                let cvTeacherVC =  storyboard?.instantiateViewController(withIdentifier: "CvTeacher")
-                navigationController?.pushViewController(cvTeacherVC!, animated: true)
+            case 5:
+                let cvTeacherVC =  storyboard?.instantiateViewController(withIdentifier: "CvTeacher") as! CvTeacherViewController
+                cvTeacherVC.teacherId = self.teacherId
+                navigationController?.pushViewController(cvTeacherVC, animated: true)
                 
-            case 4:
-                let contactUsVc =  storyboard?.instantiateViewController(withIdentifier: "ContactUs")
-                navigationController?.pushViewController(contactUsVc!, animated: true)
-
+            case 6:
+                let contactUsVc =  storyboard?.instantiateViewController(withIdentifier: "ContactUs") as! ContactUsViewController
+                contactUsVc.teacherId = self.teacherId
+                navigationController?.pushViewController(contactUsVc, animated: true)
             default:
                 return
             }

@@ -23,8 +23,8 @@ class Client: NSObject {
         return Singleton.shared
     }
     
-    func selectLessonDates(completionHandler: @escaping(_ result: LessonDate?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_lesson_dates.php" ,parameters: [:]) {(data, error) in
+    func selectLessonDates(parameters: [String : AnyObject], completionHandler: @escaping(_ result: LessonDate?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_lesson_dates.php" ,parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -32,7 +32,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             
@@ -46,8 +46,8 @@ class Client: NSObject {
         }
     }
     
-    func selectAddresses(completionHandler: @escaping(_ result: Address?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_address.php", parameters: [:]) {(data, error) in
+    func selectAddresses(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Address?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_addresses_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -69,8 +69,8 @@ class Client: NSObject {
         }
     }
     
-    func selectPhoneNumbers(completionHandler: @escaping(_ result: Phone?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_phones.php", parameters: [:]) {(data, error) in
+    func selectPhoneNumbers(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Phone?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_phones_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -115,8 +115,8 @@ class Client: NSObject {
         }
     }
     
-    func selectPdfCategories(completionHandler: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_category.php", parameters: [:]) {(data, error) in
+    func selectPdfCategories(parameters: [String : AnyObject], completionHandler: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_pdf_categories_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -124,7 +124,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             
@@ -139,7 +139,7 @@ class Client: NSObject {
     }
     
     func selectPDFs(parameters: [String : AnyObject], completionHandler: @escaping(_ result: PDFs?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_pdf.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_pdfs_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -255,8 +255,8 @@ class Client: NSObject {
         }
     }
     
-    func selectEssayTypes(completionHandler: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_essay_types.php", parameters: [:]) {(data, error) in
+    func selectEssayTypes(parameters: [String : AnyObject], completionHandler: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_all_essay_type.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -264,7 +264,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             
@@ -304,7 +304,7 @@ class Client: NSObject {
     }
     
     func selectCountOfRightAnswers(parameters: [String : AnyObject], completionHandler: @escaping(_ result: RightAnswers?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_count_of_right_answered_type.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_count_of_right_answered_type_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -425,7 +425,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             
@@ -556,8 +556,8 @@ class Client: NSObject {
         }
     }
     
-    func selectAchievements(completionHandler: @escaping(_ result: Achievement?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_achievements.php", parameters: [:]) {(data, error) in
+    func selectAchievements(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Achievement?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_achievements_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -579,8 +579,8 @@ class Client: NSObject {
         }
     }
     
-    func selectTeacherInfo(completionHandler: @escaping(_ result: TeacherInfo?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_teacher_info.php", parameters: [:]) {(data, error) in
+    func selectTeacherInfo(parameters: [String : AnyObject], completionHandler: @escaping(_ result: TeacherInfo?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_teacher_info_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -778,7 +778,7 @@ class Client: NSObject {
     }
 
     func getOtherTeachers(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Teachers?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_other_teachers.php", parameters:parameters, bodyParameters: parameters, completionHandlerForPOST: { (data, error) in
+        _ = taskForPOSTMethod("select_other_teachers_ios.php", parameters:parameters, bodyParameters: parameters, completionHandlerForPOST: { (data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return

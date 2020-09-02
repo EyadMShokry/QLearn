@@ -21,5 +21,5 @@ struct TeacherInfoResult: Decodable {
     let school: String
     let photo_url: String!
     let cover_url: String!
-    
+    let teacherID: String
 }

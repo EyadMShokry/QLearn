@@ -57,7 +57,7 @@ class QuestionsBagViewController: UIViewController {
     
     
     @IBAction func onClickTrueFalseQuestionsButton(_ sender: Any) {
-        if UserDefaults.standard.value(forKey: "admin_name") != nil {
+        if UserDefaults.standard.string(forKey: "type") == "admin" {
             navigateToChaptersVC(questionType: "TF", userType: "teacher")
         }
         else {

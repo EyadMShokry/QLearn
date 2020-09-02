@@ -27,7 +27,7 @@ class EssayQuestionsStudentViewController: UIViewController, DismissManager {
     var editQuestionText: String?
     var editAnswerText: String?
     var questionsArray: [FullQuestionResult] = []
-    
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,11 +52,11 @@ class EssayQuestionsStudentViewController: UIViewController, DismissManager {
         let student = Student()
         let parameters = ["chapter_id" : selectedChapterId,
                           "student_id" : UserDefaults.standard.string(forKey: "id")!,
-                          "essay_type" : selectedTypeId]
+                          "essay_type" : selectedTypeId, "teacher_id" : self.teacherId, "level": UserDefaults.standard.string(forKey: "student_level")]
         print(parameters)
         activityIndicator.startAnimating()
         
-        student.getNotAnsweredQuestions(method: "select_not_answerd_essay_questions.php", parameters: parameters as [String : AnyObject]) {(questions, error) in
+        student.getNotAnsweredQuestions(method: "select_not_answered_essay_question_ios.php", parameters: parameters as [String : AnyObject]) {(questions, error) in
             if let questions = questions {
                 for question in questions.RESULT {
                     self.questionsArray.append(question)

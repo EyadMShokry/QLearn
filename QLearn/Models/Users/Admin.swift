@@ -32,8 +32,8 @@ class Admin:SchoolUser{
         }
     }
     
-    func getPdfCategories(completion: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
-        Client.shared().selectPdfCategories() {(data, error) in
+    func getPdfCategories(parameters: [String : AnyObject], completion: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
+        Client.shared().selectPdfCategories(parameters: parameters) {(data, error) in
             if let categories = data {
                 completion(categories, nil)
             }
@@ -88,7 +88,7 @@ class Admin:SchoolUser{
     }
     
     func insertCategory(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_category.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_pdf_category.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -132,7 +132,7 @@ class Admin:SchoolUser{
     }
   
     func insertEssayType(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_essayType.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_essay_type.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }

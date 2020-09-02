@@ -10,8 +10,8 @@ import Foundation
 
 class Student: SchoolUser {    
     
-    func getPdfCategories(completion: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
-        Client.shared().selectPdfCategories() {(data, error) in
+    func getPdfCategories(parameters: [String : AnyObject], completion: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
+        Client.shared().selectPdfCategories(parameters: parameters) {(data, error) in
             if let categories = data {
                 completion(categories, nil)
             }

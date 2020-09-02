@@ -10,21 +10,21 @@ import UIKit
 import SCLAlertView
 
 class ContactUsViewController: UIViewController {
-    @IBOutlet weak var profilecontact: UIImageView!
     @IBOutlet weak var AddressesTableView: UITableView!
-    @IBOutlet weak var NameTeacherLabel: UILabel!
+//    @IBOutlet weak var NameTeacherLabel: UILabel!
     @IBOutlet weak var PhoneNumberTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addPhoneNumberButton: UIButton!
     @IBOutlet weak var addAddressButton: UIButton!
     
+    var teacherId = ""
     var arrayAddresses: [AddressResult] = []
     var arrayPhoneNum: [PhoneResult] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
+        if(UserDefaults.standard.string(forKey: "type") != "admin") {
             addPhoneNumberButton.isHidden = true
             addAddressButton.isHidden = true
         }
@@ -36,7 +36,8 @@ class ContactUsViewController: UIViewController {
         
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        user.getAddresses() {(addresses, error) in
+        let parameters = ["teacher_id" : teacherId]
+        user.getAddresses(parameters: parameters as [String : AnyObject]) {(addresses, error) in
             if let addresses = addresses {
                 self.arrayAddresses = addresses.RESULT
                 self.performUIUpdatesOnMain {
@@ -66,7 +67,7 @@ class ContactUsViewController: UIViewController {
         }
         
         dispatchGroup.enter()
-        user.getPhoneNumbers() {(phones, error) in
+        user.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(phones, error) in
             if let phones = phones {
                 self.arrayPhoneNum = phones.RESULT
                 self.performUIUpdatesOnMain {
@@ -95,44 +96,13 @@ class ContactUsViewController: UIViewController {
             }
         }
         
-        dispatchGroup.enter()
-        user.getTeacherFullName() {(names, error) in
-            if let name = names?.RESULT[0].fullName {
-                self.performUIUpdatesOnMain {
-                    self.NameTeacherLabel.text = name
-                }
-            }
-            else if let error = error {
-                self.performUIUpdatesOnMain {
-                    if error.code == 1001 {
-                        self.performUIUpdatesOnMain {
-                            SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                        }
-                    }
-                    else {
-                        self.performUIUpdatesOnMain {
-                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                        }
-                    }
-                    print(error)
-                    self.performUIUpdatesOnMain {
-                        self.activityIndicator.stopAnimating()
-                        self.activityIndicator.isHidden = true
-                    }
-                }
-            }
-            self.performUIUpdatesOnMain {
-                dispatchGroup.leave()
-            }
-        }
-        
         dispatchGroup.notify(queue: .main) {
             self.activityIndicator.stopAnimating()
             self.activityIndicator.isHidden = true
         }
         
-        self.profilecontact.layer.cornerRadius = self.profilecontact.frame.size.width / 2
-        self.profilecontact.clipsToBounds = true
+//        self.profilecontact.layer.cornerRadius = self.profilecontact.frame.size.width / 2
+//        self.profilecontact.clipsToBounds = true
         self.AddressesTableView?.rowHeight = 40.0
         self.PhoneNumberTableView?.rowHeight = 40.0
         self.AddressesTableView.separatorColor = .clear
@@ -168,7 +138,7 @@ class ContactUsViewController: UIViewController {
                     if let response = data{
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
-                                admin.getPhoneNumbers() {(data, error) in
+                                admin.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let numbers = data {
                                         self.arrayPhoneNum = numbers.RESULT
                                         self.performUIUpdatesOnMain {
@@ -251,7 +221,7 @@ class ContactUsViewController: UIViewController {
                     if let response = data{
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
-                                admin.getAddresses() {(data, error) in
+                                admin.getAddresses(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let addresses = data {
                                         self.arrayAddresses = addresses.RESULT
                                         self.performUIUpdatesOnMain {
@@ -428,7 +398,7 @@ extension ContactUsViewController: UITableViewDataSource, UITableViewDelegate {
                                 self.performUIUpdatesOnMain {
                                     SCLAlertView().showSuccess("Success".localized, subTitle: "Phone number edited successfully".localized, closeButtonTitle:"Ok".localized)
                                     
-                                    admin.getPhoneNumbers() {(data, error) in
+                                    admin.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let numbers = data {
                                             self.arrayPhoneNum = numbers.RESULT
                                             self.performUIUpdatesOnMain {
@@ -529,7 +499,7 @@ extension ContactUsViewController: UITableViewDataSource, UITableViewDelegate {
                                 self.performUIUpdatesOnMain {
                                     SCLAlertView().showSuccess("Success".localized, subTitle: "Address edited successfully".localized, closeButtonTitle:"Ok".localized)
                                     
-                                    admin.getAddresses() {(data, error) in
+                                    admin.getAddresses(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let addresses = data {
                                             self.arrayAddresses = addresses.RESULT
                                             self.performUIUpdatesOnMain {

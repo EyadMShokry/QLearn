@@ -21,10 +21,13 @@ class CvTeacherViewController: UIViewController {
     var inforamtionTableLabels = ["Job".localized,"Specialist".localized,"Working at".localized,"Date of Birth".localized]
     var informationTableValues: [String] = ["", "", "", ""]
     var achievementsData: [AchievementResult] = []
-    
+    var teacherId = ""
+    var getInfoParameters = ["teacher_id" : ""]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getInfoParameters = ["teacher_id" : teacherId]
         if(UserDefaults.standard.value(forKey: "admin_phone") == nil) {
             editInformation.isHidden = true
             addAchievementButton.isHidden = true
@@ -45,41 +48,12 @@ class CvTeacherViewController: UIViewController {
         self.view.bringSubviewToFront(activityIndicator)
         
         let user = User()
-
         self.activityIndicator.startAnimating()
         
         let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        user.getTeacherFullName() {(names, error) in
-            if let name = names?.RESULT[0].fullName {
-                self.performUIUpdatesOnMain {
-                    self.NameTeacherLable.text = name
-                }
-            }
-            else if let error = error {
-                if error.code == 1001 {
-                    self.performUIUpdatesOnMain {
-                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                    }
-                }
-                else {
-                    self.performUIUpdatesOnMain {
-                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                    }
-                }
-                print(error)
-                self.performUIUpdatesOnMain {
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                }
-            }
-            self.performUIUpdatesOnMain {
-                dispatchGroup.leave()
-            }
-        }
 
         dispatchGroup.enter()
-        user.getTeacherInfo() {(info, error) in
+        user.getTeacherInfo(parameters: getInfoParameters as [String : AnyObject]) {(info, error) in
             if let teacherInfo = info {
                 print(teacherInfo)
                 self.informationTableValues[0] = teacherInfo.RESULT[0].job
@@ -87,6 +61,7 @@ class CvTeacherViewController: UIViewController {
                 self.informationTableValues[2] = teacherInfo.RESULT[0].school
                 self.informationTableValues[3] = teacherInfo.RESULT[0].DOB
                 self.performUIUpdatesOnMain {
+                    self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
                     self.informationTableView.reloadData()
                 }
             }
@@ -114,9 +89,11 @@ class CvTeacherViewController: UIViewController {
         }
         
         dispatchGroup.enter()
-        user.getAchievements() {(data, error) in
+        let parameters = ["teacher_id" : self.teacherId]
+        user.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
             if let achievements = data {
                 self.achievementsData = achievements.RESULT
+                print("achievements: \(self.achievementsData)")
                 self.performUIUpdatesOnMain {
                     self.achievementsTableView.reloadData()
                 }
@@ -180,12 +157,14 @@ class CvTeacherViewController: UIViewController {
             }
             else {
                 let admin = Admin()
-                let parameters = ["fullName" : teacherNameTextField.text,
-                                  "job" : jobTextField.text,
-                                  "speciality" : specialityTextField.text,
-                                  "DOB" : dateOfBirthTextField.text,
-                                  "school" : workingAtTextField.text,
-                                  "info_id" : UserDefaults.standard.value(forKey: "id")]
+                let parameters = [
+                                  "fullName" : teacherNameTextField.text!,
+                                  "job" : jobTextField.text!,
+                                  "speciality" : specialityTextField.text!,
+                                  "DOB" : dateOfBirthTextField.text!,
+                                  "school" : workingAtTextField.text!,
+                                  "id" : UserDefaults.standard.string(forKey: "id"),
+                                  "teacher_id" : self.teacherId]
                 
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
@@ -194,7 +173,7 @@ class CvTeacherViewController: UIViewController {
                         if response.contains("inserted") {
                             self.performUIUpdatesOnMain {
                                 SCLAlertView().showSuccess("Success".localized, subTitle:"is added successfully".localized, closeButtonTitle:"Ok".localized)
-                                admin.getTeacherInfo(completion: { (teacherInfo, error) in
+                                admin.getTeacherInfo(parameters: self.getInfoParameters as [String : AnyObject], completion: { (teacherInfo, error) in
                                     if let teacherInfo = teacherInfo {
                                         self.informationTableValues[0] = teacherInfo.RESULT[0].job
                                         self.informationTableValues[1] = teacherInfo.RESULT[0].speciality
@@ -282,7 +261,7 @@ class CvTeacherViewController: UIViewController {
                 SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
             }
             else {
-                let parameters = ["achievement" : achievmentTextField.text, "teacher_id" : UserDefaults.standard.value(forKey: "id")]
+                let parameters = ["achievement" : achievmentTextField.text, "teacher_id" : UserDefaults.standard.string(forKey: "id")]
                 let admin = Admin()
                 self.achievementsData.removeAll()
                 
@@ -293,8 +272,9 @@ class CvTeacherViewController: UIViewController {
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
                                 SCLAlertView().showSuccess("Success".localized, subTitle:"Achievement added successfully".localized, closeButtonTitle:"Ok".localized)
-
-                                admin.getAchievements() {(data, error) in
+                                
+                                let parameters = ["teacher_id" : self.teacherId]
+                                admin.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let achievements = data {
                                         self.achievementsData = achievements.RESULT
                                         self.performUIUpdatesOnMain {
@@ -363,11 +343,9 @@ class CvTeacherViewController: UIViewController {
     }
   
     func inserNewIndexachievements(){
-        
         let indexPath = IndexPath(row: achievementsData.count - 1, section: 0)
         achievementsTableView.insertRows(at: [indexPath], with: .left)
         achievementsTableView.reloadData()
-        
     }
 }
 
@@ -406,7 +384,7 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
                 let holdToEditGestureRecognizer = LongPressGesture(target: self, action: #selector(CvTeacherViewController.updateAchievement))
                 holdToEditGestureRecognizer.minimumPressDuration = 1.00
                 holdToEditGestureRecognizer.title = achievementsData[indexPath.row].achievement
-                holdToEditGestureRecognizer.selectedId = achievementsData[indexPath.row].achievement_id
+                holdToEditGestureRecognizer.selectedId = achievementsData[indexPath.row].achievementID
                 cell.addGestureRecognizer(holdToEditGestureRecognizer)
             }
             
@@ -444,9 +422,11 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
                                 self.performUIUpdatesOnMain {
                                     SCLAlertView().showSuccess("Success".localized, subTitle: "Achievement edited successfully".localized, closeButtonTitle:"Ok".localized)
                                     
-                                    admin.getAchievements() {(data, error) in
+                                    let parameters = ["teacher_id" : self.teacherId]
+                                    admin.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let achievements = data {
                                             self.achievementsData = achievements.RESULT
+                                            print("achievements: \(self.achievementsData)")
                                             self.performUIUpdatesOnMain {
                                                 self.activityIndicator.stopAnimating()
                                                 self.activityIndicator.isHidden = true
@@ -532,7 +512,7 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == achievementsTableView {
             if editingStyle == .delete {
                 let admin = Admin()
-                let achievementId = achievementsData[indexPath.row].achievement_id
+                let achievementId = achievementsData[indexPath.row].achievementID
                 let parameters = ["id" : achievementId]
                 
                 admin.deleteAchievement(parameters: parameters as [String : AnyObject]) { (response, error) in

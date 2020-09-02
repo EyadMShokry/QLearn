@@ -13,7 +13,7 @@ struct Achievement: Decodable {
 }
 
 struct AchievementResult: Decodable {
-    let achievement_id: String
+    let achievementID: String
     let achievement: String
-    let teacher_id: String
+    let teacherID: String
 }
