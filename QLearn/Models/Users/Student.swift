@@ -55,7 +55,7 @@ class Student: SchoolUser {
     }
     
     func postAskQuestion(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_ask_question.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_an_ask_question.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }

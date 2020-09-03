@@ -29,7 +29,7 @@
 		5DBEA73B2343917400C6333A /* TeacherDrobMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBEA73A2343917400C6333A /* TeacherDrobMenu.swift */; };
 		5DBEA73E2343BA8B00C6333A /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBEA73D2343BA8B00C6333A /* Admin.swift */; };
 		5DE73D802339E16500696190 /* EssayQuestionsStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE73D7F2339E16500696190 /* EssayQuestionsStudentViewController.swift */; };
-		5DE88706233DFA9A007A5D0A /* AllQuestionChapterTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE88705233DFA9A007A5D0A /* AllQuestionChapterTableView.swift */; };
+		5DE88706233DFA9A007A5D0A /* AllQuestionChapterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE88705233DFA9A007A5D0A /* AllQuestionChapterViewController.swift */; };
 		5DE88708233DFAD5007A5D0A /* AllQuestionChapterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE88707233DFAD5007A5D0A /* AllQuestionChapterCell.swift */; };
 		681BFF752337E3F80086FDF4 /* SPRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681BFF742337E3F80086FDF4 /* SPRadioButton.swift */; };
 		681D59AD235E1CB60001554B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681D59AC235E1CB60001554B /* Date+Extension.swift */; };
@@ -141,7 +141,7 @@
 		5DBEA73A2343917400C6333A /* TeacherDrobMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherDrobMenu.swift; sourceTree = "<group>"; };
 		5DBEA73D2343BA8B00C6333A /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		5DE73D7F2339E16500696190 /* EssayQuestionsStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssayQuestionsStudentViewController.swift; sourceTree = "<group>"; };
-		5DE88705233DFA9A007A5D0A /* AllQuestionChapterTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuestionChapterTableView.swift; sourceTree = "<group>"; };
+		5DE88705233DFA9A007A5D0A /* AllQuestionChapterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuestionChapterViewController.swift; sourceTree = "<group>"; };
 		5DE88707233DFAD5007A5D0A /* AllQuestionChapterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuestionChapterCell.swift; sourceTree = "<group>"; };
 		681BFF742337E3F80086FDF4 /* SPRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRadioButton.swift; sourceTree = "<group>"; };
 		681D59AC235E1CB60001554B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 		684470DF233C17CE003A717B /* Student */ = {
 			isa = PBXGroup;
 			children = (
-				5DE88705233DFA9A007A5D0A /* AllQuestionChapterTableView.swift */,
+				5DE88705233DFA9A007A5D0A /* AllQuestionChapterViewController.swift */,
 				684470E0233C1845003A717B /* AskTeacherViewController.swift */,
 				684470E2233C206D003A717B /* MyQuestionsViewController.swift */,
 				5D1977AE234029B100C3659E /* GoAskQusetionViewController.swift */,
@@ -839,7 +839,7 @@
 				68F9759523302358007BFFD0 /* SelectStudentViewController.swift in Sources */,
 				68E49458233543080090E0F8 /* CreateEssayQuestionViewController.swift in Sources */,
 				9B35EDD624FBFA17006A7314 /* RegisterNewTeacherViewController.swift in Sources */,
-				5DE88706233DFA9A007A5D0A /* AllQuestionChapterTableView.swift in Sources */,
+				5DE88706233DFA9A007A5D0A /* AllQuestionChapterViewController.swift in Sources */,
 				683239FD23381D81002DACBF /* SearchQuestionsViewController.swift in Sources */,
 				5D4EFD5E23330BDF0005F7FE /* AddTeachersTableViewCell.swift in Sources */,
 				6827A4D1234459D800FF4AD9 /* AdminLogin.swift in Sources */,

@@ -43,7 +43,8 @@
             adminBarButtonItem.tintColor = UIColor(displayP3Red: 48/255, green: 140/255, blue: 239/255, alpha: 1.0)
         }
         let user = User()
-        let parameters = ["today_date" : Date.getCurrentDate()]
+        let parameters = ["expire_date" : Date.getCurrentDate(),
+                          "teacher_id" : self.teacherId]
         print("current date: \(Date.getCurrentDate()).... \(Date())")
         user.getUnexpiredNews(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let unexpiredNews = data {
@@ -209,8 +210,9 @@
                 }
                 else {
                     if(UserDefaults.standard.string(forKey: "type") == "student") {
-                        let askTeacherVC = storyboard?.instantiateViewController(withIdentifier: "AskTeacher")
-                        navigationController?.pushViewController(askTeacherVC!, animated: true)
+                        let askTeacherVC = storyboard?.instantiateViewController(withIdentifier: "AskTeacher") as! AskTeacherViewController
+                        askTeacherVC.teacherId = self.teacherId
+                        navigationController?.pushViewController(askTeacherVC, animated: true)
                     }
                     else {
                         SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)

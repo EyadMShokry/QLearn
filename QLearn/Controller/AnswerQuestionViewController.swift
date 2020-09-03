@@ -22,7 +22,7 @@ class AnswerQuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         answerTextArea.layer.borderColor = UIColor.white.cgColor
         answerTextArea.layer.borderWidth = 2
@@ -35,38 +35,40 @@ class AnswerQuestionViewController: UIViewController {
         chaptersPickerView.delegate = self
         
         let admin = Admin()
-        admin.getAllChapters { (chapters, error) in
-            if let chapters = chapters {
-                print(chapters)
-                self.chaptersArray = chapters.RESULT
-                self.performUIUpdatesOnMain {
-                    self.selectedChapter = self.chaptersArray.count > 0 ? self.chaptersArray[0].title : ""
-                    self.selectedChapterId = self.chaptersArray.count > 0 ? self.chaptersArray[0].id : ""
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                    self.chaptersPickerView.reloadAllComponents()
-                }
-            }
-            else if let error = error {
-                self.performUIUpdatesOnMain {
-                    if error.code == 1001 {
-                        self.performUIUpdatesOnMain {
-                            SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                        }
-                    }
-                    else {
-                        self.performUIUpdatesOnMain {
-                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                        }
-                    }
-                    print(error)
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                }
-            }        }
+        
+//        admin.getAllChapters { (chapters, error) in
+//            if let chapters = chapters {
+//                print(chapters)
+//                self.chaptersArray = chapters.RESULT
+//                self.performUIUpdatesOnMain {
+//                    self.selectedChapter = self.chaptersArray.count > 0 ? self.chaptersArray[0].title : ""
+//                    self.selectedChapterId = self.chaptersArray.count > 0 ? self.chaptersArray[0].id : ""
+//                    self.activityIndicator.stopAnimating()
+//                    self.activityIndicator.isHidden = true
+//                    self.chaptersPickerView.reloadAllComponents()
+//                }
+//            }
+//            else if let error = error {
+//                self.performUIUpdatesOnMain {
+//                    if error.code == 1001 {
+//                        self.performUIUpdatesOnMain {
+//                            SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+//                        }
+//                    }
+//                    else {
+//                        self.performUIUpdatesOnMain {
+//                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+//                        }
+//                    }
+//                    print(error)
+//                    self.activityIndicator.stopAnimating()
+//                    self.activityIndicator.isHidden = true
+//                }
+//            }
+//        }
     }
     
-
+    
     @IBAction func onClickSendAnswerButton(_ sender: UIButton) {
         if(answerTextArea.text.isEmpty || answerTextArea.textColor == .darkGray) {
             SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
@@ -91,7 +93,7 @@ class AnswerQuestionViewController: UIViewController {
                             let successAlertView = SCLAlertView(appearance: appearance)
                             successAlertView.addButton("Ok".localized, action: {
                                 successAlertView.dismiss(animated: true, completion: nil)
-                            self.navigationController?.popViewController(animated: true)
+                                self.navigationController?.popViewController(animated: true)
                             })
                             successAlertView.showSuccess("Success".localized, subTitle: "Question is answered successfully".localized)
                         }
@@ -139,9 +141,9 @@ extension AnswerQuestionViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-                textView.text = "The correct answer ..".localized
-                textView.textColor = .darkGray
-
+            textView.text = "The correct answer ..".localized
+            textView.textColor = .darkGray
+            
         }
     }
 }

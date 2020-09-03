@@ -22,6 +22,7 @@ class MyQuestionsViewController: UIViewController {
     var selectedChapterId = ""
     var selectedChapterName = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
+    var teacherId = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +37,18 @@ class MyQuestionsViewController: UIViewController {
         questionView.layer.cornerRadius = questionView.frame.size.width/2
         questionView.clipsToBounds = true
         questionView.layer.borderWidth = 1
-        questionView.layer.borderColor = UIColor(displayP3Red: 39/255, green: 170/255, blue: 225/255, alpha: 1).cgColor
+        questionView.layer.borderColor = UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1).cgColor
         
-        askButton.layer.borderColor = UIColor(displayP3Red: 39/255, green: 170/255, blue: 225/255, alpha: 1).cgColor
+        askButton.layer.borderColor = UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1).cgColor
         askButton.layer.borderWidth = 1
         askButton.layer.cornerRadius = 15
         
         if(isMyQuestion) {
             //fire as2lt el talb
             self.chapterLabel.text = "My Questions"
-            let parameters = ["student_id" : UserDefaults.standard.value(forKey: "id")]
+            let parameters = ["student_id" : UserDefaults.standard.value(forKey: "id"),
+                              "teacher_id" : self.teacherId,
+                              "level" : UserDefaults.standard.string(forKey: "student_level")]
             student.getStudentQuestions(parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let questions = data {
                     self.myQuestionsArray = questions.RESULT
@@ -87,7 +90,10 @@ class MyQuestionsViewController: UIViewController {
         else {
             //fire as2lt el chapter da le kol el tolab
             self.chapterLabel.text = selectedChapterName
-            let parameters = ["chapter_id" : selectedChapterId]
+            let parameters = ["chapter_id" : selectedChapterId,
+                              "teacher_id" : self.teacherId,
+                              "level" : UserDefaults.standard.string(forKey: "student_level")]
+            print(parameters)
             student.getChapterAskedQuestions(parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let questions = data {
                     self.myQuestionsArray = questions.RESULT
@@ -125,6 +131,12 @@ class MyQuestionsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func onClickAskButton(_ sender: Any) {
+        let askQuestionVC = storyboard?.instantiateViewController(withIdentifier: "GoAskQusetion") as! GoAskQusetionViewController
+        askQuestionVC.teacherId = self.teacherId
+        self.navigationController?.pushViewController(askQuestionVC, animated: true)
     }
     
 

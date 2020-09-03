@@ -263,7 +263,7 @@ extension ChaptersViewController: UITableViewDataSource, UITableViewDelegate {
             questionsTypesVC.isPdf = false
             questionsTypesVC.chapterName = chaptersArray[indexPath.row].title
             questionsTypesVC.selectedChapterId = chaptersArray[indexPath.row].id
-            
+            questionsTypesVC.teacherId = self.teacherId
             self.navigationController?.pushViewController(questionsTypesVC, animated: true)
         }
         else if(questionType == "mcq") {

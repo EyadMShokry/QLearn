@@ -13,7 +13,7 @@ class GoAskQusetionViewController: UIViewController {
 
     @IBOutlet weak var AskTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +33,12 @@ class GoAskQusetionViewController: UIViewController {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             
-            let parameters = ["student_id" : UserDefaults.standard.value(forKey: "id"),
-                              "question" : AskTextView.text!]
+            let parameters = ["level" : UserDefaults.standard.string(forKey: "student_level"),
+                              "teacher_id" : self.teacherId,
+                              "student_id" : UserDefaults.standard.value(forKey: "id"),
+                              "question" : AskTextView.text!,
+                              "answer" : "",
+                              "chapter_id" : "-1"]
             student.postAskQuestion(parameters: parameters as [String : AnyObject]) {(response, error) in
                 if let response = response {
                     if response.contains("inserted") {

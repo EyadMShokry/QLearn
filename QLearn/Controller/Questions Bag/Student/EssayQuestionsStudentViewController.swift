@@ -52,7 +52,9 @@ class EssayQuestionsStudentViewController: UIViewController, DismissManager {
         let student = Student()
         let parameters = ["chapter_id" : selectedChapterId,
                           "student_id" : UserDefaults.standard.string(forKey: "id")!,
-                          "essay_type" : selectedTypeId, "teacher_id" : self.teacherId, "level": UserDefaults.standard.string(forKey: "student_level")]
+                          "essay_type" : selectedTypeId,
+                          "teacher_id" : self.teacherId,
+                          "level": UserDefaults.standard.string(forKey: "student_level")]
         print(parameters)
         activityIndicator.startAnimating()
         
@@ -61,7 +63,7 @@ class EssayQuestionsStudentViewController: UIViewController, DismissManager {
                 for question in questions.RESULT {
                     self.questionsArray.append(question)
                 }
-                student.getAnsweredQuestions(method: "select_answerd_essay_questions.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+                student.getAnsweredQuestions(method: "select_answered_essay_question_ios.php", parameters: parameters as [String : AnyObject]) {(data, error) in
                     if let questions = data {
                         for question in questions.RESULT {
                             self.questionsArray.append(question)
@@ -183,14 +185,14 @@ extension EssayQuestionsStudentViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = .white
+            textView.textColor = .black
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if answerTextView.text.isEmpty {
             textView.text = nil
-                textView.textColor = .white
+                textView.textColor = .black
                 textView.text = "Enter The Answer ...".localized
           
     

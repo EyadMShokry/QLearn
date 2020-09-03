@@ -24,7 +24,7 @@ class Client: NSObject {
     }
     
     func selectLessonDates(parameters: [String : AnyObject], completionHandler: @escaping(_ result: LessonDate?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_lesson_dates.php" ,parameters: parameters, bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_lesson_dates_ios.php" ,parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -161,8 +161,8 @@ class Client: NSObject {
         }
     }
     
-    func selectAllChapters(completionHandler: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_all_chapters.php", parameters: [:]) {(data, error) in
+    func selectAllChapters(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_chapter_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -170,7 +170,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             
@@ -185,7 +185,7 @@ class Client: NSObject {
     }
     
     func selectStudentAskedQuestions(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Questions?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_ask_questions_by_student.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_answered_ask_questions_by_student_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -208,7 +208,7 @@ class Client: NSObject {
     }
     
     func selectChapterAskedQuestions(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Questions?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_ask_questions_by_chapter.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_answered_ask_questions_by_chapter_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -256,7 +256,7 @@ class Client: NSObject {
     }
     
     func selectEssayTypes(parameters: [String : AnyObject], completionHandler: @escaping(_ result: PDFCategories?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_all_essay_type.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_all_essay_type_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -459,7 +459,7 @@ class Client: NSObject {
     }
     
     func selectUnexpiredNews(parameters: [String : AnyObject], completionHandler: @escaping(_ result: AllNews?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("select_unexpired_news.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_unexpired_news_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return

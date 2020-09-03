@@ -32,8 +32,8 @@ class SchoolUser: User {
         }
     }
     
-    func getAllChapters(completion: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
-        Client.shared().selectAllChapters() {(data, error) in
+    func getAllChapters(parameters: [String : AnyObject], completion: @escaping(_ result: Chapter?, _ error: NSError?) -> Void) {
+        Client.shared().selectAllChapters(parameters: parameters) {(data, error) in
             if let chapters = data {
                 completion(chapters, nil)
             }

@@ -10,7 +10,6 @@ import UIKit
 import SCLAlertView
 class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
     @IBOutlet weak var questionTextArea: UITextView!
-    @IBOutlet weak var reasonTextArea: UITextView!
     @IBOutlet weak var falseButton: UIButton!
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
@@ -30,15 +29,6 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
         questionTextArea.layer.borderWidth = 2
         questionTextArea.layer.cornerRadius = 10
         questionTextArea.delegate = self
-        
-        reasonTextArea.layer.borderColor = UIColor.white.cgColor
-        reasonTextArea.layer.borderWidth = 2
-        reasonTextArea.layer.cornerRadius = 10
-        reasonTextArea.text =  "The Reasoning ...".localized
-        
-        reasonTextArea.textColor = .lightGray
-        reasonTextArea.delegate = self
-        
         
         let student = Student()
         let parameters = ["chapter_id" : selectedChapterId, "student_id" : UserDefaults.standard.string(forKey: "id"), "level" : UserDefaults.standard.string(forKey: "student_level"), "teacher_id" : self.teacherId]
@@ -64,7 +54,6 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
                             else {
                                 //ui for no questions
                                 self.questionTextArea.isHidden = true
-                                self.reasonTextArea.isHidden = true
                                 self.trueButton.isHidden = true
                                 self.falseButton.isHidden = true
                                 self.submitButton.isHidden = true
@@ -152,35 +141,59 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
     
     @IBAction func SubmitAction(_ sender: UIButton) {
         
-        if (reasonTextArea.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty || reasonTextArea.text == "The Reasoning ...".localized || selectedAnswer == "") {
-            SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
-
-        } else {
-            let evaluateAnswerVC = storyboard?.instantiateViewController(withIdentifier: "EvaluateAnswer") as! EvaluateAnswerViewController
-            evaluateAnswerVC.delegate = self
-            evaluateAnswerVC.modalPresentationStyle = .popover
-            evaluateAnswerVC.popoverPresentationController?.delegate = self
-            evaluateAnswerVC.popoverPresentationController?.permittedArrowDirections = .any
-            evaluateAnswerVC.popoverPresentationController?.sourceView = sender
-            evaluateAnswerVC.popoverPresentationController?.sourceRect = CGRect(x: 50, y: 50, width: 1, height: 1)
-            evaluateAnswerVC.modalPresentationStyle = .overCurrentContext
-            evaluateAnswerVC.modalTransitionStyle = .crossDissolve
-            evaluateAnswerVC.correctAnswer = questionsArray[0].explanation
-            evaluateAnswerVC.questionType = "TF"
-            evaluateAnswerVC.questionId = questionsArray[0].id
-            evaluateAnswerVC.chapterId = selectedChapterId
-            evaluateAnswerVC.studentAnswer = reasonTextArea.text
-            
-            if((questionsArray[0].correct_mark == "1" && selectedAnswer == "true") || (questionsArray[0].correct_mark == "0" && selectedAnswer == "false")) {
-                evaluateAnswerVC.isTFCorrect = true
-            }
-            else {
-                evaluateAnswerVC.isTFCorrect = false
-            }
-            
-            self.present(evaluateAnswerVC, animated: true, completion: nil)
+        let correctAnswerVC = storyboard?.instantiateViewController(withIdentifier: "CorrectAnswer") as! CorrectAnswerViewController
+        correctAnswerVC.delegate = self
+        correctAnswerVC.modalPresentationStyle = .popover
+        correctAnswerVC.popoverPresentationController?.delegate = self
+        correctAnswerVC.popoverPresentationController?.permittedArrowDirections = .any
+        correctAnswerVC.popoverPresentationController?.sourceView = sender
+        correctAnswerVC.popoverPresentationController?.sourceRect = CGRect(x: 50, y: 50, width: 1, height: 1)
+        correctAnswerVC.modalPresentationStyle = .overCurrentContext
+        correctAnswerVC.modalTransitionStyle = .crossDissolve
+        var isCorrectParameter = ""
+        if((questionsArray[0].correct_mark == "1" && selectedAnswer == "true") || (questionsArray[0].correct_mark == "0" && selectedAnswer == "false")) {
+            correctAnswerVC.isCorrect = true
+            isCorrectParameter = "1"
         }
-        
+        else {
+            correctAnswerVC.isCorrect = false
+            isCorrectParameter = "-1"
+        }
+        let parameters = ["actual_answer": "",
+                          "question_id": questionsArray[0].id,
+                          "student_id": UserDefaults.standard.string(forKey: "id"),
+                          "type": "TF",
+                          "isCorrect": isCorrectParameter,
+                          "chapter_id": questionsArray[0].chapter_id]
+                  let student = Student()
+                  student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+                      if let response = data {
+                          if response.contains("inserted") {
+                              print("inserted")
+                          }
+                          else {
+                              self.performUIUpdatesOnMain {
+                                  SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                              }
+                          }
+                      }
+                      else if let error = error {
+                          self.performUIUpdatesOnMain {
+                              if error.code == 1001 {
+                                  self.performUIUpdatesOnMain {
+                                      SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                  }
+                              }
+                              else {
+                                  self.performUIUpdatesOnMain {
+                                      SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                  }
+                              }
+                              print(error)
+                          }
+                      }
+                  }
+        self.present(correctAnswerVC, animated: true)
     }
     
     func popoverDismiss(isExit: Bool) {
@@ -195,7 +208,6 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
         questionsArray.append(currentQuestion)
         
         questionTextArea.text = questionsArray[0].question
-        reasonTextArea.text = ""
     }
 }
 
@@ -214,11 +226,6 @@ extension  TrueFalseQuestionStudentViewController: UITextViewDelegate {
             if textView == questionTextArea {
                 textView.text = "The Question ...".localized
                 textView.textColor = .lightGray
-            }
-            else if textView == reasonTextArea {
-                textView.textColor = .lightGray
-                textView.text = "The Reasoning ...".localized
-                
             }
         }
     }

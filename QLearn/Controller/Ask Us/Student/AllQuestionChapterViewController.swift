@@ -18,52 +18,54 @@ class AllQuestionChapterViewController: UIViewController {
     var isAskQuestion = true
     var questionType = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
+    var teacherId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
+        if(UserDefaults.standard.string(forKey: "type") != "admin") {
             headerView.isHidden = true
         }
-
+        
         TableQuestion.rowHeight = 148.0
         self.view.bringSubviewToFront(activityIndicator)
         
-//        if(isAskQuestion) {
-            var user: SchoolUser
-            user = SchoolUser()
-            
-            activityIndicator.startAnimating()
-            user.getAllChapters() {(data, error) in
-                if let chapters = data {
-                    self.chaptersArray = chapters.RESULT
-                    self.performUIUpdatesOnMain {
-                        self.activityIndicator.stopAnimating()
-                        self.activityIndicator.isHidden = true
-                        self.TableQuestion.reloadData()
-                        self.TableQuestion.animate(animation: self.fadeAnimation)
-                    }
-                }
-                else if let error = error {
-                    self.performUIUpdatesOnMain {
-                        if error.code == 1001 {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                            }
-                        }
-                        else {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                            }
-                        }
-                        print(error)
-                        self.activityIndicator.stopAnimating()
-                        self.activityIndicator.isHidden = true
-                    }
+        //        if(isAskQuestion) {
+        var user: SchoolUser
+        user = SchoolUser()
+        let parameters = ["level" : UserDefaults.standard.string(forKey: "student_level"),
+                          "teacherID" : self.teacherId]
+        activityIndicator.startAnimating()
+        user.getAllChapters(parameters: parameters as [String : AnyObject]) {(data, error) in
+            if let chapters = data {
+                self.chaptersArray = chapters.RESULT
+                self.performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.TableQuestion.reloadData()
+                    self.TableQuestion.animate(animation: self.fadeAnimation)
                 }
             }
+            else if let error = error {
+                self.performUIUpdatesOnMain {
+                    if error.code == 1001 {
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                        }
+                    }
+                    else {
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                        }
+                    }
+                    print(error)
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                }
+            }
+        }
     }
-
+    
     
     @IBAction func onClickAddNewChapterButton(_ sender: UIButton) {
         let appearence = SCLAlertView.SCLAppearance(
@@ -89,16 +91,18 @@ class AllQuestionChapterViewController: UIViewController {
                     if let response = data{
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
-                                admin.getAllChapters() {(data, error) in
+                                let parameters = ["level" : UserDefaults.standard.string(forKey: "student_level"),
+                                                  "teacherID" : self.teacherId]
+                                admin.getAllChapters(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let chapters = data {
                                         self.chaptersArray = chapters.RESULT
                                         self.performUIUpdatesOnMain {
                                             SCLAlertView().showSuccess("Success".localized, subTitle:"New chapter is added successfully", closeButtonTitle:"Ok".localized)
-
+                                            
                                             self.TableQuestion.reloadData()
                                             self.activityIndicator.stopAnimating()
                                             self.activityIndicator
-                                            .isHidden = true
+                                                .isHidden = true
                                         }
                                     }
                                     else if let error = error {
@@ -165,14 +169,14 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
         return 1
     }
     
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return chaptersArray.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) ->UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "AllQuestionChapterCell") as! AllQuestionChapterCell
         cell.QuestionLable.text = chaptersArray[indexPath.row].title
         if(UserDefaults.standard.value(forKey: "admin_name") != nil) {
@@ -203,12 +207,12 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
                     SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
                 }
                 else {
-//                    let admin = Admin()
-//                    let parameters = ["id" : sender.selectedId,
-//                                      "phone" : chapterTextField.text!]
-//
-//                    self.activityIndicator.isHidden = false
-//                    self.activityIndicator.startAnimating()
+                    //                    let admin = Admin()
+                    //                    let parameters = ["id" : sender.selectedId,
+                    //                                      "phone" : chapterTextField.text!]
+                    //
+                    //                    self.activityIndicator.isHidden = false
+                    //                    self.activityIndicator.startAnimating()
                     
                     //call edit chapter api here
                 }
@@ -230,17 +234,18 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
             questionsVC.isMyQuestion = false
             questionsVC.selectedChapterId = chaptersArray[indexPath.row].id
             questionsVC.selectedChapterName = chaptersArray[indexPath.row].title
+            questionsVC.teacherId = self.teacherId
             self.navigationController?.pushViewController(questionsVC, animated: true)
         }
             
-        //lma yb2a question bag as teacher elly da5l
+            //lma yb2a question bag as teacher elly da5l
         else {
             if(questionType == "mcq") {
                 let askMcqQuestionVC = storyboard?.instantiateViewController(withIdentifier: "CreateMCQQuestion") as! CreateMcqQuestionViewController
                 askMcqQuestionVC.selectedChapterId = chaptersArray[indexPath.row].id
                 
                 navigationController?.pushViewController(askMcqQuestionVC, animated: true)
-
+                
             }
             else if(questionType == "essay") {
                 let essayTypesVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
@@ -248,7 +253,7 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
                 essayTypesVC.selectedChapterId = chaptersArray[indexPath.row].id
                 
                 navigationController?.pushViewController(essayTypesVC, animated: true)
-
+                
             }
             else {
                 let askTFQuestionVC = storyboard?.instantiateViewController(withIdentifier: "TrueFalseQuestion") as! CreateTrueFalseQuestionViewController

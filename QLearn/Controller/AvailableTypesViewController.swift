@@ -68,7 +68,7 @@ class AvailableTypesViewController: UIViewController {
         }
         else {
             //call essay types api here
-            let parameters = ["teacherID" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+            let parameters = ["teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
             student.getEssayTypes(parameters: parameters as [String : AnyObject]) {(essayTypes, error) in
                 if let essayTypes = essayTypes {
                     self.typesArray = essayTypes.RESULT

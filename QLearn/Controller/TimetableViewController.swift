@@ -16,6 +16,7 @@ class TimetableViewController: UIViewController {
     var timesArray: [String] = []
     var placesArray: [String] = []
     var teacherId = ""
+    var levelName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class TimetableViewController: UIViewController {
         let parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
         user.getLessionDates(parameters: parameters as [String : AnyObject]) {(dates, error) in
             if let dates = dates {
+                self.levelName = dates.RESULT[0].levelTitle
                 for date in dates.RESULT {
                     self.placesArray.append(date.place)
                     self.timesArray.append("\(date.day) \(date.time):\(date.minutes)")
@@ -94,7 +96,7 @@ extension TimetableViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch section {
         case 0:
-            sectionName = NSLocalizedString("Level 3", comment: "Level 3")
+            sectionName = self.levelName
             
         default:
             sectionName = ""

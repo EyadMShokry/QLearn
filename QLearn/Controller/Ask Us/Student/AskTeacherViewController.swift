@@ -12,9 +12,10 @@ class AskTeacherViewController: UIViewController {
 
     @IBOutlet weak var myQuestionsView: UIView!
     @IBOutlet weak var chapterQuestionsView: UIView!
-    
     @IBOutlet weak var askButton: UIButton!
     @IBOutlet weak var allAskButton: UIButton!
+    var teacherId = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,7 +23,7 @@ class AskTeacherViewController: UIViewController {
         myQuestionsView.layer.cornerRadius = myQuestionsView.frame.size.width/2
         myQuestionsView.clipsToBounds = true
         myQuestionsView.layer.borderWidth = 1.5
-        myQuestionsView.layer.borderColor = UIColor(displayP3Red: 39/255, green: 170/255, blue: 225/255, alpha: 1).cgColor
+        myQuestionsView.layer.borderColor = UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1).cgColor
         
         chapterQuestionsView.layer.cornerRadius = myQuestionsView.frame.size.width/2
         chapterQuestionsView.clipsToBounds = true
@@ -34,12 +35,14 @@ class AskTeacherViewController: UIViewController {
     @IBAction func onClickMyQuestionsButton(_ sender: UIButton) {
         let questionsVC = storyboard?.instantiateViewController(withIdentifier: "MyQuestions") as! MyQuestionsViewController
         questionsVC.isMyQuestion = true
+        questionsVC.teacherId = self.teacherId
         self.navigationController?.pushViewController(questionsVC, animated: true)
     }
     
     @IBAction func onClickAllChaptersQuestionsButton(_ sender: UIButton) {
         let chaptersVC = storyboard?.instantiateViewController(withIdentifier: "AllQuestion") as! AllQuestionChapterViewController
         chaptersVC.isAskQuestion = true
+        chaptersVC.teacherId = self.teacherId
         self.navigationController?.pushViewController(chaptersVC, animated: true)
     }
     
