@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00A0913501EB4F47F6D9CF2E /* Pods_QLearn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E45E735C03497F107116A05 /* Pods_QLearn.framework */; };
 		5D0A0C262337481100D5B7EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D0A0C282337481100D5B7EF /* Localizable.strings */; };
 		5D1977AD234015FC00C3659E /* GoQusetionAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1977AC234015FC00C3659E /* GoQusetionAnswerViewController.swift */; };
 		5D1977AF234029B100C3659E /* GoAskQusetionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1977AE234029B100C3659E /* GoAskQusetionViewController.swift */; };
@@ -112,12 +113,10 @@
 		9B649AE425011AD500130645 /* TeacherCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE325011AD500130645 /* TeacherCard.swift */; };
 		9B649AE62501744500130645 /* IsActivated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE52501744500130645 /* IsActivated.swift */; };
 		9B649AE825017D5A00130645 /* GoForPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE725017D5A00130645 /* GoForPayViewController.swift */; };
-		D7B51B36466D01ACBFF4AB02 /* Pods_QLearn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17BA07AAE608FA129305DD02 /* Pods_QLearn.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1578BE657A5F6BF697F7E642 /* Pods-QLearn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLearn.debug.xcconfig"; path = "Target Support Files/Pods-QLearn/Pods-QLearn.debug.xcconfig"; sourceTree = "<group>"; };
-		17BA07AAE608FA129305DD02 /* Pods_QLearn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QLearn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4863000B38209A7EC315E789 /* Pods-QLearn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLearn.debug.xcconfig"; path = "Target Support Files/Pods-QLearn/Pods-QLearn.debug.xcconfig"; sourceTree = "<group>"; };
 		5D0A0C22233730D600D5B7EF /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		5D0A0C23233730D600D5B7EF /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5D0A0C272337481100D5B7EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -216,6 +215,7 @@
 		68FED472232A7F52000A5A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68FFB90423351171003B7D49 /* ChaptersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewController.swift; sourceTree = "<group>"; };
 		68FFB90723351430003B7D49 /* ChapterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTableViewCell.swift; sourceTree = "<group>"; };
+		8E45E735C03497F107116A05 /* Pods_QLearn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QLearn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B2E2F0D24FD09C40003E5BA /* AvailableTeachersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableTeachersViewController.swift; sourceTree = "<group>"; };
 		9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersTableViewCell.swift; sourceTree = "<group>"; };
 		9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeachersTableViewCell.xib; sourceTree = "<group>"; };
@@ -230,7 +230,7 @@
 		9B649AE325011AD500130645 /* TeacherCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCard.swift; sourceTree = "<group>"; };
 		9B649AE52501744500130645 /* IsActivated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsActivated.swift; sourceTree = "<group>"; };
 		9B649AE725017D5A00130645 /* GoForPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoForPayViewController.swift; sourceTree = "<group>"; };
-		E90EBE879AE8283379917F22 /* Pods-QLearn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLearn.release.xcconfig"; path = "Target Support Files/Pods-QLearn/Pods-QLearn.release.xcconfig"; sourceTree = "<group>"; };
+		DF38D15381E1797DF11DAED3 /* Pods-QLearn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLearn.release.xcconfig"; path = "Target Support Files/Pods-QLearn/Pods-QLearn.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,13 +238,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7B51B36466D01ACBFF4AB02 /* Pods_QLearn.framework in Frameworks */,
+				00A0913501EB4F47F6D9CF2E /* Pods_QLearn.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C7214858599F9189359A542 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E45E735C03497F107116A05 /* Pods_QLearn.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5D26B5762338A8C8000EE757 /* Student */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,7 +645,7 @@
 				68FED465232A7F45000A5A7C /* QLearn */,
 				68FED464232A7F45000A5A7C /* Products */,
 				F5EA8B42C38B4546D4F260BB /* Pods */,
-				DE253BF43BC9691C056E0EE5 /* Frameworks */,
+				5C7214858599F9189359A542 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -674,19 +682,11 @@
 			path = "Questions Bag";
 			sourceTree = "<group>";
 		};
-		DE253BF43BC9691C056E0EE5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				17BA07AAE608FA129305DD02 /* Pods_QLearn.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		F5EA8B42C38B4546D4F260BB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1578BE657A5F6BF697F7E642 /* Pods-QLearn.debug.xcconfig */,
-				E90EBE879AE8283379917F22 /* Pods-QLearn.release.xcconfig */,
+				4863000B38209A7EC315E789 /* Pods-QLearn.debug.xcconfig */,
+				DF38D15381E1797DF11DAED3 /* Pods-QLearn.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -698,11 +698,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 68FED475232A7F52000A5A7C /* Build configuration list for PBXNativeTarget "QLearn" */;
 			buildPhases = (
-				011A08114A6FB28BE711EF2B /* [CP] Check Pods Manifest.lock */,
+				CA9B6E295C12BD477C0F5A5F /* [CP] Check Pods Manifest.lock */,
 				68FED45F232A7F45000A5A7C /* Sources */,
 				68FED460232A7F45000A5A7C /* Frameworks */,
 				68FED461232A7F45000A5A7C /* Resources */,
-				2F749A79E6A66F80312E3EF6 /* [CP] Embed Pods Frameworks */,
+				03602BE8AD54E998E31BD2DB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -770,7 +770,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		011A08114A6FB28BE711EF2B /* [CP] Check Pods Manifest.lock */ = {
+		03602BE8AD54E998E31BD2DB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QLearn/Pods-QLearn-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QLearn/Pods-QLearn-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QLearn/Pods-QLearn-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA9B6E295C12BD477C0F5A5F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -790,23 +807,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2F749A79E6A66F80312E3EF6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-QLearn/Pods-QLearn-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-QLearn/Pods-QLearn-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QLearn/Pods-QLearn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1071,12 +1071,12 @@
 		};
 		68FED476232A7F52000A5A7C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1578BE657A5F6BF697F7E642 /* Pods-QLearn.debug.xcconfig */;
+			baseConfigurationReference = 4863000B38209A7EC315E789 /* Pods-QLearn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = A2Q9DC3AJW;
 				INFOPLIST_FILE = QLearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1092,12 +1092,12 @@
 		};
 		68FED477232A7F52000A5A7C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E90EBE879AE8283379917F22 /* Pods-QLearn.release.xcconfig */;
+			baseConfigurationReference = DF38D15381E1797DF11DAED3 /* Pods-QLearn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = A2Q9DC3AJW;
 				INFOPLIST_FILE = QLearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

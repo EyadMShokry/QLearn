@@ -8,14 +8,12 @@ target 'QLearn' do
   # Pods for QLearn
 pod 'IQKeyboardManagerSwift'
 pod 'TextFieldEffects' 
-pod 'SideMenu'
 pod 'SCLAlertView'
 pod 'MOLH'
 pod 'TableFlip'
-pod 'Firebase/Core', '4.2.0'
-pod 'Firebase/Storage'
-pod 'Firebase/Auth'
 pod 'iOSDropDown'
 pod 'NVActivityIndicatorView'
-
+pod 'Firebase/Core', '4.2.0'
+pod 'Firebase/Storage' 
+pod 'SideMenu'
 end

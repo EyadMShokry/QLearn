@@ -345,7 +345,7 @@
                                                 </constraints>
                                                 <state key="normal" image="menu-button"/>
                                                 <connections>
-                                                    <segue destination="nZg-9F-XLp" kind="presentation" modalPresentationStyle="fullScreen" id="efu-fy-1kk"/>
+                                                    <segue destination="5lh-J2-80k" kind="presentation" id="JDc-Mc-Qzy"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vc7-Bj-taC">
@@ -907,12 +907,31 @@
             </objects>
             <point key="canvasLocation" x="-844" y="-147"/>
         </scene>
+        <!--Side Menu Navigation Controller-->
+        <scene sceneID="mGG-Io-J9I">
+            <objects>
+                <navigationController id="5lh-J2-80k" customClass="SideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3i6-02-B2f">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="c2p-e8-d9k" kind="relationship" relationship="rootViewController" id="UIj-ip-pqN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uwW-4r-3eD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3106" y="-1074"/>
+        </scene>
         <!--Side Menu Table View Controller-->
         <scene sceneID="Qqi-VR-Lrh">
             <objects>
                 <tableViewController id="c2p-e8-d9k" customClass="SideMenuTableViewController" customModule="QLearn" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wXc-Uo-UKb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="JHx-0T-7Kj">
@@ -1067,25 +1086,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lDh-eE-EL5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1815.9420289855075" y="-1074.1071428571429"/>
-        </scene>
-        <!--Side Menu Navigation Controller-->
-        <scene sceneID="tW8-Ff-Adb">
-            <objects>
-                <navigationController id="nZg-9F-XLp" customClass="UISideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i7f-m2-BHu">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <segue destination="c2p-e8-d9k" kind="relationship" relationship="rootViewController" id="gGI-dR-Rd9"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="u1K-NL-rhJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3071" y="-1074"/>
         </scene>
         <!--Contact Us View Controller-->
         <scene sceneID="GhB-YA-5TH">

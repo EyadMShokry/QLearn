@@ -42,7 +42,6 @@ class ConfirmPasswordViewController: UIViewController {
         else {
             if((self.TheNewPassword.text?.elementsEqual(self.ConfirmNewPassword.text!))! != true) {
                 SCLAlertView().showError("Error".localized, subTitle:"Passwords do not match".localized, closeButtonTitle:"Ok".localized)
-                
                 return
             }
             else {
@@ -54,7 +53,7 @@ class ConfirmPasswordViewController: UIViewController {
                 self.activityIndicator.startAnimating()
                 student.updatePassword(parameters: parameters as [String : AnyObject]) { (response, error) in
                     if let response = response {
-                        if response.contains("inserted") {
+                        if response.contains("updated") {
                             self.performUIUpdatesOnMain {
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
@@ -65,10 +64,9 @@ class ConfirmPasswordViewController: UIViewController {
                                 )
                                 let successAlertView = SCLAlertView(appearance: appearence)
                                 successAlertView.addButton("Ok".localized, action: {
-                                    let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
-                                    homeVC.userType = "student"
-                                    let navigationController = UINavigationController(rootViewController: homeVC)
-                                    self.present(navigationController, animated: true)
+                                    let studentTeachersVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeView") as! UINavigationController
+                                    studentTeachersVC.modalPresentationStyle = .fullScreen
+                                    self.present(studentTeachersVC, animated: true, completion: nil)
                                 })
                                 successAlertView.showSuccess("Success".localized, subTitle: "Password is changed successfully".localized)
                             }
