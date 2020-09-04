@@ -376,7 +376,7 @@ class Client: NSObject {
     }
     
     func loginParent(parameters: [String : AnyObject], completionHandler: @escaping(_ result: StudentLogin?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("parent_login.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_parent_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -799,6 +799,121 @@ class Client: NSObject {
             }
 
         })
+    }
+    
+    func selectTeacherCard(parameters: [String : AnyObject], completionHandler: @escaping(_ result: TeacherCard?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_teacher_card_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let teacherCard = try JSONDecoder().decode(TeacherCard.self, from: data)
+                completionHandler(teacherCard, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+    
+    func selectWeekGrades(parameters: [String : AnyObject], completionHandler: @escaping(_ result: MonthGrades?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_week_grades_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let monthGrades = try JSONDecoder().decode(MonthGrades.self, from: data)
+                completionHandler(monthGrades, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+    
+    func selectMonthGrades(parameters: [String : AnyObject], completionHandler: @escaping(_ result: MonthGrades?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_month_grades_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let monthGrades = try JSONDecoder().decode(MonthGrades.self, from: data)
+                completionHandler(monthGrades, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+    
+    func selectStudentAttendance(parameters: [String : AnyObject], completionHandler: @escaping(_ result: AttendanceResult?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_student_attendance.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let attendance = try JSONDecoder().decode(AttendanceResult.self, from: data)
+                completionHandler(attendance, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+    
+    func selectIfActivatedAccount(parameters: [String : AnyObject], completionHandler: @escaping(_ result: IsActivated?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_if_activated_account_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let isActivated = try JSONDecoder().decode(IsActivated.self, from: data)
+                completionHandler(isActivated, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
     }
     
 }

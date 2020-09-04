@@ -34,11 +34,11 @@ class SideMenuTableViewController: UITableViewController {
             userNameLabel.text = ""
             
         }
-        else if(UserDefaults.standard.value(forKey: "admin_name") != nil) {
-            userNameLabel.text = (UserDefaults.standard.value(forKey: "admin_name") as! String)
+        else if(UserDefaults.standard.string(forKey: "type") == "admin") {
+            userNameLabel.text = (UserDefaults.standard.string(forKey: "admin_name"))
         }
-        else if(UserDefaults.standard.value(forKey: "student_name") != nil) {
-            userNameLabel.text = (UserDefaults.standard.value(forKey: "student_name") as! String)
+        else if(UserDefaults.standard.string(forKey: "type") == "student") {
+            userNameLabel.text = UserDefaults.standard.string(forKey: "student_name")
         }
     }
     
@@ -65,7 +65,10 @@ class SideMenuTableViewController: UITableViewController {
         UserDefaults.standard.removeObject(forKey: "admin_phone")
         UserDefaults.standard.removeObject(forKey: "type")
         UserDefaults.standard.synchronize()
-        self.dismiss(animated: true, completion: nil)
+        
+        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
+        loginVC.modalPresentationStyle = .fullScreen
+        self.present(loginVC, animated: true, completion: nil)
     }
     
     

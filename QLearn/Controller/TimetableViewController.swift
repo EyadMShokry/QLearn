@@ -31,15 +31,24 @@ class TimetableViewController: UIViewController {
         let parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
         user.getLessionDates(parameters: parameters as [String : AnyObject]) {(dates, error) in
             if let dates = dates {
-                self.levelName = dates.RESULT[0].levelTitle
-                for date in dates.RESULT {
-                    self.placesArray.append(date.place)
-                    self.timesArray.append("\(date.day) \(date.time):\(date.minutes)")
+                if(dates.RESULT.count != 0) {
+                    self.levelName = dates.RESULT[0].levelTitle
+                    for date in dates.RESULT {
+                        self.placesArray.append(date.place)
+                        self.timesArray.append("\(date.day) \(date.time):\(date.minutes)")
+                    }
+                    self.performUIUpdatesOnMain {
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                        self.timetableTableView.reloadData()
+                    }
                 }
-                self.performUIUpdatesOnMain {
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                    self.timetableTableView.reloadData()
+                else {
+                    self.performUIUpdatesOnMain {
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                        SCLAlertView().showError("Error".localized, subTitle: "No Lesson Dates to show!")
+                    }
                 }
             }
             else if let error = error {

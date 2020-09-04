@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class StudentReportViewController: UIViewController {
     @IBOutlet weak var studentNameLabel: UILabel!
@@ -17,15 +18,14 @@ class StudentReportViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var menuTitles = ["WEEKS GRADES".localized, "MONTHS GRADES".localized, "ATTENDANCE".localized]
-    
-    var weeksGrades = [WeekGrade]()
-    var monthsGrades = [MonthGrade]()
-    var attendances = [Attendance]()
+    var monthsGrades: [Grades] = []
+    var weeksGrades : [Grades] = []
+    var attendances : [Attendance] = []
+    var teacherId = ""
     var selectedIndex = 0
     var selectedIndexPath = IndexPath(item: 0, section: 0)
     var indicatorView = UIView()
     let indicatorHeight: CGFloat = 3
-    
     let noDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     
     fileprivate func adjustMenuCollectionView() {
@@ -108,7 +108,7 @@ class StudentReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        studentNameLabel.text = UserDefaults.standard.string(forKey: "student_name")
         menuCollectionView.dataSource = self
         menuCollectionView.delegate = self
         
@@ -130,26 +130,131 @@ class StudentReportViewController: UIViewController {
         weeksReportTableView.separatorColor = .clear
         monthsReportTableView.separatorColor = .clear
         attendanceReportTableView.separatorColor = .clear
+                
+        let dispatchGroup = DispatchGroup()
         
-        //to be deleted after calling APIs
-        weeksGrades.append(WeekGrade(weekNumber: "1", grade: "10", date: "10/10"))
-        weeksGrades.append(WeekGrade(weekNumber: "2", grade: "10", date: "10/10"))
-        weeksGrades.append(WeekGrade(weekNumber: "3", grade: "10", date: "10/10"))
-        weeksGrades.append(WeekGrade(weekNumber: "4", grade: "10", date: "10/10/2018"))
+        dispatchGroup.enter()
+        getWeekGrades()
+        dispatchGroup.leave()
 
-        monthsGrades.append(MonthGrade(monthNumber: "1", grade: "20"))
-        monthsGrades.append(MonthGrade(monthNumber: "3", grade: "20"))
-        monthsGrades.append(MonthGrade(monthNumber: "4", grade: "20"))
-        monthsGrades.append(MonthGrade(monthNumber: "6", grade: "20"))
+        dispatchGroup.enter()
+        getMonthGrades()
+        dispatchGroup.leave()
         
-        attendances.append(Attendance(weekNumber: "1", status: true, date: "10/12/2019"))
-        attendances.append(Attendance(weekNumber: "1", status: false, date: "10/12/2019"))
-        attendances.append(Attendance(weekNumber: "1", status: true, date: "10/12/2019"))
-        attendances.append(Attendance(weekNumber: "1", status: true, date: "10/12/2019"))
+        dispatchGroup.enter()
+        getStudentAttendance()
+        dispatchGroup.leave()
+        
+        dispatchGroup.notify(queue: .main) {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            print("done")
+        }
 
-        
     }
     
+    private func getStudentAttendance() {
+        var student: Student
+        student = Student()
+        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
+                          "teacher_id" : self.teacherId]
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        student.getStudentAttendance(parameters: parameters as [String : AnyObject]){ (data, error) in
+            if let attendance = data {
+                print(attendance)
+                self.attendances = attendance.RESULT
+                self.performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.attendanceReportTableView.reloadData()
+                }
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
+
+
+    private func getWeekGrades() {
+        var student: Student
+        student = Student()
+        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
+                          "teacher_id" : self.teacherId]
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        student.getWeekGrades(parameters: parameters as [String : AnyObject]){ (data, error) in
+            if let grades = data {
+                print("Grades: \(grades)")
+                for grade in grades.RESULT{
+                    self.weeksGrades.append(grade)
+                }
+                self.performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.weeksReportTableView.reloadData()
+                }
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
+    
+    private func getMonthGrades() {
+        var student: Student
+        student = Student()
+        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
+                          "teacher_id" : self.teacherId]
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        student.getMonthGrades(parameters: parameters as [String : AnyObject]){ (data, error) in
+            if let grades = data {
+                print(grades)
+                self.weeksGrades = grades.RESULT
+                self.performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.monthsReportTableView.reloadData()
+                }
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
+
 
  
 
@@ -206,24 +311,25 @@ extension StudentReportViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(tableView == weeksReportTableView) {
             let weekCell = tableView.dequeueReusableCell(withIdentifier: "WeekGrades") as! WeekGradesTableViewCell
+            weekCell.weekNumberLabel.text = weeksGrades[indexPath.row].monthNum
             weekCell.gradeLabel.text = weeksGrades[indexPath.row].grade
-            weekCell.weekNumberLabel.text = weeksGrades[indexPath.row].weekNumber
-            weekCell.dateLabel.text = weeksGrades[indexPath.row].date
+            weekCell.dateLabel.text = ""
             
             return weekCell
         }
         else if(tableView == monthsReportTableView) {
             let monthCell = tableView.dequeueReusableCell(withIdentifier: "MonthGrades") as! MonthGradesTableViewCell
             monthCell.gradeLabel.text = monthsGrades[indexPath.row].grade
-            monthCell.monthNumberLabel.text = monthsGrades[indexPath.row].monthNumber
+            monthCell.monthNumberLabel.text = monthsGrades[indexPath.row].monthNum
             
             return monthCell
         }
         else {
             let attendanceCell = tableView.dequeueReusableCell(withIdentifier: "Attendance") as! AttendanceTableViewCell
-            attendanceCell.dateLabel.text = attendances[indexPath.row].date
-            attendanceCell.statusLabel.text = attendances[indexPath.row].status ?"Attend".localized: "Not Attended".localized
-            
+            attendanceCell.dateLabel.text = ""
+            attendanceCell.weekNumberLabel.text = attendances[indexPath.row].num
+            attendanceCell.statusLabel.text = attendances[indexPath.row].status == "True" ? "Attended".localized : "Not Attended".localized
+            attendanceCell.statusLabel.layer.borderColor = attendances[indexPath.row].status == "True" ? UIColor.green.cgColor : UIColor.red.cgColor
             return attendanceCell
         }
     }

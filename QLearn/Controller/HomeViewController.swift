@@ -25,10 +25,36 @@
     var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus"]
     var newsArray: [String] = []
     var teacherId = ""
+    var teacherCard: [Card] = []
+    var isMyTeacher = true
+    
+    func getTeacherCard() {
+        let student = Student()
+        let parameters = ["teacher_id" : self.teacherId]
+        student.getTeacherCard(parameters: parameters as [String : AnyObject]){ (data, error) in
+            if let teacherCard = data {
+                self.teacherCard = teacherCard.RESULT
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
+        getTeacherCard()
         newsArray.removeAll()
         
         if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
@@ -73,7 +99,7 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         sectionsTableView.dataSource = self
         sectionsTableView.delegate = self
@@ -85,32 +111,32 @@
     override func viewWillDisappear(_ animated: Bool) {
         button(hidden: true)
     }
-       
+    
     @IBAction func goAdminTable(_ sender: Any) {
-         button (hidden: true)
+        button (hidden: true)
         let AdminableVC = storyboard?.instantiateViewController(withIdentifier: "GoTheTeachers")
         navigationController?.pushViewController(AdminableVC!, animated: true)
     }
     
     @IBAction func goNewsTable(_ sender: Any) {
         
-     button (hidden: true)
-
+        button (hidden: true)
+        
         let NewstableVC = storyboard?.instantiateViewController(withIdentifier: "GoTheAddNews")
         navigationController?.pushViewController(NewstableVC!, animated: true)
-     
+        
         
     }
     
     
-   //MARk ->Button drobDownMenu
+    //MARk ->Button drobDownMenu
     @IBAction func drobDownMenu(_ sender: UIButton) {
         print("clicked")
         UIView.animate(withDuration: 0.3) {
-//            self.buttonDrobMenu.forEach { (button) in
-//                button.isHidden = !button.isHidden
-//                self.view.layIfNeeded()
-//            }
+            //            self.buttonDrobMenu.forEach { (button) in
+            //                button.isHidden = !button.isHidden
+            //                self.view.layIfNeeded()
+            //            }
             if(UserDefaults.standard.string(forKey: "id") == "1") {
                 self.AdminButton.isHidden = !self.AdminButton.isHidden
                 self.newsButton.isHidden = !self.newsButton.isHidden
@@ -120,11 +146,11 @@
                 self.AdminButton.isHidden = true
                 self.newsButton.isHidden = !self.newsButton.isHidden
                 self.view.layoutIfNeeded()
-
+                
             }
         }
     }
-   
+    
     
     
     func button (hidden:Bool){
@@ -142,14 +168,14 @@
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return sectionsNames.count
+        return sectionsNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell") as! HomeTableViewCell
-            cell.cellLabel.text = sectionsNames[indexPath.row]
-            cell.cellImageView.image = UIImage(named: sectionsImagesNames[indexPath.row])
-       
+        cell.cellLabel.text = sectionsNames[indexPath.row]
+        cell.cellImageView.image = UIImage(named: sectionsImagesNames[indexPath.row])
+        
         return cell
     }
     
@@ -176,9 +202,15 @@
             switch selectedRow {
             case 0:
                 if(UserDefaults.standard.string(forKey: "type") != "parent") {
-                    let questionBagVC = storyboard?.instantiateViewController(withIdentifier: "QuestionsBag") as! QuestionsBagViewController
-                    questionBagVC.teacherId = self.teacherId
-                    navigationController?.pushViewController(questionBagVC, animated: true)
+                    print(self.teacherCard[0].status)
+                    if(!isMyTeacher && self.teacherCard[0].status == "0") {
+                        SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                    }
+                    else {
+                        let questionBagVC = storyboard?.instantiateViewController(withIdentifier: "QuestionsBag") as! QuestionsBagViewController
+                        questionBagVC.teacherId = self.teacherId
+                        navigationController?.pushViewController(questionBagVC, animated: true)
+                    }
                 }
                 else {
                     SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
@@ -187,20 +219,29 @@
             case 1:
                 //in case of user other than student or parent uncomment this
                 //report
-                if(UserDefaults.standard.string(forKey: "type") == "teachehr") {
+                if(UserDefaults.standard.string(forKey: "type") == "teacher") {
                     let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "SelectStudent")
                     navigationController?.pushViewController(studentReportVC!, animated: true)
                 }
                 else {
-                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "StudentReport")
-                    navigationController?.pushViewController(studentReportVC!, animated: true)
+                    if(!isMyTeacher && self.teacherCard[1].status == "0") {
+                        SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                    }
+                    else {
+                        let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "StudentReport") as! StudentReportViewController
+                        studentReportVC.teacherId = self.teacherId
+                        navigationController?.pushViewController(studentReportVC, animated: true)
+                    }
                 }
-                
             case 2:
-                let timetableVC = storyboard?.instantiateViewController(withIdentifier: "Timetable") as! TimetableViewController
-                timetableVC.teacherId = self.teacherId
-                navigationController?.pushViewController(timetableVC, animated: true)
-
+                if(!isMyTeacher && self.teacherCard[2].status == "0") {
+                    SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                }
+                else {
+                    let timetableVC = storyboard?.instantiateViewController(withIdentifier: "Timetable") as! TimetableViewController
+                    timetableVC.teacherId = self.teacherId
+                    navigationController?.pushViewController(timetableVC, animated: true)
+                }
             case 3:
                 //ask us block
                 if(UserDefaults.standard.string(forKey: "type") == "admin") {
@@ -210,9 +251,14 @@
                 }
                 else {
                     if(UserDefaults.standard.string(forKey: "type") == "student") {
-                        let askTeacherVC = storyboard?.instantiateViewController(withIdentifier: "AskTeacher") as! AskTeacherViewController
-                        askTeacherVC.teacherId = self.teacherId
-                        navigationController?.pushViewController(askTeacherVC, animated: true)
+                        if(!isMyTeacher && self.teacherCard[3].status == "0") {
+                            SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                        }
+                        else {
+                            let askTeacherVC = storyboard?.instantiateViewController(withIdentifier: "AskTeacher") as! AskTeacherViewController
+                            askTeacherVC.teacherId = self.teacherId
+                            navigationController?.pushViewController(askTeacherVC, animated: true)
+                        }
                     }
                     else {
                         SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
@@ -221,24 +267,61 @@
             case 4:
                 //pdfs block
                 if(UserDefaults.standard.string(forKey: "type") != "parent") {
-                    let uploadedPDFVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
-                    uploadedPDFVC.isPdf = true
-                    uploadedPDFVC.teacherId = self.teacherId
-                    navigationController?.pushViewController(uploadedPDFVC, animated: true)
+                    if(UserDefaults.standard.string(forKey: "type") == "student") {
+                        if(!isMyTeacher && self.teacherCard[4].status == "0") {
+                            SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                        }
+                        else {
+                            let uploadedPDFVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
+                            uploadedPDFVC.isPdf = true
+                            uploadedPDFVC.teacherId = self.teacherId
+                            navigationController?.pushViewController(uploadedPDFVC, animated: true)
+                        }
+                    }
+                    else {
+                        //If Teacher
+                        let uploadedPDFVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
+                        uploadedPDFVC.isPdf = true
+                        uploadedPDFVC.teacherId = self.teacherId
+                        navigationController?.pushViewController(uploadedPDFVC, animated: true)
+                    }
                 }
                 else {
                     SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
                 }
-
-            case 5:
-                let cvTeacherVC =  storyboard?.instantiateViewController(withIdentifier: "CvTeacher") as! CvTeacherViewController
-                cvTeacherVC.teacherId = self.teacherId
-                navigationController?.pushViewController(cvTeacherVC, animated: true)
                 
+            case 5:
+                if(UserDefaults.standard.string(forKey: "type") == "student") {
+                    if(!isMyTeacher && self.teacherCard[5].status == "0") {
+                        SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                    }
+                    else {
+                        let cvTeacherVC =  storyboard?.instantiateViewController(withIdentifier: "CvTeacher") as! CvTeacherViewController
+                        cvTeacherVC.teacherId = self.teacherId
+                        navigationController?.pushViewController(cvTeacherVC, animated: true)
+                    }
+                }
+                else {
+                    let cvTeacherVC =  storyboard?.instantiateViewController(withIdentifier: "CvTeacher") as! CvTeacherViewController
+                    cvTeacherVC.teacherId = self.teacherId
+                    navigationController?.pushViewController(cvTeacherVC, animated: true)
+                }
             case 6:
-                let contactUsVc =  storyboard?.instantiateViewController(withIdentifier: "ContactUs") as! ContactUsViewController
-                contactUsVc.teacherId = self.teacherId
-                navigationController?.pushViewController(contactUsVc, animated: true)
+                if(UserDefaults.standard.string(forKey: "type") == "student") {
+                    if(!isMyTeacher && self.teacherCard[6].status == "0") {
+                        SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                    }
+                    else {
+                        let contactUsVc =  storyboard?.instantiateViewController(withIdentifier: "ContactUs") as! ContactUsViewController
+                        contactUsVc.teacherId = self.teacherId
+                        navigationController?.pushViewController(contactUsVc, animated: true)
+                    }
+                }
+                else {
+                    let contactUsVc =  storyboard?.instantiateViewController(withIdentifier: "ContactUs") as! ContactUsViewController
+                    contactUsVc.teacherId = self.teacherId
+                    navigationController?.pushViewController(contactUsVc, animated: true)
+                }
             default:
                 return
             }

@@ -97,18 +97,18 @@ class Student: SchoolUser {
             }
         }
     }
-//    func registerStudent(parameters: [String : AnyObject], completion: @escaping(_ result: StudentLogin?, _ error: NSError?) -> Void) {
-//        Client.shared().RegistreStudent(parameters: parameters) {(data, error) in
-//            if let student = data {
-//                completion(student, nil)
-//            }
-//            else if let error = error {
-//                completion(nil, error)
-//            }
-//        }
-//    }
-
-   
+    //    func registerStudent(parameters: [String : AnyObject], completion: @escaping(_ result: StudentLogin?, _ error: NSError?) -> Void) {
+    //        Client.shared().RegistreStudent(parameters: parameters) {(data, error) in
+    //            if let student = data {
+    //                completion(student, nil)
+    //            }
+    //            else if let error = error {
+    //                completion(nil, error)
+    //            }
+    //        }
+    //    }
+    
+    
     func getAnsweredQuestions(method: String, parameters: [String : AnyObject], completion: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
         Client.shared().selectAnswerdQuestions(method: method, parameters: parameters) {(data, error) in
             if let answeredQuestions = data {
@@ -176,25 +176,79 @@ class Student: SchoolUser {
     }
     
     func getStudentTeachers(parameters: [String : AnyObject], completion: @escaping(_ result: Teachers?, _ error: NSError?) -> Void) {
-           Client.shared().getStudentTeachers(parameters: parameters) { (studentTeachers, error) in
-               if let studentTeachers = studentTeachers {
-                   completion(studentTeachers, nil)
-               }
-               else if let error = error {
-                   completion(nil, error)
-               }
-           }
-       }
+        Client.shared().getStudentTeachers(parameters: parameters) { (studentTeachers, error) in
+            if let studentTeachers = studentTeachers {
+                completion(studentTeachers, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
     
     func getOtherTeachers(parameters: [String : AnyObject], completion: @escaping(_ result: Teachers?, _ error: NSError?) -> Void) {
-             Client.shared().getOtherTeachers(parameters: parameters) { (studentTeachers, error) in
-                 if let studentTeachers = studentTeachers {
-                     completion(studentTeachers, nil)
-                 }
-                 else if let error = error {
-                     completion(nil, error)
-                 }
-             }
-         }
+        Client.shared().getOtherTeachers(parameters: parameters) { (studentTeachers, error) in
+            if let studentTeachers = studentTeachers {
+                completion(studentTeachers, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
     
+    func getTeacherCard(parameters: [String : AnyObject], completion: @escaping(_ result: TeacherCard?, _ error: NSError?) -> Void) {
+        Client.shared().selectTeacherCard(parameters: parameters){ (teacherCard, error) in
+            if let teacherCard = teacherCard {
+                completion(teacherCard, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getWeekGrades(parameters: [String : AnyObject], completion: @escaping(_ result: MonthGrades?, _ error: NSError?) -> Void) {
+        Client.shared().selectWeekGrades(parameters: parameters){ (monthGrades, error) in
+            if let monthGrades = monthGrades {
+                completion(monthGrades, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getMonthGrades(parameters: [String : AnyObject], completion: @escaping(_ result: MonthGrades?, _ error: NSError?) -> Void) {
+        Client.shared().selectMonthGrades(parameters: parameters){ (monthGrades, error) in
+            if let monthGrades = monthGrades {
+                completion(monthGrades, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getStudentAttendance(parameters: [String : AnyObject], completion: @escaping(_ result: AttendanceResult?, _ error: NSError?) -> Void) {
+        Client.shared().selectStudentAttendance(parameters: parameters){ (attendance, error) in
+            if let attendance = attendance {
+                completion(attendance, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getIfActivatedAccount(parameters: [String : AnyObject], completion: @escaping(_ result: IsActivated?, _ error: NSError?) -> Void) {
+          Client.shared().selectIfActivatedAccount(parameters: parameters){ (isActivated, error) in
+              if let isActivated = isActivated {
+                  completion(isActivated, nil)
+              }
+              else if let error = error {
+                  completion(nil, error)
+              }
+          }
+      }
 }

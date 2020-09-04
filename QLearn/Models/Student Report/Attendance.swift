@@ -8,8 +8,11 @@
 
 import Foundation
 
-struct Attendance {
-    var weekNumber: String = ""
-    var status: Bool = false
-    var date: String = ""
+struct AttendanceResult: Decodable {
+    let RESULT: [Attendance]
+}
+
+struct Attendance: Decodable {
+    let num: String
+    let status: String
 }

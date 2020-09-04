@@ -177,7 +177,7 @@ class LoginViewController: UIViewController {
             }
             else if userType == "parent" {
                 let parent = Parent()
-                let parameters = ["student_phone" : textFieldOne.text?.replacedArabicDigitsWithEnglish,
+                let parameters = ["phone" : textFieldOne.text?.replacedArabicDigitsWithEnglish,
                                   "parentPhone" : textFieldTwo.text?.replacedArabicDigitsWithEnglish]
                 parent.login(parameters: parameters as [String : AnyObject]) {(data, error) in
                     if let parent = data {
@@ -191,11 +191,11 @@ class LoginViewController: UIViewController {
                             self.performUIUpdatesOnMain {
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
-                                let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
-                                homeVC.userType = self.userType
+                                let studentTeachersVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeView") as! UINavigationController
+                                studentTeachersVC.modalPresentationStyle = .fullScreen
                                 self.textFieldOne.text = ""
                                 self.textFieldTwo.text = ""
-                                self.navigationController?.popViewController(animated: true)
+                                self.present(studentTeachersVC, animated: true, completion: nil)
                             }
                         }
                         else {

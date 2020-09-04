@@ -90,7 +90,6 @@
 		68EC10A723392EA7000654D4 /* AskUsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC10A623392EA7000654D4 /* AskUsTableViewCell.swift */; };
 		68F01928233676F800221D33 /* CreateTrueFalseQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F01927233676F800221D33 /* CreateTrueFalseQuestionViewController.swift */; };
 		68F97591232FF40D007BFFD0 /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F97590232FF40C007BFFD0 /* MenuCollectionViewCell.swift */; };
-		68F97593233002AD007BFFD0 /* WeekGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F97592233002AD007BFFD0 /* WeekGrade.swift */; };
 		68F9759523302358007BFFD0 /* SelectStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F9759423302358007BFFD0 /* SelectStudentViewController.swift */; };
 		68F988CC23530ABD00A62BC4 /* LongPressGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F988CB23530ABD00A62BC4 /* LongPressGesture.swift */; };
 		68FED467232A7F45000A5A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FED466232A7F45000A5A7C /* AppDelegate.swift */; };
@@ -110,6 +109,9 @@
 		9B35EDD224FBD262006A7314 /* NewRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDD124FBD260006A7314 /* NewRegistrationViewController.swift */; };
 		9B35EDD424FBE824006A7314 /* StudentLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDD324FBE824006A7314 /* StudentLevel.swift */; };
 		9B35EDD624FBFA17006A7314 /* RegisterNewTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDD524FBFA17006A7314 /* RegisterNewTeacherViewController.swift */; };
+		9B649AE425011AD500130645 /* TeacherCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE325011AD500130645 /* TeacherCard.swift */; };
+		9B649AE62501744500130645 /* IsActivated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE52501744500130645 /* IsActivated.swift */; };
+		9B649AE825017D5A00130645 /* GoForPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE725017D5A00130645 /* GoForPayViewController.swift */; };
 		D7B51B36466D01ACBFF4AB02 /* Pods_QLearn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17BA07AAE608FA129305DD02 /* Pods_QLearn.framework */; };
 /* End PBXBuildFile section */
 
@@ -204,7 +206,6 @@
 		68EC10A823393BE0000654D4 /* AnswerQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnswerQuestionViewController.swift; path = "El-Khateeb/Controller/AnswerQuestionViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68F01927233676F800221D33 /* CreateTrueFalseQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrueFalseQuestionViewController.swift; sourceTree = "<group>"; };
 		68F97590232FF40C007BFFD0 /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCollectionViewCell.swift; path = ../MenuCollectionViewCell.swift; sourceTree = "<group>"; };
-		68F97592233002AD007BFFD0 /* WeekGrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekGrade.swift; sourceTree = "<group>"; };
 		68F9759423302358007BFFD0 /* SelectStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudentViewController.swift; sourceTree = "<group>"; };
 		68F988CB23530ABD00A62BC4 /* LongPressGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongPressGesture.swift; sourceTree = "<group>"; };
 		68FED463232A7F45000A5A7C /* QLearn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLearn.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +227,9 @@
 		9B35EDD124FBD260006A7314 /* NewRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewRegistrationViewController.swift; path = QLearn/Controller/NewRegistrationViewController.swift; sourceTree = SOURCE_ROOT; };
 		9B35EDD324FBE824006A7314 /* StudentLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLevel.swift; sourceTree = "<group>"; };
 		9B35EDD524FBFA17006A7314 /* RegisterNewTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterNewTeacherViewController.swift; path = QLearn/Models/Auth/RegisterNewTeacherViewController.swift; sourceTree = SOURCE_ROOT; };
+		9B649AE325011AD500130645 /* TeacherCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCard.swift; sourceTree = "<group>"; };
+		9B649AE52501744500130645 /* IsActivated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsActivated.swift; sourceTree = "<group>"; };
+		9B649AE725017D5A00130645 /* GoForPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoForPayViewController.swift; sourceTree = "<group>"; };
 		E90EBE879AE8283379917F22 /* Pods-QLearn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLearn.release.xcconfig"; path = "Target Support Files/Pods-QLearn/Pods-QLearn.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -288,6 +292,7 @@
 				6875649B2333C1AA00871F5C /* Uploaded PDFs */,
 				686D748C2333B27100F2FE34 /* Student Report */,
 				5D4EFD5823330B390005F7FE /* Admin */,
+				9B649AE725017D5A00130645 /* GoForPayViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -463,6 +468,8 @@
 				68EC109F2339020D000654D4 /* Student Report */,
 				68EB192C233E9D960092589B /* Uploaded PDFs */,
 				68EB192F233E9EE70092589B /* Users */,
+				9B649AE52501744500130645 /* IsActivated.swift */,
+				9B649AE325011AD500130645 /* TeacherCard.swift */,
 				5DBEA73823438E0800C6333A /* AllNews.swift */,
 				68EAB148232E814E005CBC1D /* LessonDates.swift */,
 				9B2E2F1324FD0D310003E5BA /* Teachers.swift */,
@@ -600,7 +607,6 @@
 		68EC109F2339020D000654D4 /* Student Report */ = {
 			isa = PBXGroup;
 			children = (
-				68F97592233002AD007BFFD0 /* WeekGrade.swift */,
 				68E4ED332331196200F79C7F /* MonthGrade.swift */,
 				68E4ED35233119C000F79C7F /* Attendance.swift */,
 			);
@@ -824,6 +830,7 @@
 				68E4325E234535D800AD5544 /* FullQuestion.swift in Sources */,
 				5D39FDA9232DEADC005C3E23 /* CvTeacherViewController.swift in Sources */,
 				684470E1233C1845003A717B /* AskTeacherViewController.swift in Sources */,
+				9B649AE425011AD500130645 /* TeacherCard.swift in Sources */,
 				68E76D49233A7C9900C397F7 /* AddPdfViewController.swift in Sources */,
 				683239FF23381DAC002DACBF /* SearchQuestionsTableViewCell.swift in Sources */,
 				68EB1924233E68DE0092589B /* Phone.swift in Sources */,
@@ -852,7 +859,6 @@
 				68EB1933233EA3560092589B /* Pdf.swift in Sources */,
 				5D1E2AF12336067A007715DD /* CreateMcqQuestionViewController.swift in Sources */,
 				5DBEA73923438E0800C6333A /* AllNews.swift in Sources */,
-				68F97593233002AD007BFFD0 /* WeekGrade.swift in Sources */,
 				5D1977AD234015FC00C3659E /* GoQusetionAnswerViewController.swift in Sources */,
 				9B35EDCF24FBD24F006A7314 /* ConfirmPasswordViewController.swift in Sources */,
 				5D4EFD5C23330BC80005F7FE /* AddNewNewsTableViewCell.swift in Sources */,
@@ -869,6 +875,7 @@
 				5D7AF77B232E0E120075BC0C /* ContactUsViewController.swift in Sources */,
 				68EB1927233E715E0092589B /* Achievement.swift in Sources */,
 				5D7AF779232E0BBD0075BC0C /* CvTeacherTableViewCell.swift in Sources */,
+				9B649AE62501744500130645 /* IsActivated.swift in Sources */,
 				5D26B5782338BC1B000EE757 /* CheckQuestionViewController.swift in Sources */,
 				684470E7233C2FA7003A717B /* MyQuestionsTableViewCell.swift in Sources */,
 				68E4ED3F23312B0100F79C7F /* MonthGradesTableViewCell.swift in Sources */,
@@ -888,6 +895,7 @@
 				5D4EFD5723330B2C0005F7FE /* AddNewNewsTableView.swift in Sources */,
 				68E71D0C232D46D3007D016A /* UIButton+Extension.swift in Sources */,
 				5DBEA73B2343917400C6333A /* TeacherDrobMenu.swift in Sources */,
+				9B649AE825017D5A00130645 /* GoForPayViewController.swift in Sources */,
 				686D748E2333C00500F2FE34 /* TypeTableViewCell.swift in Sources */,
 				68EB1922233E588C0092589B /* Address.swift in Sources */,
 				68C4FB722332C49B001E287B /* SlidingText.swift in Sources */,
@@ -1068,6 +1076,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = A2Q9DC3AJW;
 				INFOPLIST_FILE = QLearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1088,6 +1097,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = A2Q9DC3AJW;
 				INFOPLIST_FILE = QLearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

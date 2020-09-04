@@ -17,7 +17,8 @@ class AvailableTeachersViewController: UIViewController {
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
     
-    var teachers = [Teacher]()
+    var allTeachers = [[Teacher]]()
+    var isActivated : [Activated] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,20 @@ class AvailableTeachersViewController: UIViewController {
         addOtherTeachersButton.isHidden = true
         activityIndicator.type = .circleStrokeSpin
         activityIndicator.color = .cyan
+        
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
         getStudentTeachers()
+        dispatchGroup.leave()
+        
+        dispatchGroup.enter()
+        getIfActivated()
+        dispatchGroup.leave()
+        
+        dispatchGroup.notify(queue: .main) {
+            print("is activated: \(self.isActivated)")
+        }
     }
     
     private func getStudentTeachers() {
@@ -41,9 +55,7 @@ class AvailableTeachersViewController: UIViewController {
         student.getStudentTeachers(parameters: parameters as [String : AnyObject]){ (data, error) in
             if let teachers = data {
                 print(teachers)
-                for teacher in teachers.RESULT{
-                    self.teachers.append(teacher)
-                }
+                self.allTeachers.append(teachers.RESULT)
                 self.performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
@@ -76,10 +88,7 @@ class AvailableTeachersViewController: UIViewController {
         activityIndicator.startAnimating()
         student.getOtherTeachers(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let teachers = data {
-                print(teachers)
-                for teacher in teachers.RESULT{
-                    self.teachers.append(teacher)
-                }
+                self.allTeachers.append(teachers.RESULT)
                 self.performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
@@ -103,6 +112,33 @@ class AvailableTeachersViewController: UIViewController {
         }
     }
     
+    func getIfActivated() {
+        let student = Student()
+        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id")]
+        student.getIfActivatedAccount(parameters: parameters as [String : AnyObject]){ (data, error) in
+            if let isActivated = data {
+                for active in isActivated.RESULT {
+                    print("Activated: \(active)")
+                    self.isActivated.append(active)
+                }
+            }
+            else if let error = error {
+                if error.code == 1001 {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                else {
+                    self.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+                print(error)
+            }
+        }
+    }
+
+    
     @IBAction func onClickAddOtherTeachersButton(_ sender: UIButton) {
         getOtherTeachers()
     }
@@ -119,13 +155,9 @@ class AvailableTeachersViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "type")
         UserDefaults.standard.synchronize()
 //        self.dismiss(animated: true, completion: nil)
-        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as! LoginViewController
+        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
         loginVC.modalPresentationStyle = .fullScreen
         self.present(loginVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func onClickProfileButton(_ sender: Any) {
-        
     }
     
 }
@@ -134,16 +166,21 @@ class AvailableTeachersViewController: UIViewController {
 extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return allTeachers.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return teachers.count
+        return allTeachers[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeacherCell") as! TeachersTableViewCell
-        cell.setupCell(teacher: teachers[indexPath.row])
+        if(indexPath.section == 0) {
+            cell.setupCell(teacher: allTeachers[indexPath.section][indexPath.row], isMyTeacher: true)
+        }
+        else if(indexPath.section == 1) {
+            cell.setupCell(teacher: allTeachers[indexPath.section][indexPath.row], isMyTeacher: false)
+        }
         return cell
     }
     
@@ -152,10 +189,22 @@ extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("hello")
-        let homeVC = storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
-        homeVC.teacherId = self.teachers[indexPath.row].id
-        navigationController?.pushViewController(homeVC, animated: true)
+        if(isActivated[0].activated == "True") {
+            let homeVC = storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
+            homeVC.teacherId = self.allTeachers[indexPath.section][indexPath.row].id
+            if(indexPath.section == 0) {
+                homeVC.isMyTeacher = true
+            }
+            else if(indexPath.section == 1) {
+                homeVC.isMyTeacher = false
+            }
+            print("is my teacher: \(homeVC.isMyTeacher)")
+            navigationController?.pushViewController(homeVC, animated: true)
+        }
+        else {
+            let goForPayVC = storyboard?.instantiateViewController(withIdentifier: "GoForPayVC")
+            navigationController?.pushViewController(goForPayVC!, animated: true)
+        }
     }
     
     

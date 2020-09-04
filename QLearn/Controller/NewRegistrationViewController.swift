@@ -97,7 +97,7 @@ class NewRegistrationViewController: UIViewController{
             if registerType == "student" {
                 let student = Student()
                 let studentParameters = ["phone" : StudentNumText.text?.replacedArabicDigitsWithEnglish]
-                student.getStudentByPhone(parameters: studentParameters as [String : AnyObject]) { (student, error) in
+                student.login(parameters: studentParameters as [String : AnyObject]) { (student, error) in
                     if let student = student {
                         if student.RESULT.count > 0 {
                             self.performUIUpdatesOnMain {
@@ -107,13 +107,15 @@ class NewRegistrationViewController: UIViewController{
                         else {
                             let user = User()
                             self.performUIUpdatesOnMain {
-                                let parameters = ["name" : self.FullNameText.text,
+                                let parameters = ["name" : self.FullNameText.text!,
                                                   "phone" : self.StudentNumText.text?.replacedArabicDigitsWithEnglish,
                                                   "parentPhone" : self.ParentNumText.text?.replacedArabicDigitsWithEnglish,
-//                                                  "level" : self.levelText.text,
-                                                  "password" : self.PasswordText.text]
+                                                  "level" : self.levelsIds[self.levelDropDown.selectedIndex!],
+                                                  "motherPhone" : "",
+                                                  "password" : self.PasswordText.text!,
+                                                  "school" : self.schoolTextField.text!]
                                 
-                                user.register(method: "insert_student.php", parameters: parameters as [String : AnyObject]) { (response, error) in
+                                user.register(method: "inserting_student.php", parameters: parameters as [String : AnyObject]) { (response, error) in
                                     if let response = response{
                                         print(response)
                                         if response.contains("inserted"){

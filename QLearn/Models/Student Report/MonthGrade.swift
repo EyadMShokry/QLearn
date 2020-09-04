@@ -8,7 +8,14 @@
 
 import Foundation
 
-struct MonthGrade {
-    var monthNumber: String = ""
-    var grade: String = ""
+struct MonthGrades: Decodable {
+    let RESULT: [Grades]
 }
+
+struct Grades: Decodable {
+    let stuID: String
+    let monthNum: String
+    let grade: String
+    let teacherID: String
+}
+
