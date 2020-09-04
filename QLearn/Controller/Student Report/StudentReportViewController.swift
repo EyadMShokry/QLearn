@@ -232,7 +232,7 @@ class StudentReportViewController: UIViewController {
         student.getMonthGrades(parameters: parameters as [String : AnyObject]){ (data, error) in
             if let grades = data {
                 print(grades)
-                self.weeksGrades = grades.RESULT
+                self.monthsGrades = grades.RESULT
                 self.performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
