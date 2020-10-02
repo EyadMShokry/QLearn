@@ -77,7 +77,7 @@ class Admin:SchoolUser{
     }
     
     func insertAchievement(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_achievement.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_achievements.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -241,6 +241,17 @@ class Admin:SchoolUser{
         }
     }
     
+    func insertAdmin(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
+        Client.shared().insertOrDeleteRequest(method: "insert_admin.php", parameters: parameters) { (data, error) in
+            if let response = data {
+                completion(response, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+
     
     func deleteNews(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
         Client.shared().insertOrDeleteRequest(method: "delete_news.php", parameters: parameters) {(data, error) in
@@ -340,6 +351,7 @@ class Admin:SchoolUser{
             }
         }
     }
+    
     
     
     func selectAllEssayQuestions(parameters: [String : AnyObject], completion: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {

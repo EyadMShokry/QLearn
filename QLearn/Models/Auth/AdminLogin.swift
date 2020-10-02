@@ -17,4 +17,7 @@ struct AdminLoginResult: Decodable {
     let phone: String
     let name: String
     let pass: String
+    let teacherID: String
+    let subject: String
+    let photo_url: String
 }

@@ -30,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable {
             let homeVC = storyboard.instantiateViewController(withIdentifier: "HomeView") as! UINavigationController
             self.window?.rootViewController = homeVC
         }
+        else if(UserDefaults.standard.value(forKey: "id") != nil && UserDefaults.standard.string(forKey: "type") == "teacher") {
+            let selectLevelVC = storyboard.instantiateViewController(withIdentifier: "SelectLevelsNavigation") as! UINavigationController
+            self.window?.rootViewController = selectLevelVC
+        }
         else {
             let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
             self.window?.rootViewController = loginVC

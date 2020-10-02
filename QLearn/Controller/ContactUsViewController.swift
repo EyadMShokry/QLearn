@@ -24,7 +24,7 @@ class ContactUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(UserDefaults.standard.string(forKey: "type") != "admin") {
+        if(UserDefaults.standard.string(forKey: "type") != "teacher") {
             addPhoneNumberButton.isHidden = true
             addAddressButton.isHidden = true
         }
@@ -36,7 +36,11 @@ class ContactUsViewController: UIViewController {
         
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        let parameters = ["teacher_id" : teacherId]
+        var parameters = ["teacher_id" : teacherId]
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+            parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
+        }
+
         user.getAddresses(parameters: parameters as [String : AnyObject]) {(addresses, error) in
             if let addresses = addresses {
                 self.arrayAddresses = addresses.RESULT
@@ -128,7 +132,8 @@ class ContactUsViewController: UIViewController {
                 SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
             }
             else {
-                let parameters = ["phone" : phoneNumberTextField.text]
+                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                  "phone" : phoneNumberTextField.text]
                 let admin = Admin()
                 self.arrayPhoneNum.removeAll()
                 
@@ -138,6 +143,7 @@ class ContactUsViewController: UIViewController {
                     if let response = data{
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
+                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
                                 admin.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let numbers = data {
                                         self.arrayPhoneNum = numbers.RESULT
@@ -211,7 +217,9 @@ class ContactUsViewController: UIViewController {
                 SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
             }
             else {
-                let parameters = ["address_title" : addressTitleTextField.text, "address" : addressTextField.text]
+                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                  "address_title" : addressTitleTextField.text,
+                                  "address" : addressTextField.text]
                 let admin = Admin()
                 self.arrayAddresses.removeAll()
                 
@@ -221,6 +229,7 @@ class ContactUsViewController: UIViewController {
                     if let response = data{
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
+                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
                                 admin.getAddresses(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let addresses = data {
                                         self.arrayAddresses = addresses.RESULT
@@ -397,7 +406,7 @@ extension ContactUsViewController: UITableViewDataSource, UITableViewDelegate {
                             if response.contains("inserted") {
                                 self.performUIUpdatesOnMain {
                                     SCLAlertView().showSuccess("Success".localized, subTitle: "Phone number edited successfully".localized, closeButtonTitle:"Ok".localized)
-                                    
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
                                     admin.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let numbers = data {
                                             self.arrayPhoneNum = numbers.RESULT
@@ -498,7 +507,7 @@ extension ContactUsViewController: UITableViewDataSource, UITableViewDelegate {
                             if response.contains("inserted") {
                                 self.performUIUpdatesOnMain {
                                     SCLAlertView().showSuccess("Success".localized, subTitle: "Address edited successfully".localized, closeButtonTitle:"Ok".localized)
-                                    
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
                                     admin.getAddresses(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let addresses = data {
                                             self.arrayAddresses = addresses.RESULT

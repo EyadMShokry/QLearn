@@ -103,6 +103,7 @@
 		9B2E2F1024FD0A850003E5BA /* TeachersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */; };
 		9B2E2F1224FD0ACC0003E5BA /* TeachersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */; };
 		9B2E2F1424FD0D310003E5BA /* Teachers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1324FD0D310003E5BA /* Teachers.swift */; };
+		9B2EE8AD2526506D00996BE2 /* SelectLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */; };
 		9B33B60424FBB91300B74760 /* AnswerQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33B60324FBB91300B74760 /* AnswerQuestionViewController.swift */; };
 		9B35EDCE24FBD24F006A7314 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDCB24FBD24F006A7314 /* ConfirmCodeViewController.swift */; };
 		9B35EDCF24FBD24F006A7314 /* ConfirmPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDCC24FBD24F006A7314 /* ConfirmPasswordViewController.swift */; };
@@ -220,6 +221,7 @@
 		9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersTableViewCell.swift; sourceTree = "<group>"; };
 		9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeachersTableViewCell.xib; sourceTree = "<group>"; };
 		9B2E2F1324FD0D310003E5BA /* Teachers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teachers.swift; sourceTree = "<group>"; };
+		9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLevelViewController.swift; sourceTree = "<group>"; };
 		9B33B60324FBB91300B74760 /* AnswerQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerQuestionViewController.swift; sourceTree = "<group>"; };
 		9B35EDCB24FBD24F006A7314 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfirmCodeViewController.swift; path = QLearn/Controller/ConfirmCodeViewController.swift; sourceTree = SOURCE_ROOT; };
 		9B35EDCC24FBD24F006A7314 /* ConfirmPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfirmPasswordViewController.swift; path = QLearn/Controller/ConfirmPasswordViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -270,6 +272,7 @@
 			children = (
 				5D4EFD5623330B2C0005F7FE /* AddNewNewsTableView.swift */,
 				5D4EFD5923330B750005F7FE /* AddTeachersTableView.swift */,
+				9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				5DE88706233DFA9A007A5D0A /* AllQuestionChapterViewController.swift in Sources */,
 				683239FD23381D81002DACBF /* SearchQuestionsViewController.swift in Sources */,
 				5D4EFD5E23330BDF0005F7FE /* AddTeachersTableViewCell.swift in Sources */,
+				9B2EE8AD2526506D00996BE2 /* SelectLevelViewController.swift in Sources */,
 				6827A4D1234459D800FF4AD9 /* AdminLogin.swift in Sources */,
 				68E4ED4123312B2800F79C7F /* AttendanceTableViewCell.swift in Sources */,
 				6875649D2333C1D400871F5C /* AvailableTypesViewController.swift in Sources */,
@@ -1076,13 +1080,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A2Q9DC3AJW;
 				INFOPLIST_FILE = QLearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = Qubtan.QLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -1097,13 +1102,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A2Q9DC3AJW;
 				INFOPLIST_FILE = QLearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = Qubtan.QLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

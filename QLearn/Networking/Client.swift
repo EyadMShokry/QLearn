@@ -353,7 +353,7 @@ class Client: NSObject {
     }
     
     func loginAdmin(parameters: [String : AnyObject], completionHandler: @escaping(_ result: AdminLogin?, _ error: NSError?) -> Void) {
-        _ = taskForPOSTMethod("admin_login.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+        _ = taskForPOSTMethod("select_admins_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return

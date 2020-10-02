@@ -149,11 +149,11 @@ class LoginViewController: UIViewController {
                                 self.performUIUpdatesOnMain {
                                     self.activityIndicator.stopAnimating()
                                     self.activityIndicator.isHidden = true
-                                    let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
-                                    homeVC.userType = self.userType
+                                    let selectLevelVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLevelsNavigation") as! UINavigationController
+                                    selectLevelVC.modalPresentationStyle = .fullScreen
                                     self.textFieldOne.text = ""
                                     self.textFieldTwo.text = ""
-                                    self.navigationController?.popViewController(animated: true)
+                                    self.present(selectLevelVC, animated: true, completion: nil)
                                 }
                             }
                             else {

@@ -27,6 +27,7 @@
     var teacherId = ""
     var teacherCard: [Card] = []
     var isMyTeacher = true
+    var levelId = ""
     
     func getTeacherCard() {
         let student = Student()
@@ -54,19 +55,23 @@
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getTeacherCard()
+        if(userType == "student") {
+            getTeacherCard()
+        }
         newsArray.removeAll()
         
         if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
             adminBarButtonItem.isEnabled = false
             adminBarButtonItem.isHidden = true
             adminBarButtonItem.tintColor = .clear
+            studentNumberLabel.isHidden = false
             studentNumberLabel.text = "رقم الطالب: \(UserDefaults.standard.string(forKey: "id") ?? "0")"
         }
         else {
             adminBarButtonItem.isEnabled = true
             adminBarButtonItem.isHidden = false
             adminBarButtonItem.tintColor = UIColor(displayP3Red: 48/255, green: 140/255, blue: 239/255, alpha: 1.0)
+            studentNumberLabel.isHidden = true
         }
         let user = User()
         let parameters = ["expire_date" : Date.getCurrentDate(),
@@ -105,6 +110,7 @@
         sectionsTableView.delegate = self
         sectionsTableView.isScrollEnabled = false
         sectionsTableView.separatorColor = .clear
+        print(levelId)
         
     }
     

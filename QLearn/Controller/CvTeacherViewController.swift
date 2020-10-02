@@ -28,13 +28,16 @@ class CvTeacherViewController: UIViewController {
         super.viewDidLoad()
         
         getInfoParameters = ["teacher_id" : teacherId]
-        if(UserDefaults.standard.value(forKey: "admin_phone") == nil) {
+        if(UserDefaults.standard.string(forKey: "type") != "teacher") {
             editInformation.isHidden = true
             addAchievementButton.isHidden = true
         }
-        else if(UserDefaults.standard.value(forKey: "admin_phone") as! String != "01142054422") {
-            editInformation.isHidden = true
+        else {
+            getInfoParameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
         }
+//        else if(UserDefaults.standard.value(forKey: "admin_phone") as! String != "01142054422") {
+//            editInformation.isHidden = true
+//        }
         
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
         self.profileImageView.clipsToBounds = true
@@ -89,7 +92,10 @@ class CvTeacherViewController: UIViewController {
         }
         
         dispatchGroup.enter()
-        let parameters = ["teacher_id" : self.teacherId]
+        var parameters = ["teacher_id" : self.teacherId]
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+            parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
+        }
         user.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
             if let achievements = data {
                 self.achievementsData = achievements.RESULT
@@ -164,7 +170,9 @@ class CvTeacherViewController: UIViewController {
                                   "DOB" : dateOfBirthTextField.text!,
                                   "school" : workingAtTextField.text!,
                                   "id" : UserDefaults.standard.string(forKey: "id"),
-                                  "teacher_id" : self.teacherId]
+                                  "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                  "photo_url" : "",
+                                  "cover_url" : ""]
                 
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
@@ -273,7 +281,7 @@ class CvTeacherViewController: UIViewController {
                             self.performUIUpdatesOnMain {
                                 SCLAlertView().showSuccess("Success".localized, subTitle:"Achievement added successfully".localized, closeButtonTitle:"Ok".localized)
                                 
-                                let parameters = ["teacher_id" : self.teacherId]
+                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
                                 admin.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let achievements = data {
                                         self.achievementsData = achievements.RESULT
@@ -422,7 +430,7 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
                                 self.performUIUpdatesOnMain {
                                     SCLAlertView().showSuccess("Success".localized, subTitle: "Achievement edited successfully".localized, closeButtonTitle:"Ok".localized)
                                     
-                                    let parameters = ["teacher_id" : self.teacherId]
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
                                     admin.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let achievements = data {
                                             self.achievementsData = achievements.RESULT

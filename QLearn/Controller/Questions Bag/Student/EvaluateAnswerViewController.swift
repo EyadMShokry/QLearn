@@ -168,7 +168,7 @@ class EvaluateAnswerViewController: UIViewController {
             let parameters = ["actual_answer": studentAnswer,
                               "question_id": questionId,
                               "student_id": UserDefaults.standard.value(forKey: "id"),
-                              "type": "questionType",
+                              "type": questionType,
                               "isCorrect": "-1",
                               "chapter_id": chapterId]
             let student = Student()
