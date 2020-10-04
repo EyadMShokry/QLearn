@@ -19,6 +19,7 @@ class AnswerQuestionViewController: UIViewController {
     var selectedChapterId = ""
     var selectedCellRow: Int = 0
     var selectedQuestionId = ""
+    var selectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,37 +36,39 @@ class AnswerQuestionViewController: UIViewController {
         chaptersPickerView.delegate = self
         
         let admin = Admin()
-        
-//        admin.getAllChapters { (chapters, error) in
-//            if let chapters = chapters {
-//                print(chapters)
-//                self.chaptersArray = chapters.RESULT
-//                self.performUIUpdatesOnMain {
-//                    self.selectedChapter = self.chaptersArray.count > 0 ? self.chaptersArray[0].title : ""
-//                    self.selectedChapterId = self.chaptersArray.count > 0 ? self.chaptersArray[0].id : ""
-//                    self.activityIndicator.stopAnimating()
-//                    self.activityIndicator.isHidden = true
-//                    self.chaptersPickerView.reloadAllComponents()
-//                }
-//            }
-//            else if let error = error {
-//                self.performUIUpdatesOnMain {
-//                    if error.code == 1001 {
-//                        self.performUIUpdatesOnMain {
-//                            SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-//                        }
-//                    }
-//                    else {
-//                        self.performUIUpdatesOnMain {
-//                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-//                        }
-//                    }
-//                    print(error)
-//                    self.activityIndicator.stopAnimating()
-//                    self.activityIndicator.isHidden = true
-//                }
-//            }
-//        }
+        let parameters = ["level" : selectedLevel,
+                          "teacherID" : UserDefaults.standard.string(forKey: "id")]
+        print(parameters)
+        admin.getAllChapters(parameters: parameters as [String : AnyObject]) { (chapters, error) in
+            if let chapters = chapters {
+                print(chapters)
+                self.chaptersArray = chapters.RESULT
+                self.performUIUpdatesOnMain {
+                    self.selectedChapter = self.chaptersArray.count > 0 ? self.chaptersArray[0].title : ""
+                    self.selectedChapterId = self.chaptersArray.count > 0 ? self.chaptersArray[0].id : ""
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.chaptersPickerView.reloadAllComponents()
+                }
+            }
+            else if let error = error {
+                self.performUIUpdatesOnMain {
+                    if error.code == 1001 {
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                        }
+                    }
+                    else {
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                        }
+                    }
+                    print(error)
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                }
+            }
+        }
     }
     
     
@@ -74,9 +77,10 @@ class AnswerQuestionViewController: UIViewController {
             SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
         }
         else {
-            let parameters = ["question_id" : selectedQuestionId,
+            let parameters = ["id" : selectedQuestionId,
                               "chapter_id" : selectedChapterId,
                               "answer" : answerTextArea.text!]
+            print(parameters)
             let admin = Admin()
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
@@ -163,7 +167,7 @@ extension AnswerQuestionViewController: UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedChapter = chaptersArray[row].title
-        selectedChapterId = chaptersArray[row].id
+        selectedChapter = self.chaptersArray.count > 0 ? chaptersArray[row].title : ""
+        selectedChapterId = self.chaptersArray.count > 0 ? chaptersArray[row].id : ""
     }
 }

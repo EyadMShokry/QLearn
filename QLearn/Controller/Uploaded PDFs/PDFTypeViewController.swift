@@ -19,13 +19,18 @@ class PDFTypeViewController: UIViewController, DismissManager {
     var pdfs: [PdfResult] = []
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
     var teacherId = ""
+    var selectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
+        if(UserDefaults.standard.string(forKey: "type") != "teacher") {
             addNewPdfButton.isEnabled = false
             addNewPdfButton.tintColor = .clear
+            selectedLevel = UserDefaults.standard.string(forKey: "student_level")!
+        }
+        else {
+            teacherId = UserDefaults.standard.string(forKey: "id")!
         }
 
         // Do any additional setup after loading the view.
@@ -40,7 +45,7 @@ class PDFTypeViewController: UIViewController, DismissManager {
         var student: Student
         student = Student()
         
-        let parameters = ["category_id" : selectedCategoryId, "teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+        let parameters = ["category_id" : selectedCategoryId, "teacher_id" : teacherId, "level" : selectedLevel]
         student.getPdfs(parameters: parameters as [String : AnyObject]) {(pdfs, error) in
             if let pdfs = pdfs {
                 self.pdfs = pdfs.RESULT
@@ -130,7 +135,7 @@ class PDFTypeViewController: UIViewController, DismissManager {
         var student: Student
         student = Student()
         
-        let parameters = ["category_id" : selectedCategoryId, "teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+        let parameters = ["category_id" : selectedCategoryId, "teacher_id" : teacherId, "level" : selectedLevel]
         student.getPdfs(parameters: parameters as [String : AnyObject]) {(pdfs, error) in
             if let pdfs = pdfs {
                 self.pdfs = pdfs.RESULT
@@ -187,7 +192,7 @@ extension PDFTypeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if(UserDefaults.standard.value(forKey: "admin_name") != nil) {
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
             return .delete
         }
         else {

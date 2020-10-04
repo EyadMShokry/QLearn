@@ -99,6 +99,8 @@
 		68FED471232A7F52000A5A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68FED46F232A7F52000A5A7C /* LaunchScreen.storyboard */; };
 		68FFB90523351171003B7D49 /* ChaptersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FFB90423351171003B7D49 /* ChaptersViewController.swift */; };
 		68FFB90823351430003B7D49 /* ChapterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FFB90723351430003B7D49 /* ChapterTableViewCell.swift */; };
+		9B2CD2E02528B2720054F0C0 /* AdminMaxId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2CD2DF2528B2720054F0C0 /* AdminMaxId.swift */; };
+		9B2E272C252A1E0100E06334 /* StudentsQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E272B252A1E0100E06334 /* StudentsQuestionsViewController.swift */; };
 		9B2E2F0E24FD09C40003E5BA /* AvailableTeachersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F0D24FD09C40003E5BA /* AvailableTeachersViewController.swift */; };
 		9B2E2F1024FD0A850003E5BA /* TeachersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */; };
 		9B2E2F1224FD0ACC0003E5BA /* TeachersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */; };
@@ -192,7 +194,6 @@
 		68EA9A7A2341AF0500A4D420 /* RightAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightAnswers.swift; sourceTree = "<group>"; };
 		68EAB148232E814E005CBC1D /* LessonDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDates.swift; sourceTree = "<group>"; };
 		68EAB14C232E8F99005CBC1D /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		68EB00B8235046AC00ACE5C2 /* StudentsQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StudentsQuestionsViewController.swift; path = "El-Khateeb/Networking/StudentsQuestionsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68EB1921233E588C0092589B /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		68EB1923233E68DE0092589B /* Phone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phone.swift; sourceTree = "<group>"; };
 		68EB1926233E715E0092589B /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
@@ -203,7 +204,6 @@
 		68EB1932233EA3560092589B /* Pdf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pdf.swift; sourceTree = "<group>"; };
 		68EC10A023390260000654D4 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		68EC10A623392EA7000654D4 /* AskUsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskUsTableViewCell.swift; sourceTree = "<group>"; };
-		68EC10A823393BE0000654D4 /* AnswerQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnswerQuestionViewController.swift; path = "El-Khateeb/Controller/AnswerQuestionViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68F01927233676F800221D33 /* CreateTrueFalseQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrueFalseQuestionViewController.swift; sourceTree = "<group>"; };
 		68F97590232FF40C007BFFD0 /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCollectionViewCell.swift; path = ../MenuCollectionViewCell.swift; sourceTree = "<group>"; };
 		68F9759423302358007BFFD0 /* SelectStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudentViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 		68FFB90423351171003B7D49 /* ChaptersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewController.swift; sourceTree = "<group>"; };
 		68FFB90723351430003B7D49 /* ChapterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTableViewCell.swift; sourceTree = "<group>"; };
 		8E45E735C03497F107116A05 /* Pods_QLearn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QLearn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B2CD2DF2528B2720054F0C0 /* AdminMaxId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMaxId.swift; sourceTree = "<group>"; };
+		9B2E272B252A1E0100E06334 /* StudentsQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsQuestionsViewController.swift; sourceTree = "<group>"; };
 		9B2E2F0D24FD09C40003E5BA /* AvailableTeachersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableTeachersViewController.swift; sourceTree = "<group>"; };
 		9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersTableViewCell.swift; sourceTree = "<group>"; };
 		9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeachersTableViewCell.xib; sourceTree = "<group>"; };
@@ -289,7 +291,6 @@
 		5D515F87232C690200F4618A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9B33B60324FBB91300B74760 /* AnswerQuestionViewController.swift */,
 				5D515F85232C68FC00F4618A /* HomeViewController.swift */,
 				68E71D11232D748D007D016A /* SideMenuTableViewController.swift */,
 				68E71D08232D2C25007D016A /* TimetableViewController.swift */,
@@ -298,8 +299,8 @@
 				6875649C2333C1D400871F5C /* AvailableTypesViewController.swift */,
 				9B2E2F0D24FD09C40003E5BA /* AvailableTeachersViewController.swift */,
 				681D59AE235E30070001554B /* Auth */,
-				68EC10A223391FC6000654D4 /* Ask Us */,
 				689EB3582334032E00D17EC8 /* Questions Bag */,
+				68EC10A223391FC6000654D4 /* Ask Us */,
 				6875649B2333C1AA00871F5C /* Uploaded PDFs */,
 				686D748C2333B27100F2FE34 /* Student Report */,
 				5D4EFD5823330B390005F7FE /* Admin */,
@@ -357,8 +358,8 @@
 		684470DE233C17B0003A717B /* Teacher */ = {
 			isa = PBXGroup;
 			children = (
-				68EB00B8235046AC00ACE5C2 /* StudentsQuestionsViewController.swift */,
-				68EC10A823393BE0000654D4 /* AnswerQuestionViewController.swift */,
+				9B2E272B252A1E0100E06334 /* StudentsQuestionsViewController.swift */,
+				9B33B60324FBB91300B74760 /* AnswerQuestionViewController.swift */,
 			);
 			path = Teacher;
 			sourceTree = "<group>";
@@ -484,6 +485,7 @@
 				5DBEA73823438E0800C6333A /* AllNews.swift */,
 				68EAB148232E814E005CBC1D /* LessonDates.swift */,
 				9B2E2F1324FD0D310003E5BA /* Teachers.swift */,
+				9B2CD2DF2528B2720054F0C0 /* AdminMaxId.swift */,
 				5DBEA73C2343917900C6333A /* Admin */,
 			);
 			path = Models;
@@ -840,6 +842,7 @@
 				5D89BC6F23307233000E0F9A /* OfficePhoneNumbersTableViewCell.swift in Sources */,
 				5DE73D802339E16500696190 /* EssayQuestionsStudentViewController.swift in Sources */,
 				68EB1929233E74820092589B /* TeacherName.swift in Sources */,
+				9B2CD2E02528B2720054F0C0 /* AdminMaxId.swift in Sources */,
 				68E71D09232D2C25007D016A /* TimetableViewController.swift in Sources */,
 				68FFB90523351171003B7D49 /* ChaptersViewController.swift in Sources */,
 				5D515F86232C68FC00F4618A /* HomeViewController.swift in Sources */,
@@ -910,6 +913,7 @@
 				68EA9A792341A12000A4D420 /* QuestionsCount.swift in Sources */,
 				9B35EDD224FBD262006A7314 /* NewRegistrationViewController.swift in Sources */,
 				68F988CC23530ABD00A62BC4 /* LongPressGesture.swift in Sources */,
+				9B2E272C252A1E0100E06334 /* StudentsQuestionsViewController.swift in Sources */,
 				68E71D12232D748D007D016A /* SideMenuTableViewController.swift in Sources */,
 				681E91032347FC21008FA842 /* UIView+Extension.swift in Sources */,
 				9B35EDD424FBE824006A7314 /* StudentLevel.swift in Sources */,

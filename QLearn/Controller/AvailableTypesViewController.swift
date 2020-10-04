@@ -23,19 +23,24 @@ class AvailableTypesViewController: UIViewController {
     var selectedChapterId = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
     var teacherId = ""
+    var selectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(UserDefaults.standard.string(forKey: "type") != "admin") {
+        if(UserDefaults.standard.string(forKey: "type") != "teacher") {
             headerView.isHidden = true
+            UserDefaults.standard.string(forKey: "student_level")
         }
 
         self.view.bringSubviewToFront(activityIndicator)
         var student: Student
         student = Student()
         if(isPdf) {
-            let parameters = ["teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+            if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+                self.teacherId = UserDefaults.standard.string(forKey: "id")!
+            }
+            let parameters = ["teacher_id" : teacherId, "level" : selectedLevel]
             activityIndicator.startAnimating()
             student.getPdfCategories(parameters: parameters as [String : AnyObject]) {(categories, error) in
                 if let categories = categories {
@@ -68,7 +73,7 @@ class AvailableTypesViewController: UIViewController {
         }
         else {
             //call essay types api here
-            let parameters = ["teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+            let parameters = ["teacher_id" : teacherId, "level" : selectedLevel]
             student.getEssayTypes(parameters: parameters as [String : AnyObject]) {(essayTypes, error) in
                 if let essayTypes = essayTypes {
                     self.typesArray = essayTypes.RESULT
@@ -124,7 +129,7 @@ class AvailableTypesViewController: UIViewController {
                 if(self.isPdf) {
                     let parameters = ["title" : newTypeTextField.text!,
                                       "teacher_id" : self.teacherId,
-                                      "level" : UserDefaults.standard.string(forKey: "student_level")]
+                                      "level" : self.selectedLevel]
                     let admin = Admin()
                     self.typesArray.removeAll()
                     
@@ -134,7 +139,7 @@ class AvailableTypesViewController: UIViewController {
                         if let response = data{
                             if response.contains("inserted"){
                                 self.performUIUpdatesOnMain {
-                                    let parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+                                    let parameters = ["teacher_id" : self.teacherId, "level" : self.selectedLevel]
                                     admin.getPdfCategories(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let types = data {
                                             self.typesArray = types.RESULT
@@ -289,6 +294,7 @@ extension AvailableTypesViewController: UITableViewDelegate, UITableViewDataSour
             pdfTypeVC.navigationItem.title = typesArray[indexPath.row].title
             pdfTypeVC.selectedCategoryId = typesArray[indexPath.row].id
             pdfTypeVC.teacherId = self.teacherId
+            pdfTypeVC.selectedLevel = self.selectedLevel
             self.navigationController?.pushViewController(pdfTypeVC, animated: true)
         }
         else {

@@ -644,8 +644,8 @@ class Client: NSObject {
         }
     }
     
-    func selectStudentsQuestion(completionHandler: @escaping(_ result: Questions?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_students_asked_questions.php", parameters: [:]) {(data, error) in
+    func selectStudentsQuestion(parameters: [String : AnyObject], completionHandler: @escaping(_ result: Questions?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_not_answered_ask_questions_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -916,6 +916,29 @@ class Client: NSObject {
         }
     }
     
+    func selectAdminMaxId(completionHandler: @escaping(_ result: AdminMaxId?, _ error: NSError?) -> Void) {
+        _ = taskForGETMethod("select_admin_max_id.php", parameters: [:]) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let maxId = try JSONDecoder().decode(AdminMaxId.self, from: data)
+                completionHandler(maxId, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+
 }
 
 

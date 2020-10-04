@@ -43,8 +43,8 @@ class Admin:SchoolUser{
         }
     }
     
-    func getStudentsQuestion(completion: @escaping(_ result: Questions?, _ error: NSError?) -> Void) {
-        Client.shared().selectStudentsQuestion() {(data, error) in
+    func getStudentsQuestion(parameters: [String : AnyObject], completion: @escaping(_ result: Questions?, _ error: NSError?) -> Void) {
+        Client.shared().selectStudentsQuestion(parameters: parameters) {(data, error) in
             if let question = data {
                 completion(question, nil)
             }
@@ -231,7 +231,7 @@ class Admin:SchoolUser{
     }
     
     func insertQuestionAnswer(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_answer_question.php", parameters: parameters) { (data, error) in
+        Client.shared().insertOrDeleteRequest(method: "answer_an_ask_question.php", parameters: parameters) { (data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -474,4 +474,16 @@ class Admin:SchoolUser{
             }
         }
     }
+    
+    func getMaxId(completion: @escaping(_ result: AdminMaxId?, _ error: NSError?) -> Void) {
+        Client.shared().selectAdminMaxId() {(data, error) in
+            if let id = data {
+                completion(id, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+
 }

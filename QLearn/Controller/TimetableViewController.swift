@@ -12,11 +12,13 @@ import SCLAlertView
 class TimetableViewController: UIViewController {
     @IBOutlet weak var timetableTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var addAppointementButton: UIBarButtonItem!
     
     var timesArray: [String] = []
     var placesArray: [String] = []
     var teacherId = ""
     var levelName = ""
+    var teacherSelectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +30,19 @@ class TimetableViewController: UIViewController {
         activityIndicator.startAnimating()
         var user: User
         user = User()
-        let parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+        var parameters = ["teacher_id" : self.teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")]
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+            parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                          "level" : teacherSelectedLevel]
+            addAppointementButton.tintColor = UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0)
+            addAppointementButton.isEnabled = true
+
+        }
+        else {
+            addAppointementButton.tintColor = .clear
+            addAppointementButton.isEnabled = false
+        }
+        print(parameters)
         user.getLessionDates(parameters: parameters as [String : AnyObject]) {(dates, error) in
             if let dates = dates {
                 if(dates.RESULT.count != 0) {
@@ -70,6 +84,10 @@ class TimetableViewController: UIViewController {
 
             }
         }
+    }
+    
+    @IBAction func onClickAddApointement(_ sender: UIBarButtonItem) {
+        
     }
     
 
@@ -117,6 +135,6 @@ extension TimetableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = .clear
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor(displayP3Red: 48/255, green: 140/255, blue: 239/255, alpha: 1.0)
+        header.textLabel?.textColor = UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0)
     }
 }

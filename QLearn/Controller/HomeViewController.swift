@@ -246,13 +246,15 @@
                 else {
                     let timetableVC = storyboard?.instantiateViewController(withIdentifier: "Timetable") as! TimetableViewController
                     timetableVC.teacherId = self.teacherId
+                    timetableVC.teacherSelectedLevel = self.levelId
                     navigationController?.pushViewController(timetableVC, animated: true)
                 }
             case 3:
                 //ask us block
-                if(UserDefaults.standard.string(forKey: "type") == "admin") {
-                    let askUsVC = storyboard?.instantiateViewController(withIdentifier: "AskUs")
-                    navigationController?.pushViewController(askUsVC!, animated: true)
+                if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+                    let askUsVC = storyboard?.instantiateViewController(withIdentifier: "AskUs") as! StudentsQuestionsViewController
+                    askUsVC.selectedLevel = self.levelId
+                    navigationController?.pushViewController(askUsVC, animated: true)
                     
                 }
                 else {
@@ -281,6 +283,7 @@
                             let uploadedPDFVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
                             uploadedPDFVC.isPdf = true
                             uploadedPDFVC.teacherId = self.teacherId
+                            uploadedPDFVC.selectedLevel = self.levelId
                             navigationController?.pushViewController(uploadedPDFVC, animated: true)
                         }
                     }
@@ -289,6 +292,7 @@
                         let uploadedPDFVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
                         uploadedPDFVC.isPdf = true
                         uploadedPDFVC.teacherId = self.teacherId
+                        uploadedPDFVC.selectedLevel = self.levelId
                         navigationController?.pushViewController(uploadedPDFVC, animated: true)
                     }
                 }
