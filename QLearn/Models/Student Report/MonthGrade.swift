@@ -17,5 +17,6 @@ struct Grades: Decodable {
     let monthNum: String
     let grade: String
     let teacherID: String
+    let totalGrade: String
 }
 

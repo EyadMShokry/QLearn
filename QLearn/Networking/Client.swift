@@ -938,6 +938,30 @@ class Client: NSObject {
             }
         }
     }
+    
+    func selectExternalLinks(parameters: [String : AnyObject], completionHandler: @escaping(_ result: ExternalLink?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_links_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let links = try JSONDecoder().decode(ExternalLink.self, from: data)
+                completionHandler(links, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+
 
 }
 
@@ -1067,10 +1091,9 @@ extension Client {
 
 
 extension Client {
-    
     struct ApiConstants {
         static let APIScheme = "http"
-        static let APIHost = "qubtan.website"
-        static let APIPath = "/khaled/Qlearn_API/"
+        static let APIHost = "5.189.186.174"
+        static let APIPath = "/~qlearn/khaled/Qlearn_API/"
     }
 }

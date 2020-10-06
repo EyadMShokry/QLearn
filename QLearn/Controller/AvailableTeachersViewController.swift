@@ -192,6 +192,7 @@ extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDel
         if(isActivated[0].activated == "True") {
             let homeVC = storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
             homeVC.teacherId = self.allTeachers[indexPath.section][indexPath.row].id
+            homeVC.userType = "student"
             if(indexPath.section == 0) {
                 homeVC.isMyTeacher = true
             }

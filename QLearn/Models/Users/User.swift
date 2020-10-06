@@ -98,5 +98,17 @@ class User {
             }
         }
     }
+    
+    func getExternalLinks(parameters: [String : AnyObject], completion: @escaping(_ result: ExternalLink?, _ error: NSError?) -> Void) {
+        Client.shared().selectExternalLinks(parameters: parameters) {(data, error) in
+            if let links = data {
+              completion(links, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+
    
 }

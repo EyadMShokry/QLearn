@@ -251,7 +251,6 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
                 let essayTypesVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
                 essayTypesVC.isPdf = false
                 essayTypesVC.selectedChapterId = chaptersArray[indexPath.row].id
-                
                 navigationController?.pushViewController(essayTypesVC, animated: true)
                 
             }

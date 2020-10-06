@@ -312,14 +312,14 @@ extension StudentReportViewController: UITableViewDataSource, UITableViewDelegat
         if(tableView == weeksReportTableView) {
             let weekCell = tableView.dequeueReusableCell(withIdentifier: "WeekGrades") as! WeekGradesTableViewCell
             weekCell.weekNumberLabel.text = weeksGrades[indexPath.row].monthNum
-            weekCell.gradeLabel.text = weeksGrades[indexPath.row].grade
+            weekCell.gradeLabel.text = "\(weeksGrades[indexPath.row].grade)/\(weeksGrades[indexPath.row].totalGrade)"
             weekCell.dateLabel.text = ""
             
             return weekCell
         }
         else if(tableView == monthsReportTableView) {
             let monthCell = tableView.dequeueReusableCell(withIdentifier: "MonthGrades") as! MonthGradesTableViewCell
-            monthCell.gradeLabel.text = monthsGrades[indexPath.row].grade
+            monthCell.gradeLabel.text = "\(monthsGrades[indexPath.row].grade)/\(monthsGrades[indexPath.row].totalGrade)"
             monthCell.monthNumberLabel.text = monthsGrades[indexPath.row].monthNum
             
             return monthCell

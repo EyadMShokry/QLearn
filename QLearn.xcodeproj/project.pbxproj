@@ -113,6 +113,9 @@
 		9B35EDD224FBD262006A7314 /* NewRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDD124FBD260006A7314 /* NewRegistrationViewController.swift */; };
 		9B35EDD424FBE824006A7314 /* StudentLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDD324FBE824006A7314 /* StudentLevel.swift */; };
 		9B35EDD624FBFA17006A7314 /* RegisterNewTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDD524FBFA17006A7314 /* RegisterNewTeacherViewController.swift */; };
+		9B367292252B669200D03509 /* ExternalLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B367291252B669200D03509 /* ExternalLinksViewController.swift */; };
+		9B367296252B6A0000D03509 /* ExternalLinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B367295252B6A0000D03509 /* ExternalLinkTableViewCell.swift */; };
+		9B367298252B6B6E00D03509 /* ExternalLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B367297252B6B6E00D03509 /* ExternalLink.swift */; };
 		9B649AE425011AD500130645 /* TeacherCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE325011AD500130645 /* TeacherCard.swift */; };
 		9B649AE62501744500130645 /* IsActivated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE52501744500130645 /* IsActivated.swift */; };
 		9B649AE825017D5A00130645 /* GoForPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE725017D5A00130645 /* GoForPayViewController.swift */; };
@@ -231,6 +234,9 @@
 		9B35EDD124FBD260006A7314 /* NewRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewRegistrationViewController.swift; path = QLearn/Controller/NewRegistrationViewController.swift; sourceTree = SOURCE_ROOT; };
 		9B35EDD324FBE824006A7314 /* StudentLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLevel.swift; sourceTree = "<group>"; };
 		9B35EDD524FBFA17006A7314 /* RegisterNewTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterNewTeacherViewController.swift; path = QLearn/Models/Auth/RegisterNewTeacherViewController.swift; sourceTree = SOURCE_ROOT; };
+		9B367291252B669200D03509 /* ExternalLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLinksViewController.swift; sourceTree = "<group>"; };
+		9B367295252B6A0000D03509 /* ExternalLinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLinkTableViewCell.swift; sourceTree = "<group>"; };
+		9B367297252B6B6E00D03509 /* ExternalLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLink.swift; sourceTree = "<group>"; };
 		9B649AE325011AD500130645 /* TeacherCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCard.swift; sourceTree = "<group>"; };
 		9B649AE52501744500130645 /* IsActivated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsActivated.swift; sourceTree = "<group>"; };
 		9B649AE725017D5A00130645 /* GoForPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoForPayViewController.swift; sourceTree = "<group>"; };
@@ -305,6 +311,7 @@
 				686D748C2333B27100F2FE34 /* Student Report */,
 				5D4EFD5823330B390005F7FE /* Admin */,
 				9B649AE725017D5A00130645 /* GoForPayViewController.swift */,
+				9B367291252B669200D03509 /* ExternalLinksViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -487,6 +494,7 @@
 				9B2E2F1324FD0D310003E5BA /* Teachers.swift */,
 				9B2CD2DF2528B2720054F0C0 /* AdminMaxId.swift */,
 				5DBEA73C2343917900C6333A /* Admin */,
+				9B367297252B6B6E00D03509 /* ExternalLink.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -538,6 +546,7 @@
 				5D4EFD5F23330BE60005F7FE /* DrobMenuTableViewCell */,
 				9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */,
 				9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */,
+				9B367295252B6A0000D03509 /* ExternalLinkTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -884,6 +893,7 @@
 				5D7AF779232E0BBD0075BC0C /* CvTeacherTableViewCell.swift in Sources */,
 				9B649AE62501744500130645 /* IsActivated.swift in Sources */,
 				5D26B5782338BC1B000EE757 /* CheckQuestionViewController.swift in Sources */,
+				9B367292252B669200D03509 /* ExternalLinksViewController.swift in Sources */,
 				684470E7233C2FA7003A717B /* MyQuestionsTableViewCell.swift in Sources */,
 				68E4ED3F23312B0100F79C7F /* MonthGradesTableViewCell.swift in Sources */,
 				5D89BC7123307299000E0F9A /* AddressesTableViewCell.swift in Sources */,
@@ -906,6 +916,7 @@
 				686D748E2333C00500F2FE34 /* TypeTableViewCell.swift in Sources */,
 				68EB1922233E588C0092589B /* Address.swift in Sources */,
 				68C4FB722332C49B001E287B /* SlidingText.swift in Sources */,
+				9B367296252B6A0000D03509 /* ExternalLinkTableViewCell.swift in Sources */,
 				68E51B11232AD61000FF48A6 /* Client.swift in Sources */,
 				68EC10A723392EA7000654D4 /* AskUsTableViewCell.swift in Sources */,
 				5D89BC6D233068D6000E0F9A /* AchievementsTableViewCell.swift in Sources */,
@@ -916,6 +927,7 @@
 				9B2E272C252A1E0100E06334 /* StudentsQuestionsViewController.swift in Sources */,
 				68E71D12232D748D007D016A /* SideMenuTableViewController.swift in Sources */,
 				681E91032347FC21008FA842 /* UIView+Extension.swift in Sources */,
+				9B367298252B6B6E00D03509 /* ExternalLink.swift in Sources */,
 				9B35EDD424FBE824006A7314 /* StudentLevel.swift in Sources */,
 				5D4EE95C233B1BAF00347CE9 /* CircularProgressBar.swift in Sources */,
 				68E4945A2335497B0090E0F8 /* HairlineConstraint.swift in Sources */,
@@ -1091,7 +1103,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = Qubtan.QLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -1113,7 +1125,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = Qubtan.QLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

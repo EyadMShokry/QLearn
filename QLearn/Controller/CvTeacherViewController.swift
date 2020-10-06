@@ -23,7 +23,7 @@ class CvTeacherViewController: UIViewController {
     var achievementsData: [AchievementResult] = []
     var teacherId = ""
     var getInfoParameters = ["teacher_id" : ""]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,9 +35,9 @@ class CvTeacherViewController: UIViewController {
         else {
             getInfoParameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
         }
-//        else if(UserDefaults.standard.value(forKey: "admin_phone") as! String != "01142054422") {
-//            editInformation.isHidden = true
-//        }
+        //        else if(UserDefaults.standard.value(forKey: "admin_phone") as! String != "01142054422") {
+        //            editInformation.isHidden = true
+        //        }
         
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
         self.profileImageView.clipsToBounds = true
@@ -54,18 +54,31 @@ class CvTeacherViewController: UIViewController {
         self.activityIndicator.startAnimating()
         
         let dispatchGroup = DispatchGroup()
-
+        
         dispatchGroup.enter()
         user.getTeacherInfo(parameters: getInfoParameters as [String : AnyObject]) {(info, error) in
             if let teacherInfo = info {
                 print(teacherInfo)
-                self.informationTableValues[0] = teacherInfo.RESULT[0].job
-                self.informationTableValues[1] = teacherInfo.RESULT[0].speciality
-                self.informationTableValues[2] = teacherInfo.RESULT[0].school
-                self.informationTableValues[3] = teacherInfo.RESULT[0].DOB
-                self.performUIUpdatesOnMain {
-                    self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
-                    self.informationTableView.reloadData()
+                if(!teacherInfo.RESULT.isEmpty) {
+                    self.informationTableValues[0] = teacherInfo.RESULT[0].job
+                    self.informationTableValues[1] = teacherInfo.RESULT[0].speciality
+                    self.informationTableValues[2] = teacherInfo.RESULT[0].school
+                    self.informationTableValues[3] = teacherInfo.RESULT[0].DOB
+                    self.performUIUpdatesOnMain {
+                        self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
+                        self.informationTableView.reloadData()
+                    }
+                }
+                else {
+                    self.informationTableValues[0] = "---"
+                    self.informationTableValues[1] = "---"
+                    self.informationTableValues[2] = "---"
+                    self.informationTableValues[3] = "---"
+                    self.performUIUpdatesOnMain {
+                        self.NameTeacherLable.text = "---"
+                        self.informationTableView.reloadData()
+                    }
+
                 }
             }
             else if let error = error {
@@ -84,7 +97,7 @@ class CvTeacherViewController: UIViewController {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
                 }
-
+                
             }
             self.performUIUpdatesOnMain {
                 dispatchGroup.leave()
@@ -130,9 +143,9 @@ class CvTeacherViewController: UIViewController {
             self.activityIndicator.isHidden = true
         }
     }
-
+    
     @IBAction func editButtonAction(_ sender: Any) {
-       
+        
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: false
         )
@@ -164,15 +177,15 @@ class CvTeacherViewController: UIViewController {
             else {
                 let admin = Admin()
                 let parameters = [
-                                  "fullName" : teacherNameTextField.text!,
-                                  "job" : jobTextField.text!,
-                                  "speciality" : specialityTextField.text!,
-                                  "DOB" : dateOfBirthTextField.text!,
-                                  "school" : workingAtTextField.text!,
-                                  "id" : UserDefaults.standard.string(forKey: "id"),
-                                  "teacher_id" : UserDefaults.standard.string(forKey: "id"),
-                                  "photo_url" : "",
-                                  "cover_url" : ""]
+                    "fullName" : teacherNameTextField.text!,
+                    "job" : jobTextField.text!,
+                    "speciality" : specialityTextField.text!,
+                    "DOB" : dateOfBirthTextField.text!,
+                    "school" : workingAtTextField.text!,
+                    "id" : UserDefaults.standard.string(forKey: "id"),
+                    "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                    "photo_url" : "",
+                    "cover_url" : ""]
                 
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
@@ -250,7 +263,7 @@ class CvTeacherViewController: UIViewController {
         editCVAlertView.showEdit(NSLocalizedString("Edit CV", comment: "")
             ,subTitle: NSLocalizedString("Update Your Cv Details", comment: "")
         )
-       
+        
     }
     
     @IBAction func addButtonAction(_ sender: Any) {
@@ -263,7 +276,7 @@ class CvTeacherViewController: UIViewController {
         let achievmentTextField = addAchievmentAlertView.addTextField(
             NSLocalizedString("Achievment", comment: ""))
         achievmentTextField.textAlignment = .center
-
+        
         addAchievmentAlertView.addButton("Add".localized) {
             if(achievmentTextField.text!.isEmpty) {
                 SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
@@ -347,9 +360,9 @@ class CvTeacherViewController: UIViewController {
         addAchievmentAlertView.showInfo(
             "Achievements".localized, subTitle:"Add New Achievment".localized, circleIconImage: alertViewIcon)
         
-
+        
     }
-  
+    
     func inserNewIndexachievements(){
         let indexPath = IndexPath(row: achievementsData.count - 1, section: 0)
         achievementsTableView.insertRows(at: [indexPath], with: .left)
@@ -373,7 +386,7 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
             return achievementsData.count
         }
     }
-  
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == informationTableView
         {
@@ -398,7 +411,7 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
             
             return cell
         }
-       
+        
     }
     
     @objc func updateAchievement(sender: LongPressGesture) {
@@ -545,7 +558,7 @@ extension CvTeacherViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
     }
-
+    
 }
 
 

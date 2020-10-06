@@ -20,7 +20,7 @@ class ChaptersViewController: UIViewController {
     var questionType = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
     var teacherId = ""
-    
+    var selectedLevel = ""
     private func setChaptersProgress() {
         for i in (0..<chaptersArray.count) {
             let chapterFullCount = Int(chaptersArray[i].questions_count)!
@@ -264,6 +264,7 @@ extension ChaptersViewController: UITableViewDataSource, UITableViewDelegate {
             questionsTypesVC.chapterName = chaptersArray[indexPath.row].title
             questionsTypesVC.selectedChapterId = chaptersArray[indexPath.row].id
             questionsTypesVC.teacherId = self.teacherId
+            questionsTypesVC.selectedLevel = self.selectedLevel
             self.navigationController?.pushViewController(questionsTypesVC, animated: true)
         }
         else if(questionType == "mcq") {

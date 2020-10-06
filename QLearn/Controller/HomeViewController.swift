@@ -21,8 +21,8 @@
     @IBOutlet weak var studentNumberLabel: UILabel!
     
     var userType = ""
-    var sectionsNames = ["Questions Bag".localized, "Student Report".localized, "Appointements".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized]
-    var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus"]
+    var sectionsNames = ["Questions Bag".localized, "Student Report".localized, "Appointements".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized, "External Links".localized]
+    var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus", "link"]
     var newsArray: [String] = []
     var teacherId = ""
     var teacherCard: [Card] = []
@@ -32,6 +32,7 @@
     func getTeacherCard() {
         let student = Student()
         let parameters = ["teacher_id" : self.teacherId]
+        print(parameters)
         student.getTeacherCard(parameters: parameters as [String : AnyObject]){ (data, error) in
             if let teacherCard = data {
                 self.teacherCard = teacherCard.RESULT
@@ -215,6 +216,7 @@
                     else {
                         let questionBagVC = storyboard?.instantiateViewController(withIdentifier: "QuestionsBag") as! QuestionsBagViewController
                         questionBagVC.teacherId = self.teacherId
+                        questionBagVC.selectedLevel = self.levelId
                         navigationController?.pushViewController(questionBagVC, animated: true)
                     }
                 }
@@ -332,6 +334,11 @@
                     contactUsVc.teacherId = self.teacherId
                     navigationController?.pushViewController(contactUsVc, animated: true)
                 }
+            case 7:
+                let externalLinksVC = storyboard?.instantiateViewController(withIdentifier: "ExternalLinks") as! ExternalLinksViewController
+                externalLinksVC.teacherId = self.teacherId
+                externalLinksVC.studentLevel = self.levelId
+                navigationController?.pushViewController(externalLinksVC, animated: true)
             default:
                 return
             }

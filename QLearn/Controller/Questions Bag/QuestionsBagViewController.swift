@@ -13,7 +13,7 @@ class QuestionsBagViewController: UIViewController {
     @IBOutlet weak var searchEssayButton: UIButton!
     @IBOutlet weak var searchTFButton: UIButton!
     var teacherId = ""
-    
+    var selectedLevel = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -82,6 +82,7 @@ class QuestionsBagViewController: UIViewController {
             let chaptersVC = storyboard?.instantiateViewController(withIdentifier: "ChaptersVC") as! ChaptersViewController
             chaptersVC.questionType = questionType
             chaptersVC.teacherId = self.teacherId
+            chaptersVC.selectedLevel = self.selectedLevel
             self.navigationController?.pushViewController(chaptersVC, animated: true)
         }
     }
