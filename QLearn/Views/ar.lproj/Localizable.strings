@@ -157,3 +157,9 @@
 "Incorrect File link" = "رابط الملف غير صحيح";
 "This teacher already exists" = "هذا المدرس موجود بالفعل";
 "External Links" = "روابط خارجيه";
+"Link Title" = "عنوان الرابط";
+"Link Description" = "وصف الرابط";
+"Link" = "الرابط";
+"Add External Link" = "اضافه رابط خارجي";
+"Link Deleted successfully" = "تم الغاء الرابط بنجاح";
+"Only Super Admins can access this content" = "المسولين فقط من يستطيعون الوصول الي ذلك المحتوي";

@@ -155,3 +155,10 @@
 "Incorrect File link" = "Incorrect File link";
 "This teacher already exists" = "This teacher already exists";
 "External Links" = "External Links";
+"Link Title" = "Link Title";
+"Link Description" = "Link Description";
+"Link" = "Link";
+"Add External Link" = "Add External Link";
+"Link Deleted successfully" = "Link Deleted successfully";
+"Only Super Admins can access this content" = "Only Super Admins can access this content";
+

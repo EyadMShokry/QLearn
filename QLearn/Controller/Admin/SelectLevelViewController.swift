@@ -57,6 +57,8 @@ class SelectLevelViewController: UIViewController {
     @IBAction func onClickStartButton(_ sender: Any) {
         let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! HomeViewController
         homeVC.userType = "admin"
+        homeVC.teacherId = UserDefaults.standard.string(forKey: "id")!
+        homeVC.subTeacherId = UserDefaults.standard.string(forKey: "sub_id")!
         homeVC.levelId = levelsIds[levelsDropDown.selectedIndex!]
         self.navigationController?.pushViewController(homeVC, animated: true)
     }

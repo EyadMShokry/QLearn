@@ -65,9 +65,11 @@ class AddNewNewsTableView: UITableViewController {
 
         let admin = Admin()
         setLoadingScreen()
-        admin.getAllNews { (data, error) in
+        let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
+        admin.getAllNews(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let getAllNews = data {
                 self.newsArray = getAllNews.RESULT
+                print(self.newsArray)
                 self.performUIUpdatesOnMain {
                     self.removeLoadingScreen()
                     self.NewNewsTable.reloadData()
@@ -189,16 +191,20 @@ class AddNewNewsTableView: UITableViewController {
             let selectedDate = dateFormatter.string(from: myDatePicker.date)
             print(selectedDate)
             let admin = Admin()
-            let parameter :[String:Any] = ["news_text":textFieldNews.text!,"expire_date": selectedDate]
+            let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!, "expire_date" : selectedDate, "news_text" : textFieldNews.text!]
             self.newsArray.removeAll()
             self.setLoadingScreen()
-            admin.insertNews(parameters: parameter as [String : AnyObject]) { (response, error) in
+            print(parameters)
+            admin.insertNews(parameters: parameters as [String : AnyObject]) { (response, error) in
                 if let response = response{
                     if response.contains("inserted"){
                         self.performUIUpdatesOnMain {
-                            admin.getAllNews {(data, error) in
+                            let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
+                            print(parameters)
+                            admin.getAllNews(parameters: parameters as [String : AnyObject]) {(data, error) in
                                 if let getAllNews = data {
                                     self.newsArray = getAllNews.RESULT
+                                    print(self.newsArray)
                                     self.performUIUpdatesOnMain {
                                         self.removeLoadingScreen()
                                         SCLAlertView().showSuccess("Success".localized, subTitle:"is added successfully".localized, closeButtonTitle:"Ok".localized)

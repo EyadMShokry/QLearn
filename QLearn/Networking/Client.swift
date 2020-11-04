@@ -434,8 +434,8 @@ class Client: NSObject {
         }
     }
     
-    func selectAllNews(completionHandler: @escaping(_ result: AllNews?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_all_news.php", parameters: [:]) {(data, error) in
+    func selectAllNews(parameters: [String : AnyObject], completionHandler: @escaping(_ result: AllNews?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_all_news_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -483,8 +483,8 @@ class Client: NSObject {
         }
     }
     //select_teacher.php
-    func selectTeacher(completionHandler: @escaping(_ result: TeacherDrobMenu?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod("select_teacher.php", parameters: [:]) {(data, error) in
+    func selectTeacher(parameters: [String : AnyObject], completionHandler: @escaping(_ result: TeacherDrobMenu?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_teacher_assistants_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -1093,7 +1093,8 @@ extension Client {
 extension Client {
     struct ApiConstants {
         static let APIScheme = "http"
-        static let APIHost = "5.189.186.174"
-        static let APIPath = "/~qlearn/khaled/Qlearn_API/"
+        static let APIHost = "vmi448785.contaboserver.net"
+        static let APIPath = "/~qlearn/khaled/Qlearn_Test_API/"
     }
 }
+

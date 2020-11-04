@@ -78,7 +78,7 @@ class CvTeacherViewController: UIViewController {
                         self.NameTeacherLable.text = "---"
                         self.informationTableView.reloadData()
                     }
-
+                    
                 }
             }
             else if let error = error {
@@ -145,222 +145,229 @@ class CvTeacherViewController: UIViewController {
     }
     
     @IBAction func editButtonAction(_ sender: Any) {
-        
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false
-        )
-        let editCVAlertView = SCLAlertView(appearance: appearance)
-        
-        let teacherNameTextField = editCVAlertView.addTextField("Speciality".localized)
-        teacherNameTextField.text = self.NameTeacherLable.text
-        teacherNameTextField.textAlignment = .center
-        
-        let jobTextField = editCVAlertView.addTextField("Job".localized)
-        jobTextField.text = self.informationTableValues[0]
-        jobTextField.textAlignment = .center
-        let specialityTextField = editCVAlertView.addTextField("Speciality".localized)
-        specialityTextField.text = self.informationTableValues[1]
-        specialityTextField.textAlignment = .center
-        let workingAtTextField = editCVAlertView.addTextField("Working at".localized)
-        workingAtTextField.text = self.informationTableValues[2]
-        workingAtTextField.textAlignment = .center
-        
-        let dateOfBirthTextField = editCVAlertView.addTextField("Date of birth".localized)
-        dateOfBirthTextField.text = self.informationTableValues[3]
-        dateOfBirthTextField.textAlignment = .center
-        
-        editCVAlertView.addButton("Save".localized)
-        {
-            if(teacherNameTextField.text!.isEmpty || jobTextField.text!.isEmpty || specialityTextField.text!.isEmpty || workingAtTextField.text!.isEmpty || dateOfBirthTextField.text!.isEmpty) {
-                SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
-            }
-            else {
-                let admin = Admin()
-                let parameters = [
-                    "fullName" : teacherNameTextField.text!,
-                    "job" : jobTextField.text!,
-                    "speciality" : specialityTextField.text!,
-                    "DOB" : dateOfBirthTextField.text!,
-                    "school" : workingAtTextField.text!,
-                    "id" : UserDefaults.standard.string(forKey: "id"),
-                    "teacher_id" : UserDefaults.standard.string(forKey: "id"),
-                    "photo_url" : "",
-                    "cover_url" : ""]
-                
-                self.activityIndicator.isHidden = false
-                self.activityIndicator.startAnimating()
-                admin.updateTeacherInfo(parameters: parameters as [String : AnyObject], completion: { (response, error) in
-                    if let response = response {
-                        if response.contains("inserted") {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showSuccess("Success".localized, subTitle:"is added successfully".localized, closeButtonTitle:"Ok".localized)
-                                admin.getTeacherInfo(parameters: self.getInfoParameters as [String : AnyObject], completion: { (teacherInfo, error) in
-                                    if let teacherInfo = teacherInfo {
-                                        self.informationTableValues[0] = teacherInfo.RESULT[0].job
-                                        self.informationTableValues[1] = teacherInfo.RESULT[0].speciality
-                                        self.informationTableValues[2] = teacherInfo.RESULT[0].school
-                                        self.informationTableValues[3] = teacherInfo.RESULT[0].DOB
-                                        self.performUIUpdatesOnMain {
-                                            self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                            self.informationTableView.reloadData()
-                                        }
-                                    }
-                                    else if let error = error {
-                                        if error.code == 1001 {
+        if(UserDefaults.standard.string(forKey: "id") != UserDefaults.standard.string(forKey: "sub_id")) {
+            SCLAlertView().showError("Access denied".localized, subTitle: "Only Super Admins can access this content".localized)
+        }
+        else {
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let editCVAlertView = SCLAlertView(appearance: appearance)
+            
+            let teacherNameTextField = editCVAlertView.addTextField("Speciality".localized)
+            teacherNameTextField.text = self.NameTeacherLable.text
+            teacherNameTextField.textAlignment = .center
+            
+            let jobTextField = editCVAlertView.addTextField("Job".localized)
+            jobTextField.text = self.informationTableValues[0]
+            jobTextField.textAlignment = .center
+            let specialityTextField = editCVAlertView.addTextField("Speciality".localized)
+            specialityTextField.text = self.informationTableValues[1]
+            specialityTextField.textAlignment = .center
+            let workingAtTextField = editCVAlertView.addTextField("Working at".localized)
+            workingAtTextField.text = self.informationTableValues[2]
+            workingAtTextField.textAlignment = .center
+            
+            let dateOfBirthTextField = editCVAlertView.addTextField("Date of birth".localized)
+            dateOfBirthTextField.text = self.informationTableValues[3]
+            dateOfBirthTextField.textAlignment = .center
+            
+            editCVAlertView.addButton("Save".localized)
+            {
+                if(teacherNameTextField.text!.isEmpty || jobTextField.text!.isEmpty || specialityTextField.text!.isEmpty || workingAtTextField.text!.isEmpty || dateOfBirthTextField.text!.isEmpty) {
+                    SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
+                }
+                else {
+                    let admin = Admin()
+                    let parameters = [
+                        "fullName" : teacherNameTextField.text!,
+                        "job" : jobTextField.text!,
+                        "speciality" : specialityTextField.text!,
+                        "DOB" : dateOfBirthTextField.text!,
+                        "school" : workingAtTextField.text!,
+                        "id" : UserDefaults.standard.string(forKey: "id"),
+                        "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                        "photo_url" : "",
+                        "cover_url" : ""]
+                    
+                    self.activityIndicator.isHidden = false
+                    self.activityIndicator.startAnimating()
+                    admin.updateTeacherInfo(parameters: parameters as [String : AnyObject], completion: { (response, error) in
+                        if let response = response {
+                            if response.contains("inserted") {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showSuccess("Success".localized, subTitle:"is added successfully".localized, closeButtonTitle:"Ok".localized)
+                                    admin.getTeacherInfo(parameters: self.getInfoParameters as [String : AnyObject], completion: { (teacherInfo, error) in
+                                        if let teacherInfo = teacherInfo {
+                                            self.informationTableValues[0] = teacherInfo.RESULT[0].job
+                                            self.informationTableValues[1] = teacherInfo.RESULT[0].speciality
+                                            self.informationTableValues[2] = teacherInfo.RESULT[0].school
+                                            self.informationTableValues[3] = teacherInfo.RESULT[0].DOB
                                             self.performUIUpdatesOnMain {
-                                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                                self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                                self.informationTableView.reloadData()
                                             }
                                         }
-                                        else {
-                                            self.performUIUpdatesOnMain {
-                                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                        else if let error = error {
+                                            if error.code == 1001 {
+                                                self.performUIUpdatesOnMain {
+                                                    SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                                }
                                             }
+                                            else {
+                                                self.performUIUpdatesOnMain {
+                                                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                                }
+                                            }
+                                            print(error)
+                                            self.performUIUpdatesOnMain {
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                            }
+                                            
                                         }
-                                        print(error)
-                                        self.performUIUpdatesOnMain {
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                        }
-                                        
-                                    }
-                                })
+                                    })
+                                }
+                            }
+                            else {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.isHidden = true
+                                }
                             }
                         }
-                        else {
+                        else if let error = error {
                             self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
                             }
-                        }
-                    }
-                    else if let error = error {
-                        self.performUIUpdatesOnMain {
-                            self.activityIndicator.stopAnimating()
-                            self.activityIndicator.isHidden = true
-                        }
-                        if error.code == 1001 {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                            if error.code == 1001 {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                }
                             }
-                        }
-                        else {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                            else {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                }
                             }
+                            print(error)
                         }
-                        print(error)
-                    }
-                })
+                    })
+                }
             }
+            
+            editCVAlertView.addButton("Cancal".localized) {
+                editCVAlertView.dismiss(animated: true, completion: nil)
+            }
+            editCVAlertView.showEdit(NSLocalizedString("Edit CV", comment: "")
+                ,subTitle: NSLocalizedString("Update Your Cv Details", comment: "")
+            )
+            
         }
-        
-        editCVAlertView.addButton("Cancal".localized) {
-            editCVAlertView.dismiss(animated: true, completion: nil)
-        }
-        editCVAlertView.showEdit(NSLocalizedString("Edit CV", comment: "")
-            ,subTitle: NSLocalizedString("Update Your Cv Details", comment: "")
-        )
         
     }
     
     @IBAction func addButtonAction(_ sender: Any) {
-        
-        let appearence = SCLAlertView.SCLAppearance(
-            showCloseButton: false, showCircularIcon: true
-        )
-        
-        let addAchievmentAlertView = SCLAlertView(appearance: appearence)
-        let achievmentTextField = addAchievmentAlertView.addTextField(
-            NSLocalizedString("Achievment", comment: ""))
-        achievmentTextField.textAlignment = .center
-        
-        addAchievmentAlertView.addButton("Add".localized) {
-            if(achievmentTextField.text!.isEmpty) {
-                SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
-            }
-            else {
-                let parameters = ["achievement" : achievmentTextField.text, "teacher_id" : UserDefaults.standard.string(forKey: "id")]
-                let admin = Admin()
-                self.achievementsData.removeAll()
-                
-                self.activityIndicator.isHidden = false
-                self.activityIndicator.startAnimating()
-                admin.insertAchievement(parameters: parameters as [String : AnyObject]) {(data, error) in
-                    if let response = data{
-                        if response.contains("inserted"){
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showSuccess("Success".localized, subTitle:"Achievement added successfully".localized, closeButtonTitle:"Ok".localized)
-                                
-                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
-                                admin.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
-                                    if let achievements = data {
-                                        self.achievementsData = achievements.RESULT
-                                        self.performUIUpdatesOnMain {
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                            self.achievementsTableView.reloadData()
-                                        }
-                                    }
-                                    else if let error = error {
-                                        if error.code == 1001 {
+        if(UserDefaults.standard.string(forKey: "id") != UserDefaults.standard.string(forKey: "sub_id")) {
+            SCLAlertView().showError("Access denied".localized, subTitle: "Only Super Admins can access this content".localized)
+        }
+        else {
+            let appearence = SCLAlertView.SCLAppearance(
+                showCloseButton: false, showCircularIcon: true
+            )
+            
+            let addAchievmentAlertView = SCLAlertView(appearance: appearence)
+            let achievmentTextField = addAchievmentAlertView.addTextField(
+                NSLocalizedString("Achievment", comment: ""))
+            achievmentTextField.textAlignment = .center
+            
+            addAchievmentAlertView.addButton("Add".localized) {
+                if(achievmentTextField.text!.isEmpty) {
+                    SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
+                }
+                else {
+                    let parameters = ["achievement" : achievmentTextField.text, "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                    let admin = Admin()
+                    self.achievementsData.removeAll()
+                    
+                    self.activityIndicator.isHidden = false
+                    self.activityIndicator.startAnimating()
+                    admin.insertAchievement(parameters: parameters as [String : AnyObject]) {(data, error) in
+                        if let response = data{
+                            if response.contains("inserted"){
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showSuccess("Success".localized, subTitle:"Achievement added successfully".localized, closeButtonTitle:"Ok".localized)
+                                    
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                                    admin.getAchievements(parameters: parameters as [String : AnyObject]) {(data, error) in
+                                        if let achievements = data {
+                                            self.achievementsData = achievements.RESULT
                                             self.performUIUpdatesOnMain {
-                                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                                self.achievementsTableView.reloadData()
                                             }
                                         }
-                                        else {
-                                            self.performUIUpdatesOnMain {
-                                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                        else if let error = error {
+                                            if error.code == 1001 {
+                                                self.performUIUpdatesOnMain {
+                                                    SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                                }
                                             }
+                                            else {
+                                                self.performUIUpdatesOnMain {
+                                                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                                }
+                                            }
+                                            self.performUIUpdatesOnMain {
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                            }
+                                            print(error)
                                         }
-                                        self.performUIUpdatesOnMain {
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                        }
-                                        print(error)
                                     }
                                 }
                             }
+                            else{
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.isHidden = true
+                                }
+                            }
                         }
-                        else{
+                        else if let error = error {
                             self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
                             }
-                        }
-                    }
-                    else if let error = error {
-                        self.performUIUpdatesOnMain {
-                            self.activityIndicator.stopAnimating()
-                            self.activityIndicator.isHidden = true
-                        }
-                        if error.code == 1001 {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                            if error.code == 1001 {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                }
                             }
-                        }
-                        else {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                            else {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                }
                             }
+                            print(error)
                         }
-                        print(error)
                     }
                 }
             }
+            addAchievmentAlertView.addButton("Cancal".localized) {
+                addAchievmentAlertView.dismiss(animated: true, completion: nil)
+            }
+            
+            let alertViewIcon = UIImage(named: "star")
+            addAchievmentAlertView.showInfo(
+                "Achievements".localized, subTitle:"Add New Achievment".localized, circleIconImage: alertViewIcon)
         }
-        addAchievmentAlertView.addButton("Cancal".localized) {
-            addAchievmentAlertView.dismiss(animated: true, completion: nil)
-        }
-        
-        let alertViewIcon = UIImage(named: "star")
-        addAchievmentAlertView.showInfo(
-            "Achievements".localized, subTitle:"Add New Achievment".localized, circleIconImage: alertViewIcon)
-        
-        
     }
     
     func inserNewIndexachievements(){

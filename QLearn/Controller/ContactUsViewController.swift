@@ -119,43 +119,137 @@ class ContactUsViewController: UIViewController {
     //MARK-> : addPhoneNumbersAction
     
     @IBAction func addPhoneNumbers(_ sender: Any) {
-        let appearence = SCLAlertView.SCLAppearance(
-            showCloseButton: false, showCircularIcon: true
-        )
-        let addPhoneNumberAlertView = SCLAlertView(appearance: appearence)
-        let phoneNumberTextField = addPhoneNumberAlertView.addTextField("Phone Number".localized)
-        phoneNumberTextField.textAlignment = .center
-        phoneNumberTextField.keyboardType = .numberPad
+        if(UserDefaults.standard.string(forKey: "id") != UserDefaults.standard.string(forKey: "sub_id")) {
+            SCLAlertView().showError("Access denied".localized, subTitle: "Only Super Admins can access this content".localized)
+        }
+        else {
+            let appearence = SCLAlertView.SCLAppearance(
+                showCloseButton: false, showCircularIcon: true
+            )
+            let addPhoneNumberAlertView = SCLAlertView(appearance: appearence)
+            let phoneNumberTextField = addPhoneNumberAlertView.addTextField("Phone Number".localized)
+            phoneNumberTextField.textAlignment = .center
+            phoneNumberTextField.keyboardType = .numberPad
 
-        addPhoneNumberAlertView.addButton("Add".localized) {
-            if(phoneNumberTextField.text!.isEmpty) {
-                SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
-            }
-            else {
-                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
-                                  "phone" : phoneNumberTextField.text]
-                let admin = Admin()
-                self.arrayPhoneNum.removeAll()
-                
-                self.activityIndicator.isHidden = false
-                self.activityIndicator.startAnimating()
-                admin.insertPhone(parameters: parameters as [String : AnyObject]) {(data, error) in
-                    if let response = data{
-                        if response.contains("inserted"){
-                            self.performUIUpdatesOnMain {
-                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
-                                admin.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(data, error) in
-                                    if let numbers = data {
-                                        self.arrayPhoneNum = numbers.RESULT
-                                        self.performUIUpdatesOnMain {
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                            SCLAlertView().showSuccess("Success".localized, subTitle:"Phone number is added successfully".localized, closeButtonTitle:"Ok".localized)
-                                            self.PhoneNumberTableView.reloadData()
+            addPhoneNumberAlertView.addButton("Add".localized) {
+                if(phoneNumberTextField.text!.isEmpty) {
+                    SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
+                }
+                else {
+                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                      "phone" : phoneNumberTextField.text]
+                    let admin = Admin()
+                    self.arrayPhoneNum.removeAll()
+                    
+                    self.activityIndicator.isHidden = false
+                    self.activityIndicator.startAnimating()
+                    admin.insertPhone(parameters: parameters as [String : AnyObject]) {(data, error) in
+                        if let response = data{
+                            if response.contains("inserted"){
+                                self.performUIUpdatesOnMain {
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
+                                    admin.getPhoneNumbers(parameters: parameters as [String : AnyObject]) {(data, error) in
+                                        if let numbers = data {
+                                            self.arrayPhoneNum = numbers.RESULT
+                                            self.performUIUpdatesOnMain {
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                                SCLAlertView().showSuccess("Success".localized, subTitle:"Phone number is added successfully".localized, closeButtonTitle:"Ok".localized)
+                                                self.PhoneNumberTableView.reloadData()
+                                            }
+                                        }
+                                        else if let error = error {
+                                            self.performUIUpdatesOnMain {
+                                                if error.code == 1001 {
+                                                    self.performUIUpdatesOnMain {
+                                                        SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                                    }
+                                                }
+                                                else {
+                                                    self.performUIUpdatesOnMain {
+                                                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                                    }
+                                                }
+                                                self.performUIUpdatesOnMain {
+                                                    self.activityIndicator.stopAnimating()
+                                                    self.activityIndicator.isHidden = true
+                                                }
+                                                print(error)
+                                            }
                                         }
                                     }
-                                    else if let error = error {
-                                        self.performUIUpdatesOnMain {
+                                }
+                            }
+                            else{
+                                self.performUIUpdatesOnMain {
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.isHidden = true
+                                    SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+            addPhoneNumberAlertView.addButton("Cancal".localized) {
+                addPhoneNumberAlertView.dismiss(animated: true, completion: nil)
+
+            }
+            
+            let alertViewIcon = UIImage(named: "phone")
+            addPhoneNumberAlertView.showInfo("Phone Number".localized, subTitle: "Add new phone number".localized, circleIconImage: alertViewIcon)
+
+        }
+
+        
+    }
+  
+    //MARK-> : addAddAddressesAction
+    @IBAction func AddAddresses(_ sender: Any) {
+        if(UserDefaults.standard.string(forKey: "id") != UserDefaults.standard.string(forKey: "sub_id")) {
+            SCLAlertView().showError("Access denied".localized, subTitle: "Only Super Admins can access this content".localized)
+        }
+        else {
+            let appearence = SCLAlertView.SCLAppearance(
+                showCloseButton: false, showCircularIcon: true
+            )
+            let addAddressAlertView = SCLAlertView(appearance: appearence)
+            
+            let addressTitleTextField = addAddressAlertView.addTextField("Address Title".localized)
+            let addressTextField = addAddressAlertView.addTextField("Address".localized)
+            addressTextField.textAlignment = .center
+            addressTitleTextField.textAlignment = .center
+            
+            addAddressAlertView.addButton("Add".localized) {
+                if(addressTextField.text!.isEmpty || addressTitleTextField.text!.isEmpty) {
+                    SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
+                }
+                else {
+                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                      "address_title" : addressTitleTextField.text,
+                                      "address" : addressTextField.text]
+                    let admin = Admin()
+                    self.arrayAddresses.removeAll()
+                    
+                    self.activityIndicator.isHidden = false
+                    self.activityIndicator.startAnimating()
+                    admin.insertAddress(parameters: parameters as [String : AnyObject]) {(data, error) in
+                        if let response = data{
+                            if response.contains("inserted"){
+                                self.performUIUpdatesOnMain {
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
+                                    admin.getAddresses(parameters: parameters as [String : AnyObject]) {(data, error) in
+                                        if let addresses = data {
+                                            self.arrayAddresses = addresses.RESULT
+                                            self.performUIUpdatesOnMain {
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                                SCLAlertView().showSuccess("Success".localized, subTitle:"Address is added successfully".localized, closeButtonTitle:"Ok".localized)
+                                                self.AddressesTableView.reloadData()
+                                            }
+                                        }
+                                        else if let error = error {
                                             if error.code == 1001 {
                                                 self.performUIUpdatesOnMain {
                                                     SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
@@ -175,135 +269,46 @@ class ContactUsViewController: UIViewController {
                                     }
                                 }
                             }
-                        }
-                        else{
-                            self.performUIUpdatesOnMain {
-                                self.activityIndicator.stopAnimating()
-                                self.activityIndicator.isHidden = true
-                                SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-        addPhoneNumberAlertView.addButton("Cancal".localized) {
-            addPhoneNumberAlertView.dismiss(animated: true, completion: nil)
-
-        }
-        
-        let alertViewIcon = UIImage(named: "phone")
-        addPhoneNumberAlertView.showInfo("Phone Number".localized, subTitle: "Add new phone number".localized, circleIconImage: alertViewIcon)
-
-        
-    }
-  
-    //MARK-> : addAddAddressesAction
-    @IBAction func AddAddresses(_ sender: Any) {
-        
-        let appearence = SCLAlertView.SCLAppearance(
-            showCloseButton: false, showCircularIcon: true
-        )
-        let addAddressAlertView = SCLAlertView(appearance: appearence)
-        
-        let addressTitleTextField = addAddressAlertView.addTextField("Address Title".localized)
-        let addressTextField = addAddressAlertView.addTextField("Address".localized)
-        addressTextField.textAlignment = .center
-        addressTitleTextField.textAlignment = .center
-        
-        addAddressAlertView.addButton("Add".localized) {
-            if(addressTextField.text!.isEmpty || addressTitleTextField.text!.isEmpty) {
-                SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
-            }
-            else {
-                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
-                                  "address_title" : addressTitleTextField.text,
-                                  "address" : addressTextField.text]
-                let admin = Admin()
-                self.arrayAddresses.removeAll()
-                
-                self.activityIndicator.isHidden = false
-                self.activityIndicator.startAnimating()
-                admin.insertAddress(parameters: parameters as [String : AnyObject]) {(data, error) in
-                    if let response = data{
-                        if response.contains("inserted"){
-                            self.performUIUpdatesOnMain {
-                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
-                                admin.getAddresses(parameters: parameters as [String : AnyObject]) {(data, error) in
-                                    if let addresses = data {
-                                        self.arrayAddresses = addresses.RESULT
-                                        self.performUIUpdatesOnMain {
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                            SCLAlertView().showSuccess("Success".localized, subTitle:"Address is added successfully".localized, closeButtonTitle:"Ok".localized)
-                                            self.AddressesTableView.reloadData()
-                                        }
-                                    }
-                                    else if let error = error {
-                                        if error.code == 1001 {
-                                            self.performUIUpdatesOnMain {
-                                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                                            }
-                                        }
-                                        else {
-                                            self.performUIUpdatesOnMain {
-                                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                                            }
-                                        }
-                                        self.performUIUpdatesOnMain {
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.isHidden = true
-                                        }
-                                        print(error)
-                                    }
+                            else{
+                                self.performUIUpdatesOnMain {
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.isHidden = true
+                                    SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
                                 }
                             }
                         }
-                        else{
+                        else if let error = error {
+                            if error.code == 1001 {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                }
+                            }
+                            else {
+                                self.performUIUpdatesOnMain {
+                                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                }
+                            }
                             self.performUIUpdatesOnMain {
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
-                                SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
                             }
+                            print(error)
                         }
-                    }
-                    else if let error = error {
-                        if error.code == 1001 {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                            }
-                        }
-                        else {
-                            self.performUIUpdatesOnMain {
-                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                            }
-                        }
-                        self.performUIUpdatesOnMain {
-                            self.activityIndicator.stopAnimating()
-                            self.activityIndicator.isHidden = true
-                        }
-                        print(error)
                     }
                 }
             }
+            addAddressAlertView.addButton("Cancal".localized) {
+                addAddressAlertView.dismiss(animated: true, completion: nil)
+
+            }
+            
+            let alertViewIcon = UIImage(named: "LocationGreen")
+            addAddressAlertView.showInfo("Address".localized, subTitle: "Add new address".localized, circleIconImage: alertViewIcon)
         }
-        addAddressAlertView.addButton("Cancal".localized) {
-            addAddressAlertView.dismiss(animated: true, completion: nil)
-
-        }
-        
-        let alertViewIcon = UIImage(named: "LocationGreen")
-        addAddressAlertView.showInfo("Address".localized, subTitle: "Add new address".localized, circleIconImage: alertViewIcon)
-
-
     }
     
     
-    
     // mark->  func inserNewIndexPhoneNumber to add data in row if table
-
-    
     func inserNewIndexPhoneNumber(){
         
         let indexPath = IndexPath(row: arrayPhoneNum.count - 1, section: 0)

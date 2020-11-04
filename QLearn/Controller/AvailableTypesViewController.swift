@@ -40,6 +40,9 @@ class AvailableTypesViewController: UIViewController {
             if(UserDefaults.standard.string(forKey: "type") == "teacher") {
                 self.teacherId = UserDefaults.standard.string(forKey: "id")!
             }
+            else {
+                self.selectedLevel = UserDefaults.standard.string(forKey: "student_level")!
+            }
             let parameters = ["teacher_id" : teacherId, "level" : selectedLevel]
             activityIndicator.startAnimating()
             student.getPdfCategories(parameters: parameters as [String : AnyObject]) {(categories, error) in

@@ -57,16 +57,17 @@ class AddTeachersTableView: UITableViewController {
         loadingLabel.isHidden = true
         
     }
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.TheTeachersAdmin?.rowHeight = 50.0
-
+        
         
         let admin = Admin()
         setLoadingScreen()
-        admin.getTeacher { (data, error) in
+        let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
+        admin.getTeacher(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let teachers = data {
                 self.teacherNameArray = teachers.RESULT
                 self.performUIUpdatesOnMain {
@@ -94,23 +95,23 @@ class AddTeachersTableView: UITableViewController {
         }
     }
     //adminuser
-//AddTeachersTableViewCell
+    //AddTeachersTableViewCell
     // MARK: - Table view data source
-
-  
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      
-            return teacherNameArray.count
-       
+        
+        return teacherNameArray.count
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AddTeachersTableViewCell") as! AddTeachersTableViewCell
-            cell.NameTeacherLable.text = teacherNameArray[indexPath.row].name
-            cell.ImageTeacher.image = UIImage(named: "adminuser")
         
-            return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AddTeachersTableViewCell") as! AddTeachersTableViewCell
+        cell.NameTeacherLable.text = teacherNameArray[indexPath.row].name
+        cell.ImageTeacher.image = UIImage(named: "adminuser")
+        
+        return cell
     }
     
     override  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -119,7 +120,7 @@ class AddTeachersTableView: UITableViewController {
     
     override  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        if(teacherNameArray[indexPath.row].id == "1") {
+        if(teacherNameArray[indexPath.row].id == UserDefaults.standard.string(forKey: "id")) {
             SCLAlertView().showError("Error".localized, subTitle: "You can't delete super admin".localized, closeButtonTitle:"Ok".localized)
             
         }
@@ -146,7 +147,7 @@ class AddTeachersTableView: UITableViewController {
                         }
                     }
                 }
-
+                
                 teacherNameArray.remove(at: indexPath.row)
                 tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -192,7 +193,8 @@ class AddTeachersTableView: UITableViewController {
                     if let data = data {
                         if data.contains("inserted"){
                             self.performUIUpdatesOnMain {
-                                admin.getTeacher { (data, error) in
+                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                                admin.getTeacher(parameters: parameters as [String : AnyObject]) { (data, error) in
                                     if let teachers = data {
                                         self.teacherNameArray = teachers.RESULT
                                         self.performUIUpdatesOnMain {
@@ -265,14 +267,14 @@ class AddTeachersTableView: UITableViewController {
         let addAdminAlertView = SCLAlertView(appearance: appearence)
         let NameAdminTextField = addAdminAlertView.addTextField("Add name Admin".localized)
         let phoneNumberAdminTextField = addAdminAlertView.addTextField("Add Phone Admin".localized)
-
+        
         let PaaswordTextField = addAdminAlertView.addTextField("Add Password Admin".localized)
         PaaswordTextField.isSecureTextEntry = true
-
+        
         NameAdminTextField.textAlignment = .center
         phoneNumberAdminTextField.textAlignment = .center
         PaaswordTextField.textAlignment = .center
-
+        
         addAdminAlertView.addButton("Add".localized) {
             if(NameAdminTextField.text!.isEmpty || phoneNumberAdminTextField.text!.isEmpty || PaaswordTextField.text!.isEmpty ) {
                 SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
@@ -281,14 +283,16 @@ class AddTeachersTableView: UITableViewController {
                 let admin = Admin()
                 let parameters = ["phone" : phoneNumberAdminTextField.text,
                                   "name" : NameAdminTextField.text,
-                                  "pass" : PaaswordTextField.text]
+                                  "pass" : PaaswordTextField.text,
+                                  "teacher_id" : UserDefaults.standard.string(forKey: "id")]
                 self.teacherNameArray.removeAll()
                 self.setLoadingScreen()
                 admin.insertTeacher(parameters: parameters as [String : AnyObject], completion: {(data, error) in
                     if let data = data {
                         if data.contains("inserted"){
                             self.performUIUpdatesOnMain {
-                                admin.getTeacher { (data, error) in
+                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                                admin.getTeacher(parameters: parameters as [String : AnyObject]) { (data, error) in
                                     if let teachers = data {
                                         self.teacherNameArray = teachers.RESULT
                                         self.performUIUpdatesOnMain {
@@ -350,16 +354,16 @@ class AddTeachersTableView: UITableViewController {
         }
         let alertViewIcon = UIImage(named: "adminuser")
         addAdminAlertView.showInfo("Add Admin".localized, subTitle: "", circleIconImage: alertViewIcon)
-
-}
         
-        func inserNewIndexNameAdmin(){
-
+    }
+    
+    func inserNewIndexNameAdmin(){
+        
         let indexPath = IndexPath(row: teacherNameArray.count - 1, section: 0)
         TheTeachersAdmin.insertRows(at: [indexPath], with: .left)
         TheTeachersAdmin.reloadData()
-
+        
     }
-
-
+    
+    
 }

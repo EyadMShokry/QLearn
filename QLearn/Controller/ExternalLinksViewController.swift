@@ -76,7 +76,115 @@ class ExternalLinksViewController: UIViewController {
     }
     
     @IBAction func onClickAddNewLink(_ sender: UIBarButtonItem) {
+        let appearence = SCLAlertView.SCLAppearance(
+            showCloseButton: false, showCircularIcon: true
+        )
+        let addLinkAlertView = SCLAlertView(appearance: appearence)
+        let titleTextField = addLinkAlertView.addTextField("Link Title".localized)
+        let descriptionTextFIeld = addLinkAlertView.addTextField("Link Description".localized)
+        let linkTextField = addLinkAlertView.addTextField("Link".localized)
+                
+        titleTextField.textAlignment = .center
+        descriptionTextFIeld.textAlignment = .center
+        linkTextField.textAlignment = .center
         
+        addLinkAlertView.addButton("Add".localized) {
+            if(titleTextField.text!.isEmpty || descriptionTextFIeld.text!.isEmpty || linkTextField.text!.isEmpty ) {
+                SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
+            }
+            else {
+                let admin = Admin()
+                var url = ""
+                let writtenUrl = linkTextField.text!
+                if(writtenUrl.hasPrefix("https://") || writtenUrl.hasPrefix("Https://") || writtenUrl.hasPrefix("http://") || writtenUrl.hasPrefix("Http://")) {
+                    url = writtenUrl
+                }
+                else {
+                    url = "https://\(writtenUrl)"
+                }
+                print("Url: \(url)")
+                let parameters = ["title" : titleTextField.text!,
+                                  "description" : descriptionTextFIeld.text!,
+                                  "URL" : url,
+                                  "level" : self.studentLevel,
+                                  "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                self.links.removeAll()
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
+                admin.insertExternalLink(parameters: parameters as [String : AnyObject], completion: {(data, error) in
+                    if let data = data {
+                        if data.contains("inserted"){
+                            self.performUIUpdatesOnMain {
+                                let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"), "level" : self.studentLevel]
+                                admin.getExternalLinks(parameters: parameters as [String : AnyObject]) { (data, error) in
+                                    if let links = data {
+                                        self.links = links.RESULT
+                                        self.performUIUpdatesOnMain {
+                                            self.activityIndicator.stopAnimating()
+                                            self.activityIndicator.isHidden = true
+                                            SCLAlertView().showSuccess("Success".localized, subTitle:"is added successfully".localized, closeButtonTitle:"Ok".localized)
+                                            self.linksTableView.reloadData()
+                                        }
+                                    }
+                                    else if let error = error {
+                                        if error.code == 1001 {
+                                            self.performUIUpdatesOnMain {
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                            }
+                                        }
+                                        else {
+                                            self.performUIUpdatesOnMain {
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.isHidden = true
+                                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                            }
+                                        }
+                                        print(error)
+                                    }
+                                }
+                                self.linksTableView.reloadData()
+                            }
+                        }
+                        else {
+                            self.performUIUpdatesOnMain {
+                                self.activityIndicator.stopAnimating()
+                                self.activityIndicator.isHidden = true
+                                SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                                self.linksTableView.reloadData()
+                                
+                            }
+                        }
+                    }
+                    else if let error = error {
+                        self.performUIUpdatesOnMain {
+                            if error.code == 1001 {
+                                self.performUIUpdatesOnMain {
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.isHidden = true
+                                    SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                                }
+                            }
+                            else {
+                                self.performUIUpdatesOnMain {
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.isHidden = true
+                                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                                }
+                            }
+                            print(error)
+                        }
+                    }
+                })
+            }
+        }
+        addLinkAlertView.addButton("Cancal".localized) {
+            addLinkAlertView.dismiss(animated: true, completion: nil)
+        }
+        let alertViewIcon = UIImage(named: "link")
+        addLinkAlertView.showInfo("Add External Link".localized, subTitle: "", circleIconImage: alertViewIcon)
+
     }
     
 
@@ -105,4 +213,43 @@ extension ExternalLinksViewController: UITableViewDataSource, UITableViewDelegat
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
 
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+            return .delete
+        }
+        else {
+            return .none
+        }
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let admin = Admin()
+            let linkId = links[indexPath.row].id
+            let parameters = ["id" : linkId]
+            admin.deleteExternalLink(parameters: parameters as [String : AnyObject]) { (response, error) in
+                if let response = response{
+                    if response.contains("inserted"){
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showSuccess("Success".localized, subTitle:"Link Deleted successfully".localized, closeButtonTitle:"Ok".localized)
+                            self.linksTableView.reloadData()
+                        }
+                    }else{
+                        
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                            
+                        }
+                    }
+                }
+            }
+            links.remove(at: indexPath.row)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+            
+        }
+    }
+
 }

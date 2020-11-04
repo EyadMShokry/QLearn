@@ -3182,7 +3182,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="vWk-1r-ecM">
-                                                <rect key="frame" x="104" y="561" width="206" height="90"/>
+                                                <rect key="frame" x="46" y="561" width="322" height="90"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJw-BN-bJ7">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
@@ -3221,8 +3221,8 @@
                                                             <constraint firstAttribute="bottom" secondItem="mlT-cO-88J" secondAttribute="bottom" constant="11.5" id="zLa-U3-gv2"/>
                                                         </constraints>
                                                     </view>
-                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zvg-CZ-1Pr">
-                                                        <rect key="frame" x="103" y="0.0" width="90" height="90"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zvg-CZ-1Pr">
+                                                        <rect key="frame" x="116" y="0.0" width="90" height="90"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rP-KQ-eB9">
                                                                 <rect key="frame" x="25" y="8" width="42.5" height="42.5"/>
@@ -3259,7 +3259,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-yJ-UtB">
-                                                        <rect key="frame" x="116" y="0.0" width="90" height="90"/>
+                                                        <rect key="frame" x="232" y="0.0" width="90" height="90"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ic-mw-JCu">
                                                                 <rect key="frame" x="25" y="8" width="42.5" height="42.5"/>

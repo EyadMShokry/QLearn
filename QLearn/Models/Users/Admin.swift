@@ -10,8 +10,8 @@ import Foundation
 
 class Admin:SchoolUser{
     
-    func getTeacher(completion: @escaping(_ result: TeacherDrobMenu?, _ error: NSError?) -> Void) {
-        Client.shared().selectTeacher() {(data, error) in
+    func getTeacher(parameters: [String : AnyObject], completion: @escaping(_ result: TeacherDrobMenu?, _ error: NSError?) -> Void) {
+        Client.shared().selectTeacher(parameters: parameters) {(data, error) in
             if let teacher = data {
                 completion(teacher, nil)
             }
@@ -21,8 +21,8 @@ class Admin:SchoolUser{
         }
     }
     
-    func getAllNews(completion: @escaping(_ result: AllNews?, _ error: NSError?) -> Void) {
-        Client.shared().selectAllNews() {(data, error) in
+    func getAllNews(parameters: [String : AnyObject], completion: @escaping(_ result: AllNews?, _ error: NSError?) -> Void) {
+        Client.shared().selectAllNews(parameters: parameters) {(data, error) in
             if let news = data {
                 completion(news, nil)
             }
@@ -198,7 +198,7 @@ class Admin:SchoolUser{
     }
     
     func insertTeacher(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_teacher.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_teacher_assistant.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -209,7 +209,7 @@ class Admin:SchoolUser{
     }
     
     func updateTeacher(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "update_teacher.php", parameters: parameters) { (data, error) in
+        Client.shared().insertOrDeleteRequest(method: "update_teacher_assistant.php", parameters: parameters) { (data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -297,7 +297,7 @@ class Admin:SchoolUser{
     }
    
     func deleteTeacher(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "delete_teacher.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "delete_teacher_assistant.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -485,5 +485,39 @@ class Admin:SchoolUser{
             }
         }
     }
+
+    func insertExternalLink(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
+        Client.shared().insertOrDeleteRequest(method: "insert_link.php", parameters: parameters) { (data, error) in
+            if let response = data {
+                completion(response, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+    
+        func deleteExternalLink(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
+        Client.shared().insertOrDeleteRequest(method: "delete_links.php", parameters: parameters) { (data, error) in
+            if let response = data {
+                completion(response, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+
+    func insertTeacherAssistant(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
+        Client.shared().insertOrDeleteRequest(method: "insert_teacher_assistant.php", parameters: parameters) { (data, error) in
+            if let response = data {
+                completion(response, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+
 
 }

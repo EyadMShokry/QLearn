@@ -25,6 +25,7 @@
     var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus", "link"]
     var newsArray: [String] = []
     var teacherId = ""
+    var subTeacherId = ""
     var teacherCard: [Card] = []
     var isMyTeacher = true
     var levelId = ""
@@ -77,6 +78,7 @@
         let user = User()
         let parameters = ["expire_date" : Date.getCurrentDate(),
                           "teacher_id" : self.teacherId]
+        print("unexpired news : \(parameters)")
         print("current date: \(Date.getCurrentDate()).... \(Date())")
         user.getUnexpiredNews(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let unexpiredNews = data {
@@ -120,21 +122,22 @@
     }
     
     @IBAction func goAdminTable(_ sender: Any) {
-        button (hidden: true)
-        let AdminableVC = storyboard?.instantiateViewController(withIdentifier: "GoTheTeachers")
-        navigationController?.pushViewController(AdminableVC!, animated: true)
+        if(UserDefaults.standard.string(forKey: "id") == UserDefaults.standard.string(forKey: "sub_id")) {
+            button(hidden: true)
+            let AdminableVC = storyboard?.instantiateViewController(withIdentifier: "GoTheTeachers")
+            navigationController?.pushViewController(AdminableVC!, animated: true)
+        }
+        else {
+            SCLAlertView().showError("Access denied".localized, subTitle: "Only Super Admins can access this content".localized)
+        }
     }
     
     @IBAction func goNewsTable(_ sender: Any) {
         
-        button (hidden: true)
-        
+        button(hidden: true)
         let NewstableVC = storyboard?.instantiateViewController(withIdentifier: "GoTheAddNews")
         navigationController?.pushViewController(NewstableVC!, animated: true)
-        
-        
     }
-    
     
     //MARk ->Button drobDownMenu
     @IBAction func drobDownMenu(_ sender: UIButton) {
@@ -201,7 +204,7 @@
                 navigationController?.pushViewController(contactUsVc!, animated: true)
             }
             else {
-                SCLAlertView().showError("Access denied".localized, subTitle: "Contact with Mr. Tarek to get an account or login".localized, closeButtonTitle:"Ok".localized)
+                SCLAlertView().showError("Access denied".localized, subTitle: "Contact with your teacher to get an account or login".localized, closeButtonTitle:"Ok".localized)
             }
         }
         else {

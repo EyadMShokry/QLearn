@@ -142,7 +142,8 @@ class LoginViewController: UIViewController {
                         if let admin = data {
                             print(admin)
                             if admin.RESULT.count == 1 {
-                                UserDefaults.standard.set(admin.RESULT[0].id, forKey: "id")
+                                UserDefaults.standard.set(admin.RESULT[0].teacherID, forKey: "id")
+                                UserDefaults.standard.set(admin.RESULT[0].id, forKey: "sub_id")
                                 UserDefaults.standard.set(admin.RESULT[0].name, forKey: "admin_name")
                                 UserDefaults.standard.set(admin.RESULT[0].phone, forKey: "admin_phone")
                                 UserDefaults.standard.set("teacher", forKey: "type")
