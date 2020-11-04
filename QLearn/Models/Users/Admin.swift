@@ -121,7 +121,7 @@ class Admin:SchoolUser{
     }
     
     func insertEssayQuestion(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_Essay_question_to_bank.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_essay_question.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -143,7 +143,7 @@ class Admin:SchoolUser{
     }
     
     func insertMcqQuestion(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_MCQ_question_to_bank.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_mcq_question.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -153,7 +153,7 @@ class Admin:SchoolUser{
         }
     }
     func insertTFQuestion(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().insertOrDeleteRequest(method: "insert_TrueFalse_question_to_bank.php", parameters: parameters) {(data, error) in
+        Client.shared().insertOrDeleteRequest(method: "insert_tf_question.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }

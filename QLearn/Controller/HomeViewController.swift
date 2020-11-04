@@ -212,7 +212,6 @@
             switch selectedRow {
             case 0:
                 if(UserDefaults.standard.string(forKey: "type") != "parent") {
-                    print(self.teacherCard[0].status)
                     if(!isMyTeacher && self.teacherCard[0].status == "0") {
                         SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
                     }

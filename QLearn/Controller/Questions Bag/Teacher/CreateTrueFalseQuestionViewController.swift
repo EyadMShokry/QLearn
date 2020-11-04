@@ -13,7 +13,6 @@ import SCLAlertView
 class CreateTrueFalseQuestionViewController: UIViewController {
   
     @IBOutlet weak var questionTextArea: UITextView!
-    @IBOutlet weak var reasonTextArea: UITextView!
     @IBOutlet weak var falseButton: UIButton!
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -24,6 +23,7 @@ class CreateTrueFalseQuestionViewController: UIViewController {
     var selectedChapterId = ""
     var selectedMark = 0
     var selectedQuestionId = ""
+    var selectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,22 +36,12 @@ class CreateTrueFalseQuestionViewController: UIViewController {
 
         questionTextArea.textColor = .darkGray
         questionTextArea.delegate = self
-        
-        reasonTextArea.layer.borderColor = UIColor.white.cgColor
-        reasonTextArea.layer.borderWidth = 2
-        reasonTextArea.layer.cornerRadius = 10
-        reasonTextArea.text =  "The Reasoning ...".localized
-
-        reasonTextArea.textColor = .darkGray
-        reasonTextArea.delegate = self
-        
+                
         activityIndicator.isHidden = true
         
         if(isEdit) {
             questionTextArea.text = editQuestionText
-            reasonTextArea.text = editReasonText
             questionTextArea.textColor = .black
-            reasonTextArea.textColor = .black
             if previousAnswer {
                 self.trueButton.setImage(UIImage(named: "check-1"), for: .normal)
                 self.falseButton.setImage(UIImage(named: "wrong-white"), for: .normal)
@@ -98,7 +88,7 @@ class CreateTrueFalseQuestionViewController: UIViewController {
     }
     
     @IBAction func onClickCreateQuestionButton(_ sender: Any) {
-        if(questionTextArea.text.isEmpty || questionTextArea.textColor == .darkGray || reasonTextArea.text.isEmpty || reasonTextArea.textColor == .darkGray || (trueButton.currentImage == UIImage(named: "check-mark") && falseButton.currentImage == UIImage(named: "wrong-white"))) {
+        if(questionTextArea.text.isEmpty || questionTextArea.textColor == .darkGray || (trueButton.currentImage == UIImage(named: "check-mark") && falseButton.currentImage == UIImage(named: "wrong-white"))) {
             SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
         }
         else {
@@ -110,7 +100,9 @@ class CreateTrueFalseQuestionViewController: UIViewController {
                 let parameters = [  "question" : questionTextArea.text!,
                                     "correct_mark" : "\(selectedMark)",
                                     "chapter_id" : selectedChapterId,
-                                    "explanation" : reasonTextArea.text!]
+                                    "explanation" : "",
+                                    "level" : selectedLevel,
+                                    "teacher_id" : UserDefaults.standard.string(forKey: "id")]
                 
                 admin.insertTFQuestion(parameters: parameters as [String : AnyObject]) {(data, error) in
                     if let response = data {
@@ -119,7 +111,6 @@ class CreateTrueFalseQuestionViewController: UIViewController {
                             self.performUIUpdatesOnMain {
                                 SCLAlertView().showSuccess("Success".localized, subTitle:"Your question is added successfully".localized, closeButtonTitle:"Ok".localized)
                                 self.questionTextArea.text = ""
-                                self.reasonTextArea.text = ""
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
                             }
@@ -155,7 +146,7 @@ class CreateTrueFalseQuestionViewController: UIViewController {
                 //call edit tf question here
                 let parameters = ["question" : questionTextArea.text!,
                                   "correct_mark" : "\(selectedMark)",
-                                  "explanation" : reasonTextArea.text!,
+                                  "explanation" : "",
                                   "id" : selectedQuestionId]
                 admin.updataTrueFalseQuestions(parameters: parameters as [String : AnyObject]) { (response, error) in
                     if let response = response {
@@ -212,11 +203,6 @@ extension CreateTrueFalseQuestionViewController: UITextViewDelegate {
             if textView == questionTextArea {
                 textView.text = "Enter The Question ...".localized
                 textView.textColor = .darkGray
-            }
-            else if textView == reasonTextArea {
-                textView.textColor = .darkGray
-                textView.text = "The Reasoning ...".localized
-
             }
         }
     }

@@ -57,7 +57,7 @@ class QuestionsBagViewController: UIViewController {
     
     
     @IBAction func onClickTrueFalseQuestionsButton(_ sender: Any) {
-        if UserDefaults.standard.string(forKey: "type") == "admin" {
+        if UserDefaults.standard.string(forKey: "type") == "teacher" {
             navigateToChaptersVC(questionType: "TF", userType: "teacher")
         }
         else {
@@ -76,6 +76,7 @@ class QuestionsBagViewController: UIViewController {
             let chaptersVC = storyboard?.instantiateViewController(withIdentifier: "AllQuestion") as! AllQuestionChapterViewController
             chaptersVC.isAskQuestion = false
             chaptersVC.questionType = questionType
+            chaptersVC.selectedLevel = self.selectedLevel
             self.navigationController?.pushViewController(chaptersVC, animated: true)
         }
         else if userType == "student" {

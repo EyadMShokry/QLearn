@@ -12,7 +12,6 @@ import SCLAlertView
 class TimetableViewController: UIViewController {
     @IBOutlet weak var timetableTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var addAppointementButton: UIBarButtonItem!
     
     var timesArray: [String] = []
     var placesArray: [String] = []
@@ -34,13 +33,9 @@ class TimetableViewController: UIViewController {
         if(UserDefaults.standard.string(forKey: "type") == "teacher") {
             parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
                           "level" : teacherSelectedLevel]
-            addAppointementButton.tintColor = UIColor(displayP3Red: 194/255, green: 139/255, blue: 188/255, alpha: 1.0)
-            addAppointementButton.isEnabled = true
 
         }
         else {
-            addAppointementButton.tintColor = .clear
-            addAppointementButton.isEnabled = false
         }
         print(parameters)
         user.getLessionDates(parameters: parameters as [String : AnyObject]) {(dates, error) in

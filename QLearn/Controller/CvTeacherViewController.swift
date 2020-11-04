@@ -35,9 +35,6 @@ class CvTeacherViewController: UIViewController {
         else {
             getInfoParameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id")!]
         }
-        //        else if(UserDefaults.standard.value(forKey: "admin_phone") as! String != "01142054422") {
-        //            editInformation.isHidden = true
-        //        }
         
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
         self.profileImageView.clipsToBounds = true
@@ -290,7 +287,8 @@ class CvTeacherViewController: UIViewController {
                     SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
                 }
                 else {
-                    let parameters = ["achievement" : achievmentTextField.text, "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                    let parameters = ["achievement" : achievmentTextField.text,
+                                      "teacher_id" : UserDefaults.standard.string(forKey: "id")]
                     let admin = Admin()
                     self.achievementsData.removeAll()
                     

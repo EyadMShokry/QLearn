@@ -29,6 +29,7 @@ class CreateMcqQuestionViewController: UIViewController {
     var editAnswer4Text: String?
     var selectedChapterId = ""
     var selectedQuestionId = ""
+    var selectedLevel = ""
 
     
 //    @IBOutlet var CollectionRadioButton: [UIButton]!
@@ -96,7 +97,9 @@ class CreateMcqQuestionViewController: UIViewController {
                                  "choice3" : AnswerThreeTextField.text!,
                                  "choice4" : AnswerFourTextField.text!,
                                  "correct_answer" : "\(selectedAnswer)",
-                                 "chapter_id" : selectedChapterId]
+                                 "chapter_id" : selectedChapterId,
+                                 "level" : selectedLevel,
+                                 "teacher_id" : UserDefaults.standard.string(forKey: "id")]
                 
                 admin.insertMcqQuestion(parameters: parameter as [String : AnyObject]) {(data, error) in
                     if let response = data {

@@ -19,11 +19,12 @@ class AllQuestionChapterViewController: UIViewController {
     var questionType = ""
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
     var teacherId = ""
+    var selectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(UserDefaults.standard.string(forKey: "type") != "admin") {
+        if(UserDefaults.standard.string(forKey: "type") != "teacher") {
             headerView.isHidden = true
         }
         
@@ -33,8 +34,14 @@ class AllQuestionChapterViewController: UIViewController {
         //        if(isAskQuestion) {
         var user: SchoolUser
         user = SchoolUser()
-        let parameters = ["level" : UserDefaults.standard.string(forKey: "student_level"),
+        var parameters = ["":""]
+        if(UserDefaults.standard.string(forKey: "type") == "student") {
+            parameters = ["level" : UserDefaults.standard.string(forKey: "student_level")!,
                           "teacherID" : self.teacherId]
+        }
+        else {
+            parameters = ["level" : selectedLevel, "teacherID" : UserDefaults.standard.string(forKey: "id")!]
+        }
         activityIndicator.startAnimating()
         user.getAllChapters(parameters: parameters as [String : AnyObject]) {(data, error) in
             if let chapters = data {
@@ -81,7 +88,7 @@ class AllQuestionChapterViewController: UIViewController {
                 SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
             }
             else {
-                let parameters = ["title" : newChapterTextField.text]
+                let parameters = ["title" : newChapterTextField.text!, "level" : self.selectedLevel, "teacherID" : UserDefaults.standard.string(forKey: "id")!] as [String : Any]
                 let admin = Admin()
                 self.chaptersArray.removeAll()
                 
@@ -91,8 +98,7 @@ class AllQuestionChapterViewController: UIViewController {
                     if let response = data{
                         if response.contains("inserted"){
                             self.performUIUpdatesOnMain {
-                                let parameters = ["level" : UserDefaults.standard.string(forKey: "student_level"),
-                                                  "teacherID" : self.teacherId]
+                                let parameters = ["level" : self.selectedLevel, "teacherID" : UserDefaults.standard.string(forKey: "id")!]
                                 admin.getAllChapters(parameters: parameters as [String : AnyObject]) {(data, error) in
                                     if let chapters = data {
                                         self.chaptersArray = chapters.RESULT
@@ -243,7 +249,7 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
             if(questionType == "mcq") {
                 let askMcqQuestionVC = storyboard?.instantiateViewController(withIdentifier: "CreateMCQQuestion") as! CreateMcqQuestionViewController
                 askMcqQuestionVC.selectedChapterId = chaptersArray[indexPath.row].id
-                
+                askMcqQuestionVC.selectedLevel = self.selectedLevel
                 navigationController?.pushViewController(askMcqQuestionVC, animated: true)
                 
             }
@@ -251,13 +257,14 @@ extension AllQuestionChapterViewController:UITableViewDataSource,UITableViewDele
                 let essayTypesVC = storyboard?.instantiateViewController(withIdentifier: "AvailableTypes") as! AvailableTypesViewController
                 essayTypesVC.isPdf = false
                 essayTypesVC.selectedChapterId = chaptersArray[indexPath.row].id
+                essayTypesVC.selectedLevel = self.selectedLevel
                 navigationController?.pushViewController(essayTypesVC, animated: true)
                 
             }
             else {
                 let askTFQuestionVC = storyboard?.instantiateViewController(withIdentifier: "TrueFalseQuestion") as! CreateTrueFalseQuestionViewController
                 askTFQuestionVC.selectedChapterId = chaptersArray[indexPath.row].id
-                
+                askTFQuestionVC.selectedLevel = self.selectedLevel
                 navigationController?.pushViewController(askTFQuestionVC, animated: true)
             }
         }

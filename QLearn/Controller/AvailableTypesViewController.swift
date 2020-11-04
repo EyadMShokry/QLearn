@@ -76,7 +76,7 @@ class AvailableTypesViewController: UIViewController {
         }
         else {
             //call essay types api here
-            var parameters = ["teacher_id" : teacherId, "level" : selectedLevel]
+            var parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"), "level" : selectedLevel]
             if(UserDefaults.standard.string(forKey: "type") == "student") {
                 parameters = ["teacher_id" : teacherId, "level" : UserDefaults.standard.string(forKey: "student_level")!]
             }
@@ -134,7 +134,7 @@ class AvailableTypesViewController: UIViewController {
             else {
                 if(self.isPdf) {
                     let parameters = ["title" : newTypeTextField.text!,
-                                      "teacher_id" : self.teacherId,
+                                      "teacher_id" : UserDefaults.standard.string(forKey: "id"),
                                       "level" : self.selectedLevel]
                     let admin = Admin()
                     self.typesArray.removeAll()
@@ -145,7 +145,7 @@ class AvailableTypesViewController: UIViewController {
                         if let response = data{
                             if response.contains("inserted"){
                                 self.performUIUpdatesOnMain {
-                                    let parameters = ["teacher_id" : self.teacherId, "level" : self.selectedLevel]
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"), "level" : self.selectedLevel]
                                     admin.getPdfCategories(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let types = data {
                                             self.typesArray = types.RESULT
@@ -188,8 +188,8 @@ class AvailableTypesViewController: UIViewController {
                 else {
                     //call add new essay type api
                     let parameters = ["title" : newTypeTextField.text!,
-                                      "level" : UserDefaults.standard.string(forKey: "student_level"),
-                                      "teacherID" : self.teacherId]
+                                      "level" : self.selectedLevel,
+                                      "teacherID" : UserDefaults.standard.string(forKey: "id")]
                     let admin = Admin()
                     self.typesArray.removeAll()
                     
@@ -199,8 +199,8 @@ class AvailableTypesViewController: UIViewController {
                         if let response = data{
                             if response.contains("inserted"){
                                 self.performUIUpdatesOnMain {
-                                    let parameters = ["teacherID" : self.teacherId,
-                                                      "level" : UserDefaults.standard.string(forKey: "student_level")]
+                                    let parameters = ["teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                                      "level" : self.selectedLevel]
                                     admin.getEssayTypes(parameters: parameters as [String : AnyObject]) {(data, error) in
                                         if let types = data {
                                             self.performUIUpdatesOnMain {
@@ -321,7 +321,7 @@ extension AvailableTypesViewController: UITableViewDelegate, UITableViewDataSour
                 askEssayQuestionVC.questionType = typesArray[indexPath.row].title
                 askEssayQuestionVC.title = chapterName
                 askEssayQuestionVC.questionTypeId = typesArray[indexPath.row].id
-                
+                askEssayQuestionVC.selectedLevel = self.selectedLevel
                 self.navigationController?.pushViewController(askEssayQuestionVC, animated: true)
             }
         }

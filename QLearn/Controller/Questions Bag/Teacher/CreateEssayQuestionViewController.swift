@@ -21,6 +21,7 @@ class CreateEssayQuestionViewController: UIViewController {
     var editAnswerText: String?
     var selectedChapterId = ""
     var selectedQuestionId = ""
+    var selectedLevel = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +68,10 @@ class CreateEssayQuestionViewController: UIViewController {
                 let parameter = ["question":questionTextView.text!,
                                  "correct_answer":answerTextView.text!,
                                  "essay_type":questionTypeId,
-                                 "chapter_id":selectedChapterId]
+                                 "chapter_id":selectedChapterId,
+                                 "level" : selectedLevel,
+                                 "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+                print(parameter)
                 admin.insertEssayQuestion(parameters: parameter as [String : AnyObject]) {(response, error) in
                     if let response = response{
                         if response.contains("inserted"){

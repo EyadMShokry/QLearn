@@ -34,7 +34,7 @@ class SideMenuTableViewController: UITableViewController {
             userNameLabel.text = ""
             
         }
-        else if(UserDefaults.standard.string(forKey: "type") == "admin") {
+        else if(UserDefaults.standard.string(forKey: "type") == "teacher") {
             userNameLabel.text = (UserDefaults.standard.string(forKey: "admin_name"))
         }
         else if(UserDefaults.standard.string(forKey: "type") == "student") {
