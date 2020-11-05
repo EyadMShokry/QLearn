@@ -602,8 +602,8 @@ class Client: NSObject {
         }
     }
     
-    func selectAllQuestion(method:String,completionHandler: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
-        _ = taskForGETMethod(method, parameters: [:]) {(data, error) in
+    func selectAllQuestion(method:String, parameters: [String : AnyObject], completionHandler: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod(method, parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -611,7 +611,7 @@ class Client: NSObject {
             
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
                 return
             }
             

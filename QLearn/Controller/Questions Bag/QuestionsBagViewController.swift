@@ -37,6 +37,7 @@ class QuestionsBagViewController: UIViewController {
     @IBAction func onClickSearchMCQButton(_ sender: Any) {
         let searchQuestionsVC = storyboard?.instantiateViewController(withIdentifier: "SeachQuestions") as! SearchQuestionsViewController
         searchQuestionsVC.questionsType = "mcq"
+        searchQuestionsVC.selectedLevel = self.selectedLevel
         self.navigationController?.pushViewController(searchQuestionsVC, animated: true)
     }
     
@@ -52,6 +53,7 @@ class QuestionsBagViewController: UIViewController {
     @IBAction func onClickSearchEssayButton(_ sender: Any) {
         let searchQuestionsVC = storyboard?.instantiateViewController(withIdentifier: "SeachQuestions") as! SearchQuestionsViewController
         searchQuestionsVC.questionsType = "essay"
+        searchQuestionsVC.selectedLevel = self.selectedLevel
         self.navigationController?.pushViewController(searchQuestionsVC, animated: true)
     }
     
@@ -68,6 +70,7 @@ class QuestionsBagViewController: UIViewController {
     @IBAction func onClickSearchTrueFalseButton(_ sender: Any) {
         let searchQuestionsVC = storyboard?.instantiateViewController(withIdentifier: "SeachQuestions") as! SearchQuestionsViewController
         searchQuestionsVC.questionsType = "TF"
+        searchQuestionsVC.selectedLevel = self.selectedLevel
         self.navigationController?.pushViewController(searchQuestionsVC, animated: true)
     }
     

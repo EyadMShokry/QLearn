@@ -19,6 +19,7 @@ class SearchQuestionsViewController: UIViewController {
     var questionsArray: [FullQuestionResult] = []
     var filteredQuestions: [FullQuestionResult] = []
     let fadeAnimation = TableViewAnimation.Cell.fade(duration: 0.7)
+    var selectedLevel = ""
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,7 +29,10 @@ class SearchQuestionsViewController: UIViewController {
         
         let admin = Admin()
         if(questionsType == "mcq") {
-            admin.selectAllMcqQuestions(parameters: [:]) {(data, error) in
+            let parameters = ["q_type" : "mcq",
+                              "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                              "level" : selectedLevel]
+            admin.selectAllQuestions(parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let questions = data {
                     self.questionsArray = questions.RESULT
                     self.filteredQuestions = self.questionsArray
@@ -68,7 +72,10 @@ class SearchQuestionsViewController: UIViewController {
             }
         }
         else if(questionsType == "essay") {
-            admin.selectAllEssayQuestions(parameters: [:]) {(data, error) in
+            let parameters = ["q_type" : "essay",
+                              "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                              "level" : selectedLevel]
+            admin.selectAllQuestions(parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let questions = data {
                     self.questionsArray = questions.RESULT
                     self.filteredQuestions = self.questionsArray
@@ -109,7 +116,10 @@ class SearchQuestionsViewController: UIViewController {
         }
             
         else {
-            admin.selectAllTrueFalseQuestions(parameters: [:]) {(data, error) in
+            let parameters = ["q_type" : "tf",
+                              "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                              "level" : selectedLevel]
+            admin.selectAllQuestions(parameters: parameters as [String : AnyObject]) {(data, error) in
                 if let questions = data {
                     self.questionsArray = questions.RESULT
                     self.filteredQuestions = self.questionsArray
@@ -236,6 +246,7 @@ class SearchQuestionsViewController: UIViewController {
             editQuestionVC.editAnswer4Text = selectedQuestion.choice4
             editQuestionVC.selectedAnswer = Int(selectedQuestion.correct_answer)!
             editQuestionVC.selectedQuestionId = selectedQuestion.id
+            editQuestionVC.selectedLevel = self.selectedLevel
             
             self.navigationController?.pushViewController(editQuestionVC, animated: true)
         }

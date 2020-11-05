@@ -352,10 +352,8 @@ class Admin:SchoolUser{
         }
     }
     
-    
-    
-    func selectAllEssayQuestions(parameters: [String : AnyObject], completion: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
-        Client.shared().selectAllQuestion(method: "select_all_essay_questions.php") {(data, error) in
+    func selectAllQuestions(parameters: [String : AnyObject], completion: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
+        Client.shared().selectAllQuestion(method: "select_all_bank_questions_ios.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }
@@ -365,30 +363,8 @@ class Admin:SchoolUser{
         }
     }
     
-    func selectAllMcqQuestions(parameters: [String : AnyObject], completion: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
-        Client.shared().selectAllQuestion(method: "select_all_mcq_questions.php") {(data, error) in
-            if let response = data {
-                completion(response, nil)
-            }
-            else if let error = error {
-                completion(nil, error)
-            }
-        }
-    }
-    
-    func selectAllTrueFalseQuestions(parameters: [String : AnyObject], completion: @escaping(_ result: FullQuestion?, _ error: NSError?) -> Void) {
-        Client.shared().selectAllQuestion(method: "select_all_trueFalse_questions.php") {(data, error) in
-            if let response = data {
-                completion(response, nil)
-            }
-            else if let error = error {
-                completion(nil, error)
-            }
-        }
-    }
-
     func updataTrueFalseQuestions(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
-        Client.shared().updateRequest(method: "update_trueFalse_question.php", parameters: parameters) {(data, error) in
+        Client.shared().updateRequest(method: "update_tf_question.php", parameters: parameters) {(data, error) in
             if let response = data {
                 completion(response, nil)
             }

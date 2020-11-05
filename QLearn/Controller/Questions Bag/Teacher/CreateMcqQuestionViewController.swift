@@ -150,7 +150,10 @@ class CreateMcqQuestionViewController: UIViewController {
                                 "choice3" : AnswerThreeTextField.text!,
                                 "choice4" : AnswerFourTextField.text!,
                                 "correct_answer" : "\(selectedAnswer)",
-                                "id" : selectedQuestionId]
+                                "id" : selectedQuestionId,
+                                "teacher_id" : UserDefaults.standard.string(forKey: "id"),
+                                "level" : selectedLevel]
+                print(parameters)
                 admin.updateMcqQuestions(parameters: parameters as [String : AnyObject]) {(response, error) in
                     if let response = response {
                         if response.contains("inserted") {
