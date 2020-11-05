@@ -230,8 +230,9 @@
                 //in case of user other than student or parent uncomment this
                 //report
                 if(UserDefaults.standard.string(forKey: "type") == "teacher") {
-                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "SelectStudent")
-                    navigationController?.pushViewController(studentReportVC!, animated: true)
+                    let studentReportVC = storyboard?.instantiateViewController(withIdentifier: "SelectStudent") as! SelectStudentViewController
+                    studentReportVC.selectedLevel = self.levelId
+                    navigationController?.pushViewController(studentReportVC, animated: true)
                 }
                 else {
                     if(!isMyTeacher && self.teacherCard[1].status == "0") {

@@ -495,5 +495,15 @@ class Admin:SchoolUser{
         }
     }
 
+    func getStudentsByTeacher(parameters: [String : AnyObject], completion: @escaping(_ result: StudentData?, _ error: NSError?) -> Void) {
+        Client.shared().selectStudentsByTeacher(parameters: parameters) {(data, error) in
+            if let students = data {
+                completion(students, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
 
 }

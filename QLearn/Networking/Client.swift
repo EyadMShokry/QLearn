@@ -962,6 +962,29 @@ class Client: NSObject {
         }
     }
 
+    func selectStudentsByTeacher(parameters: [String : AnyObject], completionHandler: @escaping(_ result: StudentData?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_student_by_teacher_ios.php", parameters: parameters, bodyParameters: parameters) {(data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let students = try JSONDecoder().decode(StudentData.self, from: data)
+                completionHandler(students, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+        }
+    }
+
 
 }
 

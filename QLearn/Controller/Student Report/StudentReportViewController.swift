@@ -28,6 +28,11 @@ class StudentReportViewController: UIViewController {
     let indicatorHeight: CGFloat = 3
     let noDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     
+    //for admin when use student report
+    var isStudentRequest = true
+    var selectedStudentId = ""
+    var selectedStudentName = ""
+    
     fileprivate func adjustMenuCollectionView() {
         menuCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .centeredVertically)
         
@@ -108,7 +113,13 @@ class StudentReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        studentNameLabel.text = UserDefaults.standard.string(forKey: "student_name")
+        print("Is student request? \(isStudentRequest)")
+        if(isStudentRequest) {
+            studentNameLabel.text = UserDefaults.standard.string(forKey: "student_name")
+        }
+        else {
+            studentNameLabel.text = self.selectedStudentName
+        }
         menuCollectionView.dataSource = self
         menuCollectionView.delegate = self
         
@@ -156,8 +167,13 @@ class StudentReportViewController: UIViewController {
     private func getStudentAttendance() {
         var student: Student
         student = Student()
-        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
+        var parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
                           "teacher_id" : self.teacherId]
+        if(!isStudentRequest) {
+            parameters = ["stuID" : self.selectedStudentId,
+                          "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+        }
+        print(parameters)
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         student.getStudentAttendance(parameters: parameters as [String : AnyObject]){ (data, error) in
@@ -190,8 +206,13 @@ class StudentReportViewController: UIViewController {
     private func getWeekGrades() {
         var student: Student
         student = Student()
-        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
+        var parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
                           "teacher_id" : self.teacherId]
+        if(!isStudentRequest) {
+            parameters = ["stuID" : self.selectedStudentId,
+                          "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+        }
+        print(parameters)
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         student.getWeekGrades(parameters: parameters as [String : AnyObject]){ (data, error) in
@@ -225,8 +246,13 @@ class StudentReportViewController: UIViewController {
     private func getMonthGrades() {
         var student: Student
         student = Student()
-        let parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
+        var parameters = ["stuID" : UserDefaults.standard.string(forKey: "id"),
                           "teacher_id" : self.teacherId]
+        if(!isStudentRequest) {
+            parameters = ["stuID" : self.selectedStudentId,
+                          "teacher_id" : UserDefaults.standard.string(forKey: "id")]
+        }
+        print(parameters)
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         student.getMonthGrades(parameters: parameters as [String : AnyObject]){ (data, error) in

@@ -106,6 +106,8 @@
 		9B2E2F1224FD0ACC0003E5BA /* TeachersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */; };
 		9B2E2F1424FD0D310003E5BA /* Teachers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1324FD0D310003E5BA /* Teachers.swift */; };
 		9B2EE8AD2526506D00996BE2 /* SelectLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */; };
+		9B30D4D225542FAB000CF859 /* StudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B30D4D125542FAB000CF859 /* StudentTableViewCell.swift */; };
+		9B30D4D4255430D2000CF859 /* StudentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B30D4D3255430D2000CF859 /* StudentData.swift */; };
 		9B33B60424FBB91300B74760 /* AnswerQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33B60324FBB91300B74760 /* AnswerQuestionViewController.swift */; };
 		9B35EDCE24FBD24F006A7314 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDCB24FBD24F006A7314 /* ConfirmCodeViewController.swift */; };
 		9B35EDCF24FBD24F006A7314 /* ConfirmPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35EDCC24FBD24F006A7314 /* ConfirmPasswordViewController.swift */; };
@@ -227,6 +229,8 @@
 		9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeachersTableViewCell.xib; sourceTree = "<group>"; };
 		9B2E2F1324FD0D310003E5BA /* Teachers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teachers.swift; sourceTree = "<group>"; };
 		9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLevelViewController.swift; sourceTree = "<group>"; };
+		9B30D4D125542FAB000CF859 /* StudentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTableViewCell.swift; sourceTree = "<group>"; };
+		9B30D4D3255430D2000CF859 /* StudentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentData.swift; sourceTree = "<group>"; };
 		9B33B60324FBB91300B74760 /* AnswerQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerQuestionViewController.swift; sourceTree = "<group>"; };
 		9B35EDCB24FBD24F006A7314 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfirmCodeViewController.swift; path = QLearn/Controller/ConfirmCodeViewController.swift; sourceTree = SOURCE_ROOT; };
 		9B35EDCC24FBD24F006A7314 /* ConfirmPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfirmPasswordViewController.swift; path = QLearn/Controller/ConfirmPasswordViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -472,6 +476,7 @@
 				68E4ED3C23312AEB00F79C7F /* WeekGradesTableViewCell.swift */,
 				68E4ED3E23312B0100F79C7F /* MonthGradesTableViewCell.swift */,
 				68E4ED4023312B2800F79C7F /* AttendanceTableViewCell.swift */,
+				9B30D4D125542FAB000CF859 /* StudentTableViewCell.swift */,
 			);
 			path = "Student Report";
 			sourceTree = "<group>";
@@ -631,6 +636,7 @@
 			children = (
 				68E4ED332331196200F79C7F /* MonthGrade.swift */,
 				68E4ED35233119C000F79C7F /* Attendance.swift */,
+				9B30D4D3255430D2000CF859 /* StudentData.swift */,
 			);
 			path = "Student Report";
 			sourceTree = "<group>";
@@ -831,6 +837,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D26B5752338A862000EE757 /* TrueFalseQuestionStudentViewController.swift in Sources */,
+				9B30D4D225542FAB000CF859 /* StudentTableViewCell.swift in Sources */,
 				68E4325A2345217000AD5544 /* EvaluateAnswerViewController.swift in Sources */,
 				68F01928233676F800221D33 /* CreateTrueFalseQuestionViewController.swift in Sources */,
 				68E4ED3D23312AEB00F79C7F /* WeekGradesTableViewCell.swift in Sources */,
@@ -905,6 +912,7 @@
 				5DE88708233DFAD5007A5D0A /* AllQuestionChapterCell.swift in Sources */,
 				689EB3542333CF6800D17EC8 /* PDFTypeViewController.swift in Sources */,
 				68E4ED3823311D8000F79C7F /* UILabel+Extension.swift in Sources */,
+				9B30D4D4255430D2000CF859 /* StudentData.swift in Sources */,
 				5D4EFD5A23330B750005F7FE /* AddTeachersTableView.swift in Sources */,
 				9B2E2F1424FD0D310003E5BA /* Teachers.swift in Sources */,
 				9B33B60424FBB91300B74760 /* AnswerQuestionViewController.swift in Sources */,
