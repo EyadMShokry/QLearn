@@ -8,6 +8,7 @@
 
 import UIKit
 import SCLAlertView
+import MOLH
 
 class StudentReportViewController: UIViewController {
     @IBOutlet weak var studentNameLabel: UILabel!
@@ -44,9 +45,11 @@ class StudentReportViewController: UIViewController {
         rightSwipe.direction = .right
         self.view.addGestureRecognizer(rightSwipe)
         
-        indicatorView.backgroundColor = .red
-        indicatorView.frame = CGRect(x: menuCollectionView.bounds.minX, y: menuCollectionView.bounds.maxY - indicatorHeight, width: menuCollectionView.bounds.width / CGFloat(menuTitles.count), height: indicatorHeight)
-        menuCollectionView.addSubview(indicatorView)
+        if(MOLHLanguage.currentAppleLanguage() == "en") {
+            indicatorView.backgroundColor = .red
+            indicatorView.frame = CGRect(x: menuCollectionView.bounds.minX, y: menuCollectionView.bounds.maxY - indicatorHeight, width: menuCollectionView.bounds.width / CGFloat(menuTitles.count), height: indicatorHeight)
+            menuCollectionView.addSubview(indicatorView)
+        }
     }
     
     @objc func swipeAction(_ sender: UISwipeGestureRecognizer) {
@@ -82,9 +85,11 @@ class StudentReportViewController: UIViewController {
             attendanceReportTableView.isHidden = false
         }
         
-        let desiredX = (menuCollectionView.bounds.width / CGFloat(menuTitles.count)) * CGFloat(selectedIndex)
-        UIView.animate(withDuration: 0.3) {
-            self.indicatorView.frame = CGRect(x: desiredX, y: self.menuCollectionView.bounds.maxY - self.indicatorHeight, width: self.menuCollectionView.bounds.width / CGFloat(self.menuTitles.count), height: self.indicatorHeight)
+        if(MOLHLanguage.currentAppleLanguage() == "en") {
+            let desiredX = (menuCollectionView.bounds.width / CGFloat(menuTitles.count)) * CGFloat(selectedIndex)
+            UIView.animate(withDuration: 0.3) {
+                self.indicatorView.frame = CGRect(x: desiredX, y: self.menuCollectionView.bounds.maxY - self.indicatorHeight, width: self.menuCollectionView.bounds.width / CGFloat(self.menuTitles.count), height: self.indicatorHeight)
+            }
         }
     }
     
@@ -127,7 +132,7 @@ class StudentReportViewController: UIViewController {
         self.weeksReportTableView.rowHeight = 75
         self.monthsReportTableView.rowHeight = 75
         self.attendanceReportTableView.rowHeight = 75
-
+        
         weeksReportTableView.dataSource = self
         weeksReportTableView.delegate = self
         monthsReportTableView.dataSource = self
@@ -141,13 +146,13 @@ class StudentReportViewController: UIViewController {
         weeksReportTableView.separatorColor = .clear
         monthsReportTableView.separatorColor = .clear
         attendanceReportTableView.separatorColor = .clear
-                
+        
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
         getWeekGrades()
         dispatchGroup.leave()
-
+        
         dispatchGroup.enter()
         getMonthGrades()
         dispatchGroup.leave()
@@ -161,7 +166,7 @@ class StudentReportViewController: UIViewController {
             self.activityIndicator.isHidden = true
             print("done")
         }
-
+        
     }
     
     private func getStudentAttendance() {
@@ -201,8 +206,8 @@ class StudentReportViewController: UIViewController {
             }
         }
     }
-
-
+    
+    
     private func getWeekGrades() {
         var student: Student
         student = Student()
@@ -280,10 +285,10 @@ class StudentReportViewController: UIViewController {
             }
         }
     }
-
-
- 
-
+    
+    
+    
+    
 }
 
 
@@ -312,16 +317,16 @@ extension StudentReportViewController: UICollectionViewDelegate, UICollectionVie
         selectedIndex = indexPath.item
         refreshContent()
     }
-
+    
 }
 
 
 extension StudentReportViewController: UITableViewDataSource, UITableViewDelegate {
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == weeksReportTableView) {
             return weeksGrades.count
@@ -333,7 +338,7 @@ extension StudentReportViewController: UITableViewDataSource, UITableViewDelegat
             return attendances.count
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(tableView == weeksReportTableView) {
             let weekCell = tableView.dequeueReusableCell(withIdentifier: "WeekGrades") as! WeekGradesTableViewCell
@@ -359,5 +364,5 @@ extension StudentReportViewController: UITableViewDataSource, UITableViewDelegat
             return attendanceCell
         }
     }
-
+    
 }

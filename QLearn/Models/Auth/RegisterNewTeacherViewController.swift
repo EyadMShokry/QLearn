@@ -49,12 +49,14 @@ class RegisterNewTeacherViewController: UIViewController {
                             if let maxId = data {
                                 self.performUIUpdatesOnMain {
                                     self.maxAdminId = maxId.RESULT[0].max_id
+                                    print("MAX ID : \(self.maxAdminId)")
                                     let user = User()
-                                    let parameters = ["id" : maxId,
+                                    let parameters = ["id" : "\(Int(self.maxAdminId)! + 1)",
                                                       "name" : self.teacherNameTextField.text!,
                                                       "password" : self.passwordTextField.text!,
                                                       "phone" : self.phoneNumberTextField.text!,
                                                       "subject" : self.subjectTextField.text!] as [String : Any]
+                                    print("regester admin parameters: \(parameters)")
                                     user.register(method: "insert_admin.php", parameters: parameters as [String : AnyObject]) { (response, error) in
                                         if let response = response{
                                             print(response)

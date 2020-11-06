@@ -60,7 +60,7 @@
 "JVX-PH-jFa.text" = "إنجازات";
 
 /* Class = "UINavigationItem"; title = "Timetable"; ObjectID = "Jml-bH-Xcn"; */
-"Jml-bH-Xcn.title" = "الجدول الزمني";
+"Jml-bH-Xcn.title" = "تقرير الطالب";
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "Lky-FM-oYb"; */
 "Lky-FM-oYb.text" = "تاريخ";

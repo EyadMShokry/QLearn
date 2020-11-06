@@ -49,7 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable {
     func reset() {
         let rootviewcontroller: UIWindow = ((UIApplication.shared.delegate?.window)!)!
         let stry = UIStoryboard(name: "Main", bundle: nil)
-        rootviewcontroller.rootViewController = stry.instantiateViewController(withIdentifier: "HomeView")
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+            rootviewcontroller.rootViewController = stry.instantiateViewController(withIdentifier: "SelectLevelsNavigation")
+        }
+        else {
+            rootviewcontroller.rootViewController = stry.instantiateViewController(withIdentifier: "HomeView")
+        }
+        
     }
     
 }

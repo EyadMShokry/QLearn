@@ -56,6 +56,7 @@
     
     
     override func viewWillAppear(_ animated: Bool) {
+        self.addTeachersButton.titleLabel?.text = "Add Assistants".localized
         super.viewWillAppear(animated)
         if(userType == "student") {
             getTeacherCard()

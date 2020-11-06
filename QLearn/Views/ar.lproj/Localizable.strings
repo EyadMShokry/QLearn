@@ -45,8 +45,8 @@
 "Questions Bag" = "بنك الأسئلة";
 "Student Report" = "تقرير الطالب";
 "Timetable" ="الجدول الزمني";
-"Uploaded PDFs" = "ملفات PDF المحمّلة";
-"Ask Us something" =  "اسألنا شيئا";
+"Uploaded PDFs" = "ملفات PDF";
+"Ask Us something" =  "اسأل المدرس";
 "Teacher CV" =  "السيرة الذاتية للمعلم";
 "Contact Us" = "تواصل معانا";
 "Job" = "المهنة";
@@ -74,7 +74,7 @@
 "Full Name" = "الاسم بالكامل";
 "Password" = "كلمه السر";
 "Confirm The Password" = "تأكيد كلمة المرور";
-"New Registration" = "تسجيل";
+"New Registration" = "حساب جديد";
 "Passwords do not match" = "كلمات المرور غير متطابقة";
 "This student already exists" = "هذا الطالب موجود بالفعل";
 "Server Error, please contact with applications author" = "خطأ في الخادم ، يرجى الاتصال بمالك التطبيق";
@@ -163,3 +163,5 @@
 "Add External Link" = "اضافه رابط خارجي";
 "Link Deleted successfully" = "تم الغاء الرابط بنجاح";
 "Only Super Admins can access this content" = "المسولين فقط من يستطيعون الوصول الي ذلك المحتوي";
+"Add Assistants" = "إضافة مساعدين";
+
