@@ -37,7 +37,10 @@
         student.getTeacherCard(parameters: parameters as [String : AnyObject]){ (data, error) in
             if let teacherCard = data {
                 self.teacherCard = teacherCard.RESULT
-                print(self.teacherCard)
+                self.performUIUpdatesOnMain {
+                    self.sectionsTableView.reloadData()
+                }
+                print("TeacherCard: \(self.teacherCard[0].status) - \(self.teacherCard[1].status)")
             }
             else if let error = error {
                 if error.code == 1001 {
@@ -57,11 +60,8 @@
     
     
     override func viewWillAppear(_ animated: Bool) {
-        self.addTeachersButton.titleLabel?.text = "Add Assistants".localized
         super.viewWillAppear(animated)
-        if(userType == "student") {
-            getTeacherCard()
-        }
+        getTeacherCard()
         newsArray.removeAll()
         
         if(UserDefaults.standard.value(forKey: "admin_name") == nil) {
@@ -115,8 +115,6 @@
         sectionsTableView.delegate = self
         sectionsTableView.isScrollEnabled = false
         sectionsTableView.separatorColor = .clear
-        print(levelId)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -180,7 +178,7 @@
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionsNames.count
+        return teacherCard.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -190,10 +188,20 @@
         if(UserDefaults.standard.string(forKey: "type") == "teacher") {
             cell.teacherCardStackView.isHidden = false
             cell.lockingImage.isHidden = true
+            cell.cellSwitch.isOn = teacherCard[indexPath.row].status == "1" ? true : false
+            cell.availabilityLabel.text = teacherCard[indexPath.row].status == "1" ? "available for all students".localized : "available only for my students".localized
+            cell.availabilityLabel.textColor = teacherCard[indexPath.row].status == "1" ? UIColor.green : UIColor.red
         }
         else {
             cell.teacherCardStackView.isHidden = true
             cell.lockingImage.isHidden = false
+            if #available(iOS 13.0, *) {
+                cell.lockingImage.image = self.teacherCard[indexPath.row].status == "1" ? UIImage(systemName: "lock.open.fill") : UIImage(systemName: "lock.fill")
+            } else {
+                // Fallback on earlier versions
+                
+            }
+            cell.lockingImage.tintColor = self.teacherCard[indexPath.row].status == "1" ? UIColor.green : UIColor.black
         }
         
         return cell

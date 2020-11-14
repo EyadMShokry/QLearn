@@ -197,16 +197,6 @@ class Student: SchoolUser {
         }
     }
     
-    func getTeacherCard(parameters: [String : AnyObject], completion: @escaping(_ result: TeacherCard?, _ error: NSError?) -> Void) {
-        Client.shared().selectTeacherCard(parameters: parameters){ (teacherCard, error) in
-            if let teacherCard = teacherCard {
-                completion(teacherCard, nil)
-            }
-            else if let error = error {
-                completion(nil, error)
-            }
-        }
-    }
     
     func getWeekGrades(parameters: [String : AnyObject], completion: @escaping(_ result: MonthGrades?, _ error: NSError?) -> Void) {
         Client.shared().selectWeekGrades(parameters: parameters){ (monthGrades, error) in

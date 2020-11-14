@@ -25,6 +25,9 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - iOSDropDown (0.3.4)
   - IQKeyboardManagerSwift (6.5.6)
+  - Kingfisher (5.15.0):
+    - Kingfisher/Core (= 5.15.0)
+  - Kingfisher/Core (5.15.0)
   - MOLH (1.4.1)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -44,6 +47,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - iOSDropDown
   - IQKeyboardManagerSwift
+  - Kingfisher
   - MOLH
   - NVActivityIndicatorView
   - SCLAlertView
@@ -62,6 +66,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - iOSDropDown
     - IQKeyboardManagerSwift
+    - Kingfisher
     - MOLH
     - nanopb
     - NVActivityIndicatorView
@@ -80,6 +85,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
+  Kingfisher: 1acb67597a520c2d0310677e66d6e0af455ef757
   MOLH: 9ea6c0390f5963b2df9827ae64035fbc8598b092
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
@@ -88,6 +94,6 @@ SPEC CHECKSUMS:
   TableFlip: 2bd0375d9d0b29f7bbd500a236dba560a0e00618
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
-PODFILE CHECKSUM: 11c26e7839221f0d06917eb5e643aba0753d0f1a
+PODFILE CHECKSUM: d20e9c3b8e3d40ae514c7ac7c2c87f48c495904c
 
 COCOAPODS: 1.9.1

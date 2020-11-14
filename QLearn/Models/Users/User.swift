@@ -109,6 +109,16 @@ class User {
             }
         }
     }
-
+    
+    func getTeacherCard(parameters: [String : AnyObject], completion: @escaping(_ result: TeacherCard?, _ error: NSError?) -> Void) {
+        Client.shared().getTeacherCard(parameters: parameters) {(data, error) in
+            if let card = data {
+              completion(card, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
    
 }

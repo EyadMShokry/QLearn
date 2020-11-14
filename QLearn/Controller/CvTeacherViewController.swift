@@ -8,6 +8,7 @@
 
 import UIKit
 import SCLAlertView
+import Kingfisher
 
 class CvTeacherViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
@@ -61,9 +62,14 @@ class CvTeacherViewController: UIViewController {
                     self.informationTableValues[1] = teacherInfo.RESULT[0].speciality
                     self.informationTableValues[2] = teacherInfo.RESULT[0].school
                     self.informationTableValues[3] = teacherInfo.RESULT[0].DOB
+                    print("Teacher Info: \(teacherInfo.RESULT[0])")
                     self.performUIUpdatesOnMain {
                         self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
                         self.informationTableView.reloadData()
+                        let url = URL(string: Client.ApiConstants.APIScheme + "://" + Client.ApiConstants.APIHost + "/" + Client.ApiConstants.ImagesPath + teacherInfo.RESULT[0].photo_url)
+                        print("Image url: \(url)")
+                        self.profileImageView.kf.indicatorType = .activity
+                        self.profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "adminicon"), options: [KingfisherOptionsInfoItem.transition(.fade(0.4))])
                     }
                 }
                 else {

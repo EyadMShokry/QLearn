@@ -801,6 +801,29 @@ class Client: NSObject {
         })
     }
     
+    func getTeacherCard(parameters: [String : AnyObject], completionHandler: @escaping(_ result: TeacherCard?, _ error: NSError?) -> Void) {
+        _ = taskForPOSTMethod("select_teacher_card_ios.php", parameters:[:], bodyParameters: parameters, completionHandlerForPOST: { (data, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey : "Couldn't retrive data"]
+                completionHandler(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            do {
+                let teacherCard = try JSONDecoder().decode(TeacherCard.self, from: data)
+                completionHandler(teacherCard, nil)
+            }
+            catch {
+                completionHandler(nil, error as NSError)
+            }
+
+        })
+    }
     func selectTeacherCard(parameters: [String : AnyObject], completionHandler: @escaping(_ result: TeacherCard?, _ error: NSError?) -> Void) {
         _ = taskForPOSTMethod("select_teacher_card_ios.php", parameters: [:], bodyParameters: parameters) {(data, error) in
             if let error = error {
@@ -1118,6 +1141,7 @@ extension Client {
         static let APIScheme = "http"
         static let APIHost = "vmi448785.contaboserver.net"
         static let APIPath = "/~qlearn/khaled/Qlearn_Test_API/"
+        static let ImagesPath = "~qlearn/qlearn/"
     }
 }
 
