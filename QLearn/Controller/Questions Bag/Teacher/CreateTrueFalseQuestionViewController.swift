@@ -44,11 +44,15 @@ class CreateTrueFalseQuestionViewController: UIViewController {
             questionTextArea.textColor = .black
             if previousAnswer {
                 self.trueButton.setImage(UIImage(named: "check-1"), for: .normal)
+                self.trueButton.tag = 1
                 self.falseButton.setImage(UIImage(named: "wrong-white"), for: .normal)
+                self.falseButton.tag = 0
             }
             else {
                 self.falseButton.setImage(UIImage(named: "wrong"), for: .normal)
+                self.falseButton.tag = 1
                 self.trueButton.setImage(UIImage(named: "check-mark"), for: .normal)
+                self.trueButton.tag = 0
             }
         }
 
@@ -62,6 +66,7 @@ class CreateTrueFalseQuestionViewController: UIViewController {
             }
             sender.setImage(UIImage(named: "check-1"), for: .normal)
             print("true changed to selected image")
+            self.trueButton.tag = 1
         }
         else if sender == falseButton {
             selectedMark = 0
@@ -70,17 +75,19 @@ class CreateTrueFalseQuestionViewController: UIViewController {
             }
             sender.setImage(UIImage(named: "wrong"), for: .normal)
             print("false changed to selected")
-
+            self.falseButton.tag = 1
         }
         
         switch sender {
         case self.trueButton:
             self.falseButton.setImage(UIImage(named: "wrong-white"), for: .normal)
             print("wrong back to white")
+            self.falseButton.tag = 0
             
         case self.falseButton:
             self.trueButton.setImage(UIImage(named: "check-mark"), for: .normal)
             print("true back to white")
+            self.trueButton.tag = 0
             
         default:
             return
@@ -88,8 +95,11 @@ class CreateTrueFalseQuestionViewController: UIViewController {
     }
     
     @IBAction func onClickCreateQuestionButton(_ sender: Any) {
-        if(questionTextArea.text.isEmpty || questionTextArea.textColor == .darkGray || (trueButton.currentImage == UIImage(named: "check-mark") && falseButton.currentImage == UIImage(named: "wrong-white"))) {
+        if(questionTextArea.text.isEmpty || questionTextArea.textColor == .darkGray) {
             SCLAlertView().showError("Error".localized, subTitle:"Some field is empty".localized, closeButtonTitle:"Ok".localized)
+        }
+        else if(trueButton.tag == 0 && falseButton.tag == 0)  {
+            SCLAlertView().showError("Error".localized, subTitle: "Choose true or false".localized)
         }
         else {
             let admin = Admin()
@@ -113,6 +123,8 @@ class CreateTrueFalseQuestionViewController: UIViewController {
                                 self.questionTextArea.text = ""
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.isHidden = true
+                                self.falseButton.setImage(UIImage(named: "wrong-white"), for: .normal)
+                                self.trueButton.setImage(UIImage(named: "check-mark"), for: .normal)
                             }
                         }
                         else {

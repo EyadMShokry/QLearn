@@ -112,6 +112,7 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
                 return
             }
             sender.setImage(UIImage(named: "check-1"), for: .normal)
+            self.trueButton.tag = 1
             print("true changed to selected image")
         }
         else if sender == falseButton {
@@ -120,6 +121,7 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
                 return
             }
             sender.setImage(UIImage(named: "wrong"), for: .normal)
+            self.falseButton.tag = 1
             print("false changed to selected")
             
         }
@@ -128,10 +130,12 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
         case self.trueButton:
             self.falseButton.setImage(UIImage(named: "wrong-white"), for: .normal)
             print("wrong back to white")
+            self.falseButton.tag = 0
             
         case self.falseButton:
             self.trueButton.setImage(UIImage(named: "check-mark"), for: .normal)
             print("true back to white")
+            self.trueButton.tag = 0
             
         default:
             return
@@ -140,66 +144,75 @@ class TrueFalseQuestionStudentViewController: UIViewController, DismissManager {
     
     
     @IBAction func SubmitAction(_ sender: UIButton) {
-        
-        let correctAnswerVC = storyboard?.instantiateViewController(withIdentifier: "CorrectAnswer") as! CorrectAnswerViewController
-        correctAnswerVC.delegate = self
-        correctAnswerVC.modalPresentationStyle = .popover
-        correctAnswerVC.popoverPresentationController?.delegate = self
-        correctAnswerVC.popoverPresentationController?.permittedArrowDirections = .any
-        correctAnswerVC.popoverPresentationController?.sourceView = sender
-        correctAnswerVC.popoverPresentationController?.sourceRect = CGRect(x: 50, y: 50, width: 1, height: 1)
-        correctAnswerVC.modalPresentationStyle = .overCurrentContext
-        correctAnswerVC.modalTransitionStyle = .crossDissolve
-        var isCorrectParameter = ""
-        if((questionsArray[0].correct_mark == "1" && selectedAnswer == "true") || (questionsArray[0].correct_mark == "0" && selectedAnswer == "false")) {
-            correctAnswerVC.isCorrect = true
-            isCorrectParameter = "1"
+        if(trueButton.tag == 0 && falseButton.tag == 0) {
+            SCLAlertView().showError("Error".localized, subTitle: "Choose true or false".localized)
         }
         else {
-            correctAnswerVC.isCorrect = false
-            isCorrectParameter = "-1"
+            let correctAnswerVC = storyboard?.instantiateViewController(withIdentifier: "CorrectAnswer") as! CorrectAnswerViewController
+            correctAnswerVC.delegate = self
+            correctAnswerVC.modalPresentationStyle = .popover
+            correctAnswerVC.popoverPresentationController?.delegate = self
+            correctAnswerVC.popoverPresentationController?.permittedArrowDirections = .any
+            correctAnswerVC.popoverPresentationController?.sourceView = sender
+            correctAnswerVC.popoverPresentationController?.sourceRect = CGRect(x: 50, y: 50, width: 1, height: 1)
+            correctAnswerVC.modalPresentationStyle = .overCurrentContext
+            correctAnswerVC.modalTransitionStyle = .crossDissolve
+            var isCorrectParameter = ""
+            if((questionsArray[0].correct_mark == "1" && selectedAnswer == "true") || (questionsArray[0].correct_mark == "0" && selectedAnswer == "false")) {
+                correctAnswerVC.isCorrect = true
+                isCorrectParameter = "1"
+            }
+            else {
+                correctAnswerVC.isCorrect = false
+                isCorrectParameter = "-1"
+            }
+            let parameters = ["actual_answer": "",
+                              "question_id": questionsArray[0].id,
+                              "student_id": UserDefaults.standard.string(forKey: "id"),
+                              "type": "TF",
+                              "isCorrect": isCorrectParameter,
+                              "chapter_id": questionsArray[0].chapter_id]
+            let student = Student()
+            student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
+                if let response = data {
+                    if response.contains("inserted") {
+                        print("inserted")
+                        self.performUIUpdatesOnMain {
+                            self.falseButton.setImage(UIImage(named: "wrong-white"), for: .normal)
+                            self.trueButton.setImage(UIImage(named: "check-mark"), for: .normal)
+                        }
+                    }
+                    else {
+                        self.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                        }
+                    }
+                }
+                else if let error = error {
+                    self.performUIUpdatesOnMain {
+                        if error.code == 1001 {
+                            self.performUIUpdatesOnMain {
+                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                            }
+                        }
+                        else {
+                            self.performUIUpdatesOnMain {
+                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                            }
+                        }
+                        print(error)
+                    }
+                }
+            }
+            self.present(correctAnswerVC, animated: true)
+            
         }
-        let parameters = ["actual_answer": "",
-                          "question_id": questionsArray[0].id,
-                          "student_id": UserDefaults.standard.string(forKey: "id"),
-                          "type": "TF",
-                          "isCorrect": isCorrectParameter,
-                          "chapter_id": questionsArray[0].chapter_id]
-                  let student = Student()
-                  student.insertAnswerWithType(method: "insert_answer.php", parameters: parameters as [String : AnyObject]) {(data, error) in
-                      if let response = data {
-                          if response.contains("inserted") {
-                              print("inserted")
-                          }
-                          else {
-                              self.performUIUpdatesOnMain {
-                                  SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
-                              }
-                          }
-                      }
-                      else if let error = error {
-                          self.performUIUpdatesOnMain {
-                              if error.code == 1001 {
-                                  self.performUIUpdatesOnMain {
-                                      SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
-                                  }
-                              }
-                              else {
-                                  self.performUIUpdatesOnMain {
-                                      SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
-                                  }
-                              }
-                              print(error)
-                          }
-                      }
-                  }
-        self.present(correctAnswerVC, animated: true)
     }
     
     func popoverDismiss(isExit: Bool) {
         print("popover dismissed")
         showNewQuestion()
-
+        
     }
     
     private func showNewQuestion() {
@@ -229,7 +242,7 @@ extension  TrueFalseQuestionStudentViewController: UITextViewDelegate {
             }
         }
     }
-
+    
 }
 
 

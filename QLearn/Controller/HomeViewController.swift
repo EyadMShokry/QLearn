@@ -37,6 +37,7 @@
         student.getTeacherCard(parameters: parameters as [String : AnyObject]){ (data, error) in
             if let teacherCard = data {
                 self.teacherCard = teacherCard.RESULT
+                print(self.teacherCard)
             }
             else if let error = error {
                 if error.code == 1001 {
@@ -186,6 +187,14 @@
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell") as! HomeTableViewCell
         cell.cellLabel.text = sectionsNames[indexPath.row]
         cell.cellImageView.image = UIImage(named: sectionsImagesNames[indexPath.row])
+        if(UserDefaults.standard.string(forKey: "type") == "teacher") {
+            cell.teacherCardStackView.isHidden = false
+            cell.lockingImage.isHidden = true
+        }
+        else {
+            cell.teacherCardStackView.isHidden = true
+            cell.lockingImage.isHidden = false
+        }
         
         return cell
     }
@@ -339,10 +348,20 @@
                     navigationController?.pushViewController(contactUsVc, animated: true)
                 }
             case 7:
-                let externalLinksVC = storyboard?.instantiateViewController(withIdentifier: "ExternalLinks") as! ExternalLinksViewController
-                externalLinksVC.teacherId = self.teacherId
-                externalLinksVC.studentLevel = self.levelId
-                navigationController?.pushViewController(externalLinksVC, animated: true)
+                if(UserDefaults.standard.string(forKey: "type") != "parent") {
+                    if(!isMyTeacher && self.teacherCard[7].status == "0") {
+                        SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                    }
+                    else {
+                        let externalLinksVC = storyboard?.instantiateViewController(withIdentifier: "ExternalLinks") as! ExternalLinksViewController
+                        externalLinksVC.teacherId = self.teacherId
+                        externalLinksVC.studentLevel = self.levelId
+                        navigationController?.pushViewController(externalLinksVC, animated: true)
+                    }
+                }
+                else {
+                    SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
+                }
             default:
                 return
             }

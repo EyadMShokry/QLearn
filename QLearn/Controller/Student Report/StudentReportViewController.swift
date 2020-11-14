@@ -359,7 +359,7 @@ extension StudentReportViewController: UITableViewDataSource, UITableViewDelegat
             let attendanceCell = tableView.dequeueReusableCell(withIdentifier: "Attendance") as! AttendanceTableViewCell
             attendanceCell.dateLabel.text = ""
             attendanceCell.weekNumberLabel.text = attendances[indexPath.row].num
-            attendanceCell.statusLabel.text = attendances[indexPath.row].status == "True" ? "Attended".localized : "Not Attended".localized
+            attendanceCell.statusLabel.text = attendances[indexPath.row].status == "True" ? "Attend".localized : "Not Attended".localized
             attendanceCell.statusLabel.layer.borderColor = attendances[indexPath.row].status == "True" ? UIColor.green.cgColor : UIColor.red.cgColor
             return attendanceCell
         }
