@@ -192,7 +192,7 @@
             cell.availabilityLabel.text = teacherCard[indexPath.row].status == "1" ? "available for all students".localized : "available only for my students".localized
             cell.availabilityLabel.textColor = teacherCard[indexPath.row].status == "1" ? UIColor.green : UIColor.red
         }
-        else {
+        else if(!isMyTeacher){
             cell.teacherCardStackView.isHidden = true
             cell.lockingImage.isHidden = false
             if #available(iOS 13.0, *) {
@@ -202,6 +202,10 @@
                 
             }
             cell.lockingImage.tintColor = self.teacherCard[indexPath.row].status == "1" ? UIColor.green : UIColor.black
+        }
+        else {
+            cell.teacherCardStackView.isHidden = true
+            cell.lockingImage.isHidden = true
         }
         
         return cell
