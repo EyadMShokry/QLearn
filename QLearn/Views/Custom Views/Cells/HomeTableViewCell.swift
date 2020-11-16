@@ -16,10 +16,15 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var teacherCardStackView: UIStackView!
     @IBOutlet weak var lockingImage: UIImageView!
     
+    var switchPressed: ((UISwitch)->Void)?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
     }
     
+    @IBAction func switchPressed(_ sender: UISwitch) {
+        switchPressed?(sender)
+    }
 }
  

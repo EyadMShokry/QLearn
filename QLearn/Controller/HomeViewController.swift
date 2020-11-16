@@ -191,6 +191,48 @@
             cell.cellSwitch.isOn = teacherCard[indexPath.row].status == "1" ? true : false
             cell.availabilityLabel.text = teacherCard[indexPath.row].status == "1" ? "available for all students".localized : "available only for my students".localized
             cell.availabilityLabel.textColor = teacherCard[indexPath.row].status == "1" ? UIColor.green : UIColor.red
+            cell.switchPressed = { [weak self] sender in
+                let admin = Admin()
+                var status = ""
+                if sender.isOn {
+                    status = "1"
+                }
+                else {
+                    status = "0"
+                }
+                let parameters = ["status" : status,
+                                  "teacherID" : UserDefaults.standard.string(forKey: "id"),
+                                  "cardNumber" : self!.teacherCard[indexPath.row].cardNumber]
+                print(parameters)
+                admin.updateCardActivation(parameters: parameters as [String : AnyObject]) { (data, error) in
+                    if let response = data{
+                        if response.contains("inserted"){
+                            self!.performUIUpdatesOnMain {
+                                SCLAlertView().showSuccess("Success".localized, subTitle: "Status is changed successfully".localized, closeButtonTitle:"Ok".localized)
+                                self?.getTeacherCard()
+                            }
+                        }
+                        else{
+                            self!.performUIUpdatesOnMain {
+                                SCLAlertView().showError("Error".localized, subTitle: "Server Error, please contact with applications author".localized, closeButtonTitle:"Ok".localized)
+                            }
+                        }
+                    }
+                    else if let error = error {
+                        if error.code == 1001 {
+                            self!.performUIUpdatesOnMain {
+                                SCLAlertView().showError("Error happened", subTitle: "Please check your internet connection", closeButtonTitle:"Ok".localized)
+                            }
+                        }
+                        else {
+                            self!.performUIUpdatesOnMain {
+                                SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                            }
+                        }
+                        print(error)
+                    }
+                }
+            }
         }
         else if(!isMyTeacher){
             cell.teacherCardStackView.isHidden = true
@@ -203,6 +245,7 @@
             }
             cell.lockingImage.tintColor = self.teacherCard[indexPath.row].status == "1" ? UIColor.green : UIColor.black
         }
+            //If a student registered with that teacher no matter to show him the lock images (the all features are already availble to him )
         else {
             cell.teacherCardStackView.isHidden = true
             cell.lockingImage.isHidden = true

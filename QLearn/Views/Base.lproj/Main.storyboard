@@ -246,6 +246,9 @@
                                                                                                 <constraint firstAttribute="height" constant="20" id="5Dg-hA-Wcc"/>
                                                                                                 <constraint firstAttribute="width" constant="40" id="t4j-uu-k8C"/>
                                                                                             </constraints>
+                                                                                            <connections>
+                                                                                                <action selector="switchPressed:" destination="czi-i6-5t8" eventType="valueChanged" id="CRZ-pn-tRQ"/>
+                                                                                            </connections>
                                                                                         </switch>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاح فقط لطلابي" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwW-OB-xaD">
                                                                                             <rect key="frame" x="27" y="26.5" width="81.5" height="14.5"/>
@@ -6222,8 +6225,8 @@
         <image name="parent" width="42.5" height="42.5"/>
         <image name="pdf-icon" width="666.5" height="666.5"/>
         <image name="pencil" width="42.5" height="42.5"/>
-        <image name="plus" width="42.5" height="42.5"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="42.5" height="42.5"/>
         <image name="question-blue" width="21" height="21"/>
         <image name="send" width="42.5" height="42.5"/>
         <image name="smallbackground" width="166.5" height="125"/>

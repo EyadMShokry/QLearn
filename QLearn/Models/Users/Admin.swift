@@ -407,6 +407,18 @@ class Admin:SchoolUser{
         }
     }
     
+    func updateCardActivation(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
+        Client.shared().updateRequest(method: "update_card_activation.php", parameters: parameters) { (data, error) in
+            if let response = data {
+                completion(response, nil)
+            }
+            else if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+
+    
     func updateAchievement(parameters: [String : AnyObject], completion: @escaping(_ result: String?, _ error: NSError?) -> Void) {
         Client.shared().updateRequest(method: "update_achievement.php", parameters: parameters) { (data, error) in
             if let response = data {
