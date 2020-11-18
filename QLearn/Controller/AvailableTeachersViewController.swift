@@ -9,6 +9,7 @@
 import UIKit
 import SCLAlertView
 import NVActivityIndicatorView
+import Kingfisher
 
 class AvailableTeachersViewController: UIViewController {
 
@@ -89,6 +90,11 @@ class AvailableTeachersViewController: UIViewController {
         student.getOtherTeachers(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let teachers = data {
                 self.allTeachers.append(teachers.RESULT)
+                for teachers in self.allTeachers {
+                    for teacher in teachers {
+                        print(teacher.photo_url)
+                    }
+                }
                 self.performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
@@ -181,6 +187,17 @@ extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDel
         else if(indexPath.section == 1) {
             cell.setupCell(teacher: allTeachers[indexPath.section][indexPath.row], isMyTeacher: false)
         }
+        //download and show teachers' images
+        var url: URL!
+        if let imageUrl = allTeachers[indexPath.section][indexPath.row].photo_url {
+            url = URL(string: Client.ApiConstants.APIScheme + "://" + Client.ApiConstants.APIHost + "/" + Client.ApiConstants.ImagesPath + imageUrl)
+        }
+        else {
+            url = nil
+        }
+        cell.teacherImage.kf.indicatorType = .activity
+        cell.teacherImage.kf.setImage(with: url, placeholder: UIImage(named: "adminicon"), options: [KingfisherOptionsInfoItem.transition(.fade(0.4))])
+
         return cell
     }
     

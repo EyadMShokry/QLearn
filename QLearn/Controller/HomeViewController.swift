@@ -147,7 +147,7 @@
             //                button.isHidden = !button.isHidden
             //                self.view.layIfNeeded()
             //            }
-            if(UserDefaults.standard.string(forKey: "id") == "1") {
+            if(UserDefaults.standard.string(forKey: "id") == UserDefaults.standard.string(forKey: "sub_id")) {
                 self.AdminButton.isHidden = !self.AdminButton.isHidden
                 self.newsButton.isHidden = !self.newsButton.isHidden
                 self.view.layoutIfNeeded()
@@ -196,9 +196,11 @@
                 var status = ""
                 if sender.isOn {
                     status = "1"
+                    sender.isOn = false
                 }
                 else {
                     status = "0"
+                    sender.isOn = true
                 }
                 let parameters = ["status" : status,
                                   "teacherID" : UserDefaults.standard.string(forKey: "id"),

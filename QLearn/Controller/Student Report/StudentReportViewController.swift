@@ -45,11 +45,10 @@ class StudentReportViewController: UIViewController {
         rightSwipe.direction = .right
         self.view.addGestureRecognizer(rightSwipe)
         
-        if(MOLHLanguage.currentAppleLanguage() == "en") {
-            indicatorView.backgroundColor = .red
-            indicatorView.frame = CGRect(x: menuCollectionView.bounds.minX, y: menuCollectionView.bounds.maxY - indicatorHeight, width: menuCollectionView.bounds.width / CGFloat(menuTitles.count), height: indicatorHeight)
-            menuCollectionView.addSubview(indicatorView)
-        }
+        indicatorView.backgroundColor = .red
+        indicatorView.frame = CGRect(x: menuCollectionView.bounds.minX, y: menuCollectionView.bounds.maxY - indicatorHeight, width: menuCollectionView.bounds.width / CGFloat(menuTitles.count), height: indicatorHeight)
+        menuCollectionView.addSubview(indicatorView)
+        
     }
     
     @objc func swipeAction(_ sender: UISwipeGestureRecognizer) {
@@ -85,12 +84,11 @@ class StudentReportViewController: UIViewController {
             attendanceReportTableView.isHidden = false
         }
         
-        if(MOLHLanguage.currentAppleLanguage() == "en") {
-            let desiredX = (menuCollectionView.bounds.width / CGFloat(menuTitles.count)) * CGFloat(selectedIndex)
-            UIView.animate(withDuration: 0.3) {
-                self.indicatorView.frame = CGRect(x: desiredX, y: self.menuCollectionView.bounds.maxY - self.indicatorHeight, width: self.menuCollectionView.bounds.width / CGFloat(self.menuTitles.count), height: self.indicatorHeight)
-            }
+        let desiredX = (menuCollectionView.bounds.width / CGFloat(menuTitles.count)) * CGFloat(selectedIndex)
+        UIView.animate(withDuration: 0.3) {
+            self.indicatorView.frame = CGRect(x: desiredX, y: self.menuCollectionView.bounds.maxY - self.indicatorHeight, width: self.menuCollectionView.bounds.width / CGFloat(self.menuTitles.count), height: self.indicatorHeight)
         }
+        
     }
     
     fileprivate func addNoDataLabel() {

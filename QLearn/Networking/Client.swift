@@ -1140,7 +1140,7 @@ extension Client {
     struct ApiConstants {
         static let APIScheme = "http"
         static let APIHost = "vmi448785.contaboserver.net"
-        static let APIPath = "/~qlearn/khaled/Qlearn_Test_API/"
+        static let APIPath = "/~qlearn/khaled/Qlearn_API/"
         static let ImagesPath = "~qlearn/qlearn/"
     }
 }

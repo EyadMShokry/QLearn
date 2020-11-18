@@ -67,7 +67,6 @@ class CvTeacherViewController: UIViewController {
                         self.NameTeacherLable.text = teacherInfo.RESULT[0].fullName
                         self.informationTableView.reloadData()
                         let url = URL(string: Client.ApiConstants.APIScheme + "://" + Client.ApiConstants.APIHost + "/" + Client.ApiConstants.ImagesPath + teacherInfo.RESULT[0].photo_url)
-                        print("Image url: \(url)")
                         self.profileImageView.kf.indicatorType = .activity
                         self.profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "adminicon"), options: [KingfisherOptionsInfoItem.transition(.fade(0.4))])
                     }
