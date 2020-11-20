@@ -17,4 +17,5 @@ pod 'Firebase/Core', '4.2.0'
 pod 'Firebase/Storage' 
 pod 'SideMenu'
 pod 'Kingfisher'
+pod 'Moya'
 end

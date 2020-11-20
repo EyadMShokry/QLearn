@@ -121,6 +121,8 @@
 		9B649AE425011AD500130645 /* TeacherCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE325011AD500130645 /* TeacherCard.swift */; };
 		9B649AE62501744500130645 /* IsActivated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE52501744500130645 /* IsActivated.swift */; };
 		9B649AE825017D5A00130645 /* GoForPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B649AE725017D5A00130645 /* GoForPayViewController.swift */; };
+		9B6D705325675B0400C33E91 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6D705225675B0400C33E91 /* NetworkingService.swift */; };
+		9B6D705525675B5200C33E91 /* QLearnAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6D705425675B5200C33E91 /* QLearnAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -244,6 +246,8 @@
 		9B649AE325011AD500130645 /* TeacherCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCard.swift; sourceTree = "<group>"; };
 		9B649AE52501744500130645 /* IsActivated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsActivated.swift; sourceTree = "<group>"; };
 		9B649AE725017D5A00130645 /* GoForPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoForPayViewController.swift; sourceTree = "<group>"; };
+		9B6D705225675B0400C33E91 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		9B6D705425675B5200C33E91 /* QLearnAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLearnAPI.swift; sourceTree = "<group>"; };
 		DF38D15381E1797DF11DAED3 /* Pods-QLearn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLearn.release.xcconfig"; path = "Target Support Files/Pods-QLearn/Pods-QLearn.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -518,6 +522,7 @@
 		68E51B06232AA40D00FF48A6 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9B6D705125675AE800C33E91 /* Moya */,
 				68E51B10232AD61000FF48A6 /* Client.swift */,
 				681E910423484762008FA842 /* FileDownloader.swift */,
 			);
@@ -702,6 +707,15 @@
 			path = "Questions Bag";
 			sourceTree = "<group>";
 		};
+		9B6D705125675AE800C33E91 /* Moya */ = {
+			isa = PBXGroup;
+			children = (
+				9B6D705225675B0400C33E91 /* NetworkingService.swift */,
+				9B6D705425675B5200C33E91 /* QLearnAPI.swift */,
+			);
+			path = Moya;
+			sourceTree = "<group>";
+		};
 		F5EA8B42C38B4546D4F260BB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -839,6 +853,7 @@
 				5D26B5752338A862000EE757 /* TrueFalseQuestionStudentViewController.swift in Sources */,
 				9B30D4D225542FAB000CF859 /* StudentTableViewCell.swift in Sources */,
 				68E4325A2345217000AD5544 /* EvaluateAnswerViewController.swift in Sources */,
+				9B6D705325675B0400C33E91 /* NetworkingService.swift in Sources */,
 				68F01928233676F800221D33 /* CreateTrueFalseQuestionViewController.swift in Sources */,
 				68E4ED3D23312AEB00F79C7F /* WeekGradesTableViewCell.swift in Sources */,
 				68EC10A123390260000654D4 /* Question.swift in Sources */,
@@ -852,6 +867,7 @@
 				5D39FDA9232DEADC005C3E23 /* CvTeacherViewController.swift in Sources */,
 				684470E1233C1845003A717B /* AskTeacherViewController.swift in Sources */,
 				9B649AE425011AD500130645 /* TeacherCard.swift in Sources */,
+				9B6D705525675B5200C33E91 /* QLearnAPI.swift in Sources */,
 				68E76D49233A7C9900C397F7 /* AddPdfViewController.swift in Sources */,
 				683239FF23381DAC002DACBF /* SearchQuestionsTableViewCell.swift in Sources */,
 				68EB1924233E68DE0092589B /* Phone.swift in Sources */,

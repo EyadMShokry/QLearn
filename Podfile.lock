@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.2.2)
   - Firebase/Core (4.2.0):
     - FirebaseAnalytics (= 4.0.3)
     - FirebaseCore (= 4.0.7)
@@ -29,6 +30,10 @@ PODS:
     - Kingfisher/Core (= 5.15.0)
   - Kingfisher/Core (5.15.0)
   - MOLH (1.4.1)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -49,6 +54,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - Kingfisher
   - MOLH
+  - Moya
   - NVActivityIndicatorView
   - SCLAlertView
   - SideMenu
@@ -57,6 +63,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -68,6 +75,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Kingfisher
     - MOLH
+    - Moya
     - nanopb
     - NVActivityIndicatorView
     - SCLAlertView
@@ -76,6 +84,7 @@ SPEC REPOS:
     - TextFieldEffects
 
 SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   Firebase: 9548cae14d69718add12d75a5b312893f7ef89c7
   FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
   FirebaseCore: 9a6cc1e3eaf75905390f9220596ad4fd8f92faee
@@ -87,6 +96,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Kingfisher: 1acb67597a520c2d0310677e66d6e0af455ef757
   MOLH: 9ea6c0390f5963b2df9827ae64035fbc8598b092
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
@@ -94,6 +104,6 @@ SPEC CHECKSUMS:
   TableFlip: 2bd0375d9d0b29f7bbd500a236dba560a0e00618
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
-PODFILE CHECKSUM: d20e9c3b8e3d40ae514c7ac7c2c87f48c495904c
+PODFILE CHECKSUM: 9fed0f2d1b121722d84387add320826042a6575c
 
 COCOAPODS: 1.9.1
