@@ -13,7 +13,10 @@ class TeachersTableViewCell: UITableViewCell {
     @IBOutlet weak var teacherSubjectLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var teacherImage: UIImageView!
+    @IBOutlet weak var joinRequestButton: UIButton!
     
+    var joinRequestPressed: ((UIButton)->Void)?
+
     func setupCell(teacher: Teacher, isMyTeacher: Bool) {
         UIView.appearance().semanticContentAttribute = .forceLeftToRight
         self.teacherNameLabel.text = "مدرس: \(teacher.subject)"
@@ -23,6 +26,8 @@ class TeachersTableViewCell: UITableViewCell {
         teacherImage.clipsToBounds = true
         teacherImage.layer.borderColor = UIColor.white.cgColor
         teacherImage.layer.borderWidth = 4.5
+        joinRequestButton.titleLabel?.textAlignment = .center
+        joinRequestButton.roundCorners(corners: [.topRight, .bottomRight], radius: 15)
 
         if(!isMyTeacher) {
             cellView.layer.backgroundColor = UIColor(displayP3Red: 36/255, green: 102/255, blue: 66/255, alpha: 1).cgColor
@@ -31,5 +36,10 @@ class TeachersTableViewCell: UITableViewCell {
             cellView.layer.backgroundColor = UIColor(displayP3Red: 0/255, green: 41/255, blue: 59/255, alpha: 1).cgColor
         }
     }
+    
+    @IBAction func onClickSubmitJoinRequestButton(_ sender: UIButton) {
+        joinRequestPressed?(sender)
+    }
+    
 
 }

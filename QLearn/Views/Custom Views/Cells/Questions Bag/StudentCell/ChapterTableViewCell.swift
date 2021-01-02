@@ -14,6 +14,8 @@ class ChapterTableViewCell: UITableViewCell {
     @IBOutlet weak var chapterLabel: UILabel!
     @IBOutlet weak var ViewLable: UIView!
     @IBOutlet weak var progressBar: CircularProgressBar!
+    @IBOutlet weak var questionsNumberLabel: UILabel!
+    @IBOutlet weak var examTimeLabel: UILabel!
     var progress : Double = 0
 
     override func awakeFromNib() {

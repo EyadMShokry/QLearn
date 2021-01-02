@@ -9,6 +9,9 @@
 import Moya
 
 public enum QLearnAPI {
+    // MARK: Select Teachers APIs
+    case insertStudentTeacherRequest(stuID: String, teacher_id: String)
+    
     // MARK: Live Exam APIs
     // LE -> Live Exam
     case insertEssayQuestionLE(question: String, correct_answer: String, essay_type: String, exam_id: String, teacher_id: String, level: String)
@@ -29,6 +32,7 @@ public enum QLearnAPI {
     case selectNotAnswerdEssayQuestionsLE(exam_id: String, teacher_id: String, student_id: String, level: String)
     case selectNotAnswerdMcqQuestionsLE(exam_id: String, teacher_id: String, student_id: String, level: String)
     case selectNotAnswerdTFQuestionsLE(exam_id: String, teacher_id: String, student_id: String, level: String)
+    case selectOnGoingExamsLE(teacher_id: String, level: String)
     
 }
 
@@ -36,12 +40,15 @@ extension QLearnAPI: TargetType {
     
     public var baseURL: URL {
         switch self {
-        default: return URL(string: "http://vmi448785.contaboserver.net/~qlearn/khaled/Qlearn_API/")!
+        default: return URL(string: "https://vmi448785.contaboserver.net/~qlearn/qlearn/api/")!
         }
     }
     
     public var path: String {
         switch self {
+        // MARK: Select Teachers APIs
+        case .insertStudentTeacherRequest: return "insert_stu_teacher_request.php"
+            
         // MARK: Live Exam APIs
         case .insertEssayQuestionLE: return "insert_essay_question_liveexam"
         case .insertMcqQuestionLE: return "insert_mcq_question_liveexam"
@@ -59,13 +66,14 @@ extension QLearnAPI: TargetType {
         case .selectNotAnswerdEssayQuestionsLE: return "select_not_answered_essay_question_liveexam"
         case .selectNotAnswerdMcqQuestionsLE: return "select_not_answered_mcq_questions_liveexam"
         case .selectNotAnswerdTFQuestionsLE: return "select_not_answered_tf_questions_liveexam"
+        case .selectOnGoingExamsLE: return "select_ongoin_exams"
         }
     }
     
     public var method: Moya.Method {
         switch self {
         case .insertEssayQuestionLE, .insertMcqQuestionLE, .insertTFQuestionLE,
-             .updateEssayQuestionLE, .updateMcqQuestionLE, .updateTFQuestionLE: return .post
+             .updateEssayQuestionLE, .updateMcqQuestionLE, .updateTFQuestionLE, .insertStudentTeacherRequest: return .post
         default: return .get
         }
     }
@@ -76,6 +84,10 @@ extension QLearnAPI: TargetType {
     
     public var task: Task {
         switch self {
+        // MARK: Select Teachers APIs
+        case .insertStudentTeacherRequest(stuID: let studentId, teacher_id: let teacherId):
+            return .requestParameters(parameters: ["stuID" : studentId, "teacher_id" : teacherId], encoding: URLEncoding.queryString)
+            
         // MARK: Live Exam APIs
         case .insertEssayQuestionLE(question: let question, correct_answer: let correctAnswer, essay_type: let essayType, exam_id: let examId, teacher_id: let teacherId, level: let level) :
             return .requestParameters(parameters: ["question" : question, "correct_answer" : correctAnswer, "essay_type" : essayType, "exam_id" : examId, "teacher_id" : teacherId, "level" : level], encoding: URLEncoding.queryString)
@@ -124,7 +136,8 @@ extension QLearnAPI: TargetType {
             
         case .selectNotAnswerdTFQuestionsLE(exam_id: let examId, teacher_id: let teacherId, student_id: let studentId, level: let level) :
             return .requestParameters(parameters: ["exam_id" : examId, "teacher_id" : teacherId, "student_id" : studentId, "level" : level], encoding: URLEncoding.queryString)
-            
+        case .selectOnGoingExamsLE(teacher_id: let teacherId, level: let level) :
+            return .requestParameters(parameters: ["teacher_id" : teacherId, "level" : level], encoding: URLEncoding.queryString)
         default :
             return .requestPlain
         }

@@ -12,7 +12,7 @@ import NVActivityIndicatorView
 import Kingfisher
 
 class AvailableTeachersViewController: UIViewController {
-
+    
     @IBOutlet weak var teachersTableView: UITableView!
     @IBOutlet weak var addOtherTeachersButton: UIButton!
     @IBOutlet weak var footerView: UIView!
@@ -90,11 +90,6 @@ class AvailableTeachersViewController: UIViewController {
         student.getOtherTeachers(parameters: parameters as [String : AnyObject]) { (data, error) in
             if let teachers = data {
                 self.allTeachers.append(teachers.RESULT)
-                for teachers in self.allTeachers {
-                    for teacher in teachers {
-                        print(teacher.photo_url)
-                    }
-                }
                 self.performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
@@ -143,13 +138,13 @@ class AvailableTeachersViewController: UIViewController {
             }
         }
     }
-
+    
     
     @IBAction func onClickAddOtherTeachersButton(_ sender: UIButton) {
         getOtherTeachers()
     }
     
-
+    
     @IBAction func onClickLogoutButton(_ sender: UIBarButtonItem) {
         UserDefaults.standard.removeObject(forKey: "id")
         UserDefaults.standard.removeObject(forKey: "student_name")
@@ -160,7 +155,6 @@ class AvailableTeachersViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "admin_phone")
         UserDefaults.standard.removeObject(forKey: "type")
         UserDefaults.standard.synchronize()
-//        self.dismiss(animated: true, completion: nil)
         let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
         loginVC.modalPresentationStyle = .fullScreen
         self.present(loginVC, animated: true, completion: nil)
@@ -183,11 +177,43 @@ extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeacherCell") as! TeachersTableViewCell
         if(indexPath.section == 0) {
             cell.setupCell(teacher: allTeachers[indexPath.section][indexPath.row], isMyTeacher: true)
+            cell.joinRequestButton.isHidden = true
         }
         else if(indexPath.section == 1) {
+            cell.joinRequestButton.isHidden = false
             cell.setupCell(teacher: allTeachers[indexPath.section][indexPath.row], isMyTeacher: false)
+            if(allTeachers[indexPath.section][indexPath.row].requested == "True") {
+                cell.joinRequestButton.isEnabled = false
+                cell.joinRequestButton.setTitle("A request is sent".localized, for: .normal)
+                cell.joinRequestButton.backgroundColor = UIColor.lightGray
+            }
         }
-        //download and show teachers' images
+        //Handle join requests
+        cell.joinRequestPressed  = { [weak self] sender in
+            NetworkingService.shared.provider.request(.insertStudentTeacherRequest(stuID: UserDefaults.standard.string(forKey: "id")!, teacher_id: self!.allTeachers[indexPath.section][indexPath.row].id)) {[weak self] (result) in
+                switch result {
+                case .success(let response):
+                    let responseString = String(decoding: response.data, as: UTF8.self)
+                    print(responseString)
+                    if(responseString == "inserted") {
+                        self?.performUIUpdatesOnMain {
+                            cell.joinRequestButton.isEnabled = false
+                            cell.joinRequestButton.setTitle("A request is sent".localized, for: .normal)
+                            cell.joinRequestButton.backgroundColor = UIColor.lightGray
+                        }
+                    }
+                    else {
+                        self?.performUIUpdatesOnMain {
+                            SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                        }
+                    }
+                case .failure(let err):
+                    print(err)
+                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                }
+            }
+        }
+        //Download and show teachers' images
         var url: URL!
         if let imageUrl = allTeachers[indexPath.section][indexPath.row].photo_url {
             url = URL(string: Client.ApiConstants.APIScheme + "://" + Client.ApiConstants.APIHost + "/" + Client.ApiConstants.ImagesPath + imageUrl)
@@ -197,7 +223,7 @@ extension AvailableTeachersViewController: UITableViewDataSource, UITableViewDel
         }
         cell.teacherImage.kf.indicatorType = .activity
         cell.teacherImage.kf.setImage(with: url, placeholder: UIImage(named: "adminicon"), options: [KingfisherOptionsInfoItem.transition(.fade(0.4))])
-
+        
         return cell
     }
     

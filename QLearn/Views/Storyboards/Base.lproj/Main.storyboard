@@ -177,14 +177,14 @@
             <objects>
                 <viewController storyboardIdentifier="Login" id="BwN-Zd-Bkq" customClass="HomeViewController" customModule="QLearn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sCM-Ff-slf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4y3-5A-nun">
-                                <rect key="frame" x="0.0" y="44" width="375" height="956"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="1156"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUf-hF-1Zl" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1250"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundNew" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-CI-1od">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
@@ -193,10 +193,10 @@
                                                 </constraints>
                                             </imageView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="37e-AW-BeH">
-                                                <rect key="frame" x="5" y="520" width="365" height="650"/>
+                                                <rect key="frame" x="5" y="520" width="365" height="800"/>
                                                 <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="650" id="FAH-bD-9Nb"/>
+                                                    <constraint firstAttribute="height" constant="800" id="FAH-bD-9Nb"/>
                                                 </constraints>
                                                 <view key="tableFooterView" contentMode="scaleToFill" id="Slm-1o-jfY">
                                                     <rect key="frame" x="0.0" y="121" width="365" height="44"/>
@@ -393,7 +393,7 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1150" id="0Zw-Y3-9Go"/>
+                                            <constraint firstAttribute="height" constant="1250" id="0Zw-Y3-9Go"/>
                                             <constraint firstItem="Vc7-Bj-taC" firstAttribute="top" secondItem="fUf-hF-1Zl" secondAttribute="top" constant="10" id="0ni-vl-jj5"/>
                                             <constraint firstItem="ZTD-sn-U8j" firstAttribute="leading" secondItem="fUf-hF-1Zl" secondAttribute="leading" constant="5" id="2y7-cN-o5R"/>
                                             <constraint firstItem="jyC-Wn-YWW" firstAttribute="top" secondItem="fUf-hF-1Zl" secondAttribute="top" constant="10" id="6Fm-Gs-7mt"/>
@@ -435,7 +435,7 @@
                         <viewLayoutGuide key="safeArea" id="Mxr-DB-J97"/>
                     </view>
                     <navigationItem key="navigationItem" id="iwW-LQ-mcH"/>
-                    <size key="freeformSize" width="375" height="1000"/>
+                    <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="AdminButton" destination="9Gb-9h-MTn" id="xum-Z0-1NO"/>
                         <outlet property="addNewsButton" destination="fEa-PG-8Sr" id="OvA-fZ-gMg"/>
@@ -938,6 +938,56 @@
             </objects>
             <point key="canvasLocation" x="-844" y="-147"/>
         </scene>
+        <!--Student Attendance View Controller-->
+        <scene sceneID="2sh-Ox-TbK">
+            <objects>
+                <viewController storyboardIdentifier="StudentAttendanceVC" id="i6U-QC-VVc" customClass="StudentAttendanceViewController" customModule="QLearn" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="buX-bU-gjt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topwhitebackground" translatesAutoresizingMaskIntoConstraints="NO" id="YA9-qr-ps7">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hft-qn-BaP">
+                                <rect key="frame" x="82" y="303.5" width="250" height="289"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="رقم الطالب:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlO-nJ-hbC">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="zPR-2X-4Do">
+                                        <rect key="frame" x="0.0" y="39" width="250" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="8my-5C-gaE"/>
+                                            <constraint firstAttribute="width" constant="250" id="fEz-W0-Up2"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="YA9-qr-ps7" firstAttribute="trailing" secondItem="TbI-tM-xtx" secondAttribute="trailing" id="BnT-4m-28J"/>
+                            <constraint firstItem="YA9-qr-ps7" firstAttribute="top" secondItem="TbI-tM-xtx" secondAttribute="top" id="fIM-KY-wnI"/>
+                            <constraint firstItem="hft-qn-BaP" firstAttribute="centerX" secondItem="buX-bU-gjt" secondAttribute="centerX" id="fP2-X6-Z2q"/>
+                            <constraint firstItem="YA9-qr-ps7" firstAttribute="leading" secondItem="TbI-tM-xtx" secondAttribute="leading" id="gdW-2s-ppn"/>
+                            <constraint firstItem="TbI-tM-xtx" firstAttribute="bottom" secondItem="YA9-qr-ps7" secondAttribute="bottom" id="nmh-gK-XUZ"/>
+                            <constraint firstItem="hft-qn-BaP" firstAttribute="centerY" secondItem="buX-bU-gjt" secondAttribute="centerY" id="wIP-oe-efy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TbI-tM-xtx"/>
+                    </view>
+                    <connections>
+                        <outlet property="qrCodeImageView" destination="zPR-2X-4Do" id="ils-Tm-00w"/>
+                        <outlet property="studentIdLabel" destination="XlO-nJ-hbC" id="VsW-Al-oGO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6tz-UY-mC7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1817.3913043478262" y="-1856.25"/>
+        </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="mGG-Io-J9I">
             <objects>
@@ -961,7 +1011,7 @@
         <scene sceneID="Qqi-VR-Lrh">
             <objects>
                 <tableViewController id="c2p-e8-d9k" customClass="SideMenuTableViewController" customModule="QLearn" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wXc-Uo-UKb">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wXc-Uo-UKb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1013,31 +1063,9 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ba1-ge-A9V">
-                            <rect key="frame" x="0.0" y="452" width="414" height="151"/>
+                            <rect key="frame" x="0.0" y="219" width="414" height="151"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wm8-PA-kmO">
-                                    <rect key="frame" x="8" y="85" width="103" height="24"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="log-out" translatesAutoresizingMaskIntoConstraints="NO" id="X5u-xq-pdx">
-                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="EVX-y4-zYg"/>
-                                                <constraint firstAttribute="width" constant="24" id="acc-68-bP0"/>
-                                            </constraints>
-                                        </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ty-o9-jmO">
-                                            <rect key="frame" x="32" y="0.0" width="71" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                            <state key="normal" title="Sign out">
-                                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="onClickSignOutButton:" destination="c2p-e8-d9k" eventType="touchUpInside" id="vm6-ff-Zve"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To Change Language:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPi-El-Rpu">
                                     <rect key="frame" x="8" y="2" width="190" height="24"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -1058,47 +1086,70 @@
                                         <action selector="didPressOnLanguage:" destination="c2p-e8-d9k" eventType="touchUpInside" id="O3v-Rd-5jh"/>
                                     </connections>
                                 </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Ctf-fS-Gr5">
+                                    <rect key="frame" x="10" y="76" width="394" height="63"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t56-oJ-6Rf">
+                                            <rect key="frame" x="0.0" y="0.0" width="394" height="24"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attendance" translatesAutoresizingMaskIntoConstraints="NO" id="daj-IF-jDh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="Jks-Wn-0M5"/>
+                                                        <constraint firstAttribute="height" constant="24" id="x1z-lN-4bE"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3I-3u-Lu9">
+                                                    <rect key="frame" x="32" y="0.0" width="362" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <state key="normal" title="Attendance">
+                                                        <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onClickAttendanceButton:" destination="c2p-e8-d9k" eventType="touchUpInside" id="k1p-9o-IjS"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wm8-PA-kmO">
+                                            <rect key="frame" x="0.0" y="39" width="394" height="24"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="log-out" translatesAutoresizingMaskIntoConstraints="NO" id="X5u-xq-pdx">
+                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="EVX-y4-zYg"/>
+                                                        <constraint firstAttribute="width" constant="24" id="acc-68-bP0"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ty-o9-jmO">
+                                                    <rect key="frame" x="32" y="0.0" width="362" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <state key="normal" title="Sign out">
+                                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onClickSignOutButton:" destination="c2p-e8-d9k" eventType="touchUpInside" id="vm6-ff-Zve"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="jPi-El-Rpu" firstAttribute="top" secondItem="ba1-ge-A9V" secondAttribute="top" constant="2" id="4pm-Bz-TQb"/>
+                                <constraint firstItem="Ctf-fS-Gr5" firstAttribute="leading" secondItem="ba1-ge-A9V" secondAttribute="leading" constant="10" id="5Pf-Bh-C1Y"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="E5N-B4-nar" secondAttribute="trailing" constant="20" symbolic="YES" id="BDd-mt-Iou"/>
                                 <constraint firstItem="E5N-B4-nar" firstAttribute="leading" secondItem="jPi-El-Rpu" secondAttribute="leading" id="M2g-p5-thh"/>
                                 <constraint firstItem="E5N-B4-nar" firstAttribute="top" secondItem="jPi-El-Rpu" secondAttribute="bottom" constant="8" symbolic="YES" id="SdR-Rh-5Xh"/>
-                                <constraint firstItem="jPi-El-Rpu" firstAttribute="leading" secondItem="wm8-PA-kmO" secondAttribute="leading" id="a7U-0x-b5d"/>
                                 <constraint firstItem="jPi-El-Rpu" firstAttribute="leading" secondItem="ba1-ge-A9V" secondAttribute="leading" constant="8" id="a9z-A4-48a"/>
+                                <constraint firstItem="Ctf-fS-Gr5" firstAttribute="top" secondItem="E5N-B4-nar" secondAttribute="bottom" constant="10" id="b9v-TU-c5r"/>
+                                <constraint firstAttribute="trailing" secondItem="Ctf-fS-Gr5" secondAttribute="trailing" constant="10" id="dnr-Sy-4Jn"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jPi-El-Rpu" secondAttribute="trailing" constant="20" symbolic="YES" id="qQW-cV-pNy"/>
-                                <constraint firstAttribute="bottom" secondItem="wm8-PA-kmO" secondAttribute="bottom" constant="42" id="yhI-ET-I5C"/>
                             </constraints>
                         </view>
-                        <sections>
-                            <tableViewSection id="W6S-Va-5ub">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="177" id="pFv-D6-Yq6">
-                                        <rect key="frame" x="0.0" y="247" width="414" height="177"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pFv-D6-Yq6" id="2Es-gq-elx">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="177"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="IrO-JL-Xae">
-                                                    <rect key="frame" x="147" y="28.5" width="120" height="120"/>
-                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="120" id="hho-yh-F4f"/>
-                                                        <constraint firstAttribute="width" constant="120" id="uIu-7d-oA2"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="IrO-JL-Xae" firstAttribute="centerX" secondItem="2Es-gq-elx" secondAttribute="centerX" id="6Rc-0d-t44"/>
-                                                <constraint firstItem="IrO-JL-Xae" firstAttribute="centerY" secondItem="2Es-gq-elx" secondAttribute="centerY" id="ejb-jK-cVg"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="c2p-e8-d9k" id="cnr-ao-dy3"/>
                             <outlet property="delegate" destination="c2p-e8-d9k" id="99B-1a-HyE"/>
@@ -1107,6 +1158,9 @@
                     <navigationItem key="navigationItem" id="sPZ-zc-Tvw"/>
                     <connections>
                         <outlet property="LangaugeButton" destination="E5N-B4-nar" id="JDK-jv-vHy"/>
+                        <outlet property="attendanceButton" destination="C3I-3u-Lu9" id="EoV-X9-gdl"/>
+                        <outlet property="attendanceStackView" destination="t56-oJ-6Rf" id="ghE-WF-wu0"/>
+                        <outlet property="logoutStackView" destination="wm8-PA-kmO" id="9zR-br-Ryg"/>
                         <outlet property="menuTableView" destination="wXc-Uo-UKb" id="303-WV-DNv"/>
                         <outlet property="singOutButton" destination="4ty-o9-jmO" id="etM-1P-4Vk"/>
                         <outlet property="singOutImage" destination="X5u-xq-pdx" id="je2-5L-nuK"/>
@@ -6204,6 +6258,7 @@
         <image name="add-button" width="21" height="21"/>
         <image name="add_pdf_icon" width="170.5" height="170.5"/>
         <image name="adminicon" width="33" height="33"/>
+        <image name="attendance" width="21" height="21"/>
         <image name="back" width="42.5" height="42.5"/>
         <image name="backgroundNew" width="166.5" height="291.5"/>
         <image name="check" width="21" height="21"/>
@@ -6212,7 +6267,7 @@
         <image name="download-button" width="21" height="21"/>
         <image name="edit" width="21" height="21"/>
         <image name="essay" width="240" height="240"/>
-        <image name="icon" width="170.5" height="170.5"/>
+        <image name="imagePlaceholder" width="75" height="75"/>
         <image name="link" width="42.5" height="42.5"/>
         <image name="lock.fill" catalog="system" width="128" height="128"/>
         <image name="log-out" width="10.5" height="10.5"/>
@@ -6225,8 +6280,8 @@
         <image name="parent" width="42.5" height="42.5"/>
         <image name="pdf-icon" width="666.5" height="666.5"/>
         <image name="pencil" width="42.5" height="42.5"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="42.5" height="42.5"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="question-blue" width="21" height="21"/>
         <image name="send" width="42.5" height="42.5"/>
         <image name="smallbackground" width="166.5" height="125"/>

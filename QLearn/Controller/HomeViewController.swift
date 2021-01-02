@@ -21,8 +21,8 @@
     @IBOutlet weak var studentNumberLabel: UILabel!
     
     var userType = ""
-    var sectionsNames = ["Questions Bag".localized, "Student Report".localized, "Appointements".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized, "External Links".localized]
-    var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus", "link"]
+    var sectionsNames = ["Questions Bag".localized, "Student Report".localized, "Appointements".localized, "Ask Us something".localized, "Uploaded PDFs".localized, "Teacher CV".localized, "Contact Us".localized, "External Links".localized, "Live Exams".localized]
+    var sectionsImagesNames = ["questionbankicon", "studenticon", "timetalbeicon" ,"askquestionicon", "pdficon", "teachercv", "contactus", "link", "exam"]
     var newsArray: [String] = []
     var teacherId = ""
     var subTeacherId = ""
@@ -178,7 +178,8 @@
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return teacherCard.count
+//        return teacherCard.count
+        return 9
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -414,6 +415,31 @@
                         externalLinksVC.teacherId = self.teacherId
                         externalLinksVC.studentLevel = self.levelId
                         navigationController?.pushViewController(externalLinksVC, animated: true)
+                    }
+                }
+                else {
+                    SCLAlertView().showError("Access denied".localized, subTitle: "Parents can't access this content", closeButtonTitle:"Ok".localized)
+                }
+            case 8:
+                if(UserDefaults.standard.string(forKey: "type") != "parent") {
+                    if(UserDefaults.standard.string(forKey: "type") == "student") {
+                        //change it after adding teachercard[8]
+                        if(!isMyTeacher && self.teacherCard[7].status == "0") {
+                            SCLAlertView().showError("Access denied".localized, subTitle: "You can't access this content", closeButtonTitle:"Ok".localized)
+                        }
+                        else {
+                            // go to live exams as student
+                            let storyboard = UIStoryboard(name: "LiveExam", bundle: nil)
+                            let questionsTypeVC = storyboard.instantiateViewController(withIdentifier: "QuestionsType") as! QuestionsTypeViewController
+                            questionsTypeVC.teacherId = self.teacherId
+                            navigationController?.pushViewController(questionsTypeVC, animated: true)
+                        }
+                    }
+                    else {
+                        // go to live exams as teacher
+                        let storyboard = UIStoryboard(name: "LiveExam", bundle: nil)
+                        let questionsTypeVC = storyboard.instantiateViewController(withIdentifier: "QuestionsType") as! QuestionsTypeViewController
+                        navigationController?.pushViewController(questionsTypeVC, animated: true)
                     }
                 }
                 else {

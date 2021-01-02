@@ -8,6 +8,7 @@
 
 import UIKit
 import MOLH
+import SCLAlertView
 
 
 class SideMenuTableViewController: UITableViewController {
@@ -17,12 +18,15 @@ class SideMenuTableViewController: UITableViewController {
     @IBOutlet weak var toChangeLanguage: UILabel!
     @IBOutlet weak var LangaugeButton: UIButton!
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var attendanceStackView: UIStackView!
+    @IBOutlet weak var attendanceButton: UIButton!
+    @IBOutlet weak var logoutStackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        menuTableView.dataSource = self
-        menuTableView.delegate = self
+        attendanceButton.setTitle("Attendance".localized, for: .normal)
+        attendanceStackView.isHidden = UserDefaults.standard.string(forKey: "type") == "student" ? false : true
         menuTableView.separatorColor = .clear
         LangaugeButton.setTitle("LanguageButton".localized, for: .normal)
         toChangeLanguage.text = "To Change Language:".localized
@@ -43,11 +47,11 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     @IBAction func didPressOnLanguage(_ sender: UIButton) {
-       
+        
         let newViewController = storyboard?.instantiateViewController(withIdentifier: "HomeView")
-
+        
         self.dismiss(animated: true) { () -> Void in
-
+            
             UIApplication.shared.keyWindow?.rootViewController = newViewController
             MOLH.setLanguageTo(MOLHLanguage.currentAppleLanguage() == "en" ? "ar" : "en")
             MOLH.reset()
@@ -62,6 +66,7 @@ class SideMenuTableViewController: UITableViewController {
         UserDefaults.standard.removeObject(forKey: "student_level")
         UserDefaults.standard.removeObject(forKey: "student_parent_phone")
         UserDefaults.standard.removeObject(forKey: "admin_name")
+        UserDefaults.standard.removeObject(forKey: "sub_id")
         UserDefaults.standard.removeObject(forKey: "admin_phone")
         UserDefaults.standard.removeObject(forKey: "type")
         UserDefaults.standard.synchronize()
@@ -71,11 +76,10 @@ class SideMenuTableViewController: UITableViewController {
         self.present(loginVC, animated: true, completion: nil)
     }
     
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
-        footerView.backgroundColor = .cyan
-        
-        return footerView
+    @IBAction func onClickAttendanceButton(_ sender: Any) {
+        let studentAttendanceVC = self.storyboard?.instantiateViewController(withIdentifier: "StudentAttendanceVC") as! StudentAttendanceViewController
+        self.navigationController?.pushViewController(studentAttendanceVC, animated: true)
     }
+    
+    
 }

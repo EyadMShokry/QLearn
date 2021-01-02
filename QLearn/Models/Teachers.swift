@@ -18,4 +18,5 @@ class Teacher: Decodable {
     let phone: String
     let subject: String
     let photo_url: String!
+    let requested: String!
 }

@@ -10,21 +10,29 @@ import UIKit
 
 class StudentAttendanceViewController: UIViewController {
 
+    @IBOutlet weak var studentIdLabel: UILabel!
+    @IBOutlet weak var qrCodeImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        studentIdLabel.text = "رقم الطالب: \(UserDefaults.standard.string(forKey: "id")!)"
+        qrCodeImageView.image = generateQRCode(from: UserDefaults.standard.string(forKey: "id")!)
     }
     
+    fileprivate func generateQRCode(from string: String) -> UIImage? {
+        let data = string.data(using: String.Encoding.ascii)
 
-    /*
-    // MARK: - Navigation
+        if let filter = CIFilter(name: "CIQRCodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            let transform = CGAffineTransform(scaleX: 3, y: 3)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            if let output = filter.outputImage?.transformed(by: transform) {
+                return UIImage(ciImage: output)
+            }
+        }
+        return nil
     }
-    */
+
 
 }
