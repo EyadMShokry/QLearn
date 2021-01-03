@@ -18,4 +18,5 @@ pod 'Firebase/Storage'
 pod 'SideMenu'
 pod 'Kingfisher'
 pod 'Moya'
+pod 'CountdownLabel'
 end

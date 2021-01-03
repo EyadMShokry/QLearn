@@ -31,7 +31,7 @@ public struct Exam: Codable {
     public var examduration : String!
     public var id : String!
     public var level : String!
-    public var noOfQuestions : Int!
+    public var no_of_questions : Int!
     public var teacherID : String!
     public var title : String!
     

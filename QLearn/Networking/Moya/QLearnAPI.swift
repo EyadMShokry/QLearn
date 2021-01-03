@@ -33,6 +33,7 @@ public enum QLearnAPI {
     case selectNotAnswerdMcqQuestionsLE(exam_id: String, teacher_id: String, student_id: String, level: String)
     case selectNotAnswerdTFQuestionsLE(exam_id: String, teacher_id: String, student_id: String, level: String)
     case selectOnGoingExamsLE(teacher_id: String, level: String)
+    case selectCountOfRightAnsweredTypeLE(studentID: String, questionType: String)
     
 }
 
@@ -67,6 +68,7 @@ extension QLearnAPI: TargetType {
         case .selectNotAnswerdMcqQuestionsLE: return "select_not_answered_mcq_questions_liveexam"
         case .selectNotAnswerdTFQuestionsLE: return "select_not_answered_tf_questions_liveexam"
         case .selectOnGoingExamsLE: return "select_ongoin_exams"
+        case .selectCountOfRightAnsweredTypeLE: return "select_count_of_right_answered_type_liveexam"
         }
     }
     
@@ -138,6 +140,8 @@ extension QLearnAPI: TargetType {
             return .requestParameters(parameters: ["exam_id" : examId, "teacher_id" : teacherId, "student_id" : studentId, "level" : level], encoding: URLEncoding.queryString)
         case .selectOnGoingExamsLE(teacher_id: let teacherId, level: let level) :
             return .requestParameters(parameters: ["teacher_id" : teacherId, "level" : level], encoding: URLEncoding.queryString)
+        case .selectCountOfRightAnsweredTypeLE(studentID: let studentID, questionType: let questionType) :
+            return .requestParameters(parameters: ["studentID" : studentID, "questionType" : questionType], encoding: URLEncoding.queryString)
         default :
             return .requestPlain
         }
