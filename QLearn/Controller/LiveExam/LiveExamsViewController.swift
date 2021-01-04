@@ -216,6 +216,7 @@ extension LiveExamsViewController: UITableViewDataSource, UITableViewDelegate {
         getNotAnsweredMCQQuestions(examId: examsArray[indexPath.row].id) { (success) -> Void in
             if success {
                 let solveMcqVC = self.storyboard?.instantiateViewController(withIdentifier: "SolveMCQ") as! SolveMCQViewController
+                solveMcqVC.examDuration = self.examsArray[indexPath.row].examduration
                 //if el erray msh fadia da5alo ymt7n .. else d5alo ytfrg bs
                 if(self.notAnsweredMcqQuestionsArray.isEmpty) {
                     solveMcqVC.isSolveRequest = false
