@@ -32,6 +32,8 @@ class SolveMCQViewController: UIViewController {
     var selectedAnswer = 1
     var questionsArray: [String] = []
     var notAnsweredMcqQuestionsArray: [NotAnsweredMcqQuestion] = []
+    var answeredMcqQuestionsArray: [AnswerdMCQQuestion] = []
+    var isSolveRequest = false
     
     private func adjustUIForNewQuestion() {
         self.questionTextView.text = self.questionsArray[0]
@@ -53,8 +55,10 @@ class SolveMCQViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print("Hy5osh ymt7n? : \(isSolveRequest)")
         resetRadioButtons()
-        print(notAnsweredMcqQuestionsArray)
+        print("as2lt el emt7an: \(notAnsweredMcqQuestionsArray)")
+        print("as2la et7lt abl kda: \(answeredMcqQuestionsArray)")
     }
     
 

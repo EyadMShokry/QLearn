@@ -19,6 +19,7 @@ class LiveExamsViewController: UIViewController {
     var rightAnswersCountArray: [RightAnswersCountExam] = []
     var rightAnswersCountFullArray: [String] = []
     var notAnsweredMcqQuestionsArray: [NotAnsweredMcqQuestion] = []
+    var answeredMcqQuestionsArray: [AnswerdMCQQuestion] = []
     
     fileprivate func adjustActivityIndicator() {
         self.view.bringSubviewToFront(activityIndicator)
@@ -60,13 +61,14 @@ class LiveExamsViewController: UIViewController {
                                 self!.rightAnswersCountFullArray.append(rightCount.right_count)
                                 isFound = true
                             }
+                            else {
+                                isFound = false
+                            }
                         }
                         if(!isFound) {
                             self!.rightAnswersCountFullArray.append("0")
                         }
                     }
-                    print("Right count:")
-                    print(self!.rightAnswersCountFullArray)
                     self?.performUIUpdatesOnMain {
                         self?.examsTableView.reloadData()
                     }
@@ -106,10 +108,44 @@ class LiveExamsViewController: UIViewController {
                 self?.performUIUpdatesOnMain {
                     SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
                 }
-                self?.performUIUpdatesOnMain {
-                    self?.activityIndicator.isHidden = true
-                    self?.activityIndicator.stopAnimating()
+            }
+            self?.performUIUpdatesOnMain {
+                self?.activityIndicator.isHidden = true
+                self?.activityIndicator.stopAnimating()
+            }
+            finished(success)
+        }
+    }
+    
+    fileprivate func getMcqAnswersLE(examId: String, finished: @escaping (_ success: Bool) -> Void) {
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        NetworkingService.shared.provider.request(.selectAnswersLiveExamType(studentId: UserDefaults.standard.string(forKey: "id")!, examId: examId, type: "mcq")) {[weak self] (result) in
+            var success = false
+            switch result {
+            case .success(let response) :
+                do {
+                    let answers = try JSONDecoder().decode(AnsweredMCQQuestions.self, from: response.data)
+                    self?.answeredMcqQuestionsArray = answers.response.questions
+                    success = true
                 }
+                catch {
+                    print(error)
+                    success = false
+                    self?.performUIUpdatesOnMain {
+                        SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                    }
+                }
+            case .failure(let err) :
+                print(err)
+                success = false
+                self?.performUIUpdatesOnMain {
+                    SCLAlertView().showError("Error happened", subTitle: "Server error happened. please check your internet connection or contact with application's author", closeButtonTitle:"Ok".localized)
+                }
+            }
+            self?.performUIUpdatesOnMain {
+                self?.activityIndicator.isHidden = true
+                self?.activityIndicator.stopAnimating()
             }
             finished(success)
         }
@@ -170,7 +206,6 @@ extension LiveExamsViewController: UITableViewDataSource, UITableViewDelegate {
         examCell.chapterLabel.text = examsArray[indexPath.row].title
         examCell.examTimeLabel.text = examsArray[indexPath.row].examduration + ":00"
         examCell.CalculatesProgress.text = String( (Double(rightAnswersCountFullArray[indexPath.row])! / Double(examsArray[indexPath.row].no_of_questions)) * 100 ) + "%"
-        print( String( (Int(rightAnswersCountFullArray[indexPath.row])! / Int(examsArray[indexPath.row].no_of_questions)) * 100 ))
         examCell.questionsNumberLabel.text = "(" + rightAnswersCountFullArray[indexPath.row] + "/" + "\(String(examsArray[indexPath.row].no_of_questions))" + ")"
         examCell.progress = (Double(rightAnswersCountFullArray[indexPath.row])! / Double(examsArray[indexPath.row].no_of_questions))
         examCell.updateProgress()
@@ -181,9 +216,25 @@ extension LiveExamsViewController: UITableViewDataSource, UITableViewDelegate {
         getNotAnsweredMCQQuestions(examId: examsArray[indexPath.row].id) { (success) -> Void in
             if success {
                 let solveMcqVC = self.storyboard?.instantiateViewController(withIdentifier: "SolveMCQ") as! SolveMCQViewController
-                print(self.notAnsweredMcqQuestionsArray)
-                solveMcqVC.notAnsweredMcqQuestionsArray = self.notAnsweredMcqQuestionsArray
-                self.navigationController?.pushViewController(solveMcqVC, animated: true)
+                //if el erray msh fadia da5alo ymt7n .. else d5alo ytfrg bs
+                if(self.notAnsweredMcqQuestionsArray.isEmpty) {
+                    solveMcqVC.isSolveRequest = false
+                    //call getAnsweresLiveExamType and pass the data to the next controller
+                    //yd5ol ytfrg bs
+                    self.getMcqAnswersLE(examId: self.examsArray[indexPath.row].id) { (success) -> Void in
+                        if success {
+                            solveMcqVC.isSolveRequest = false
+                            solveMcqVC.answeredMcqQuestionsArray = self.answeredMcqQuestionsArray
+                            self.navigationController?.pushViewController(solveMcqVC, animated: true)
+                        }
+                    }
+                }
+                else {
+                    //yd5ol ymt7n
+                    solveMcqVC.isSolveRequest = true
+                    solveMcqVC.notAnsweredMcqQuestionsArray = self.notAnsweredMcqQuestionsArray
+                    self.navigationController?.pushViewController(solveMcqVC, animated: true)
+                }
             }
         }
     }

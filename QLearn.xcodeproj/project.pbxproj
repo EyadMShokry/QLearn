@@ -105,6 +105,7 @@
 		9B2E2F1024FD0A850003E5BA /* TeachersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */; };
 		9B2E2F1224FD0ACC0003E5BA /* TeachersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */; };
 		9B2E2F1424FD0D310003E5BA /* Teachers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E2F1324FD0D310003E5BA /* Teachers.swift */; };
+		9B2E75EC25A3433A00E5D537 /* AnswerdMCQQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E75EB25A3433A00E5D537 /* AnswerdMCQQuestions.swift */; };
 		9B2EC7F725A2277600CB52EF /* SolveMCQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EC7F625A2277600CB52EF /* SolveMCQViewController.swift */; };
 		9B2EC7F925A22F8800CB52EF /* NotAnsweredMCQQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EC7F825A22F8800CB52EF /* NotAnsweredMCQQuestions.swift */; };
 		9B2EE8AD2526506D00996BE2 /* SelectLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */; };
@@ -239,6 +240,7 @@
 		9B2E2F0F24FD0A850003E5BA /* TeachersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersTableViewCell.swift; sourceTree = "<group>"; };
 		9B2E2F1124FD0ACC0003E5BA /* TeachersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeachersTableViewCell.xib; sourceTree = "<group>"; };
 		9B2E2F1324FD0D310003E5BA /* Teachers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teachers.swift; sourceTree = "<group>"; };
+		9B2E75EB25A3433A00E5D537 /* AnswerdMCQQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerdMCQQuestions.swift; sourceTree = "<group>"; };
 		9B2EC7F625A2277600CB52EF /* SolveMCQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolveMCQViewController.swift; sourceTree = "<group>"; };
 		9B2EC7F825A22F8800CB52EF /* NotAnsweredMCQQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotAnsweredMCQQuestions.swift; sourceTree = "<group>"; };
 		9B2EE8AC2526506D00996BE2 /* SelectLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLevelViewController.swift; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 				9B32897125A08B2F0049CCBA /* Exam.swift */,
 				9B312B7125A129850043C306 /* RightAnswersCountLE.swift */,
 				9B2EC7F825A22F8800CB52EF /* NotAnsweredMCQQuestions.swift */,
+				9B2E75EB25A3433A00E5D537 /* AnswerdMCQQuestions.swift */,
 			);
 			path = "Live Exam";
 			sourceTree = "<group>";
@@ -992,6 +995,7 @@
 				68E4ED43233162EA00F79C7F /* User.swift in Sources */,
 				9B35EDD024FBD24F006A7314 /* LoginViewController.swift in Sources */,
 				68E4ED342331196200F79C7F /* MonthGrade.swift in Sources */,
+				9B2E75EC25A3433A00E5D537 /* AnswerdMCQQuestions.swift in Sources */,
 				5DE88708233DFAD5007A5D0A /* AllQuestionChapterCell.swift in Sources */,
 				689EB3542333CF6800D17EC8 /* PDFTypeViewController.swift in Sources */,
 				68E4ED3823311D8000F79C7F /* UILabel+Extension.swift in Sources */,
